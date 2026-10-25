@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Model / Embodied AI Field Map</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <span class="eyebrow">Reference</span>
+      <h1>World Model × Embodied AI 全景图</h1>
+      <p class="meta">把“会预测”和“会行动”拆开，再组合成系统。</p>
+    </header>
+
+    <section>
+      <h2>五个不可混用的层次</h2>
+      <div class="grid">
+        <article class="card"><h3>1. 观测与动作</h3><p>世界给你的输入是 <code>observation</code>，你给世界的是 <code>action</code>。先看张量形状、单位、频率和物理含义。</p></article>
+        <article class="card"><h3>2. 世界模型</h3><p>学习 <code>(o, a) → o'</code>、<code>r</code>、<code>done</code> 或未来视频。它回答“如果我这么做，世界会怎样”。</p></article>
+        <article class="card"><h3>3. 策略</h3><p>学习 <code>o → a</code>。它回答“我现在应该怎么做”。策略可以没有显式世界模型。</p></article>
+        <article class="card"><h3>4. VLA</h3><p>把图像、语言、机器人状态映射为动作块。它通常是策略，不一定显式输出未来世界状态。</p></article>
+        <article class="card"><h3>5. 数据与仿真</h3><p>数据提供经验分布，仿真器提供闭环真值。二者都不能单独证明泛化。</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>一张决策表</h2>
+      <table>
+        <thead><tr><th>你想解决的问题</th><th>应该优先看</th><th>常见坑</th></tr></thead>
+        <tbody>
+          <tr><td>预测下一帧/未来画面</td><td>Video world model、Cosmos、Genie</td><td>漂亮视频 ≠ 可控制环境</td></tr>
+          <tr><td>在低维状态上做控制</td><td>RSSM、Dreamer、model-based RL</td><td>只做 next-state 回归不等于 Dreamer</td></tr>
+          <tr><td>让机器人听指令做事</td><td>VLA、SmolVLA、OpenVLA、π0</td><td>输出形状对了不等于 embodiment 匹配</td></tr>
+          <tr><td>评估策略真实效果</td><td>closed-loop benchmark</td><td>offline loss 不能外推成功率</td></tr>
+          <tr><td>构造训练数据</td><td>LeRobot / Open X-Embodiment</td><td>episode 内相邻帧会造成泄漏</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>证据等级</h2>
+      <div class="callout"><strong>Level 1 — Interface smoke test</strong><p>证明张量形状、预处理、模型加载和推理路径能跑通，不证明语义性能。</p></div>
+      <div class="callout blue"><strong>Level 2 — Offline metric</strong><p>在静态验证集上测 MSE、loss、生成质量，不证明闭环策略有效。</p></div>
+      <div class="callout good"><strong>Level 3 — Closed-loop evaluation</strong><p>策略自己的动作会改变未来观测，才有资格谈 return、success rate 和泛化。</p></div>
+    </section>
+
+    <section>
+      <h2>最小系统图</h2>
+      <pre><code>观测 o ─┬─&gt; World model ─&gt; 未来 o' / r / done
+        │        ↑
+        │        action a
+        └─&gt; Policy / VLA ─&gt; action a
+                 ↓
+             Environment / Robot
+                 ↓
+             下一帧 o'</code></pre>
+      <p>关键不是把所有模块塞进一个模型，而是明确：谁负责预测，谁负责决策，谁负责评估。</p>
+    </section>
+
+    <section>
+      <h2>推荐一手资料</h2>
+      <ul>
+        <li><a href="https://arxiv.org/abs/2501.03575" target="_blank">NVIDIA Cosmos 论文</a></li>
+        <li><a href="https://www.nature.com/articles/s41586-025-08744-2" target="_blank">DreamerV3 Nature 论文</a></li>
+        <li><a href="https://arxiv.org/abs/2506.01844" target="_blank">SmolVLA 论文</a></li>
+        <li><a href="https://arxiv.org/abs/2506.09985" target="_blank">V-JEPA 2 论文</a></li>
+      </ul>
+    </section>
+    <div class="source-note">本地参考页 · 用于全课程术语对齐</div>
+  </main>
+</body>
+</html>

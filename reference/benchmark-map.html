@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>比赛与 Benchmark 地图</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <div class="course-topbar"><div class="container compact"><a href="../lessons/index.html">← 课程总目录</a><span>Reference · Benchmarks & Challenges</span></div></div>
+  <main class="container">
+    <header class="hero">
+      <span class="eyebrow">Reference</span>
+      <h1>比赛与 Benchmark 地图</h1>
+      <p class="meta">先选对任务族和指标，再决定是否参加 challenge 或提交 leaderboard。</p>
+    </header>
+
+    <section>
+      <h2>Benchmark、leaderboard、challenge 的区别</h2>
+      <div class="grid">
+        <article class="card"><h3>Benchmark</h3><p>固定任务集、数据划分和指标，用来做可复现比较。</p></article>
+        <article class="card"><h3>Leaderboard</h3><p>按指标排序的结果列表；要看是否固定 test split、是否允许外部数据和多次提交。</p></article>
+        <article class="card"><h3>Competition / Challenge</h3><p>有时间窗口、提交格式和排名规则；每年任务和数据可能变化，报名前看官方页面。</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>当前课程主目标</h2>
+      <div class="callout good">
+        <strong>RoboWorld Challenge 2026</strong>
+        <p>课程的默认产出目标。推荐先做 <b>WorldNav</b>，再用 <b>HA-VLN 2.0</b> 进阶闭环导航；SafeDrive-VLA 作为安全驾驶方向的观察项。</p>
+        <p><a href="https://roboworld2026.github.io" target="_blank">官网</a> · <a href="roboworld-2026.html">课程产出路线</a></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>导航与通用具身智能</h2>
+      <table>
+        <thead><tr><th>平台</th><th>任务类型</th><th>适合练什么</th><th>入口</th></tr></thead>
+        <tbody>
+          <tr><td>Embodied AI Workshop</td><td>导航、rearrangement、vision-language navigation 等 challenge</td><td>跟踪主流具身智能比赛任务和提交格式</td><td><a href="https://embodied-ai.org" target="_blank">embodied-ai.org</a></td></tr>
+          <tr><td>RoboWorld Challenge 2026</td><td>WorldNav、HA-VLN 2.0、SafeDrive-VLA</td><td>本课程主目标；连接 world model、VLA 与 embodied policy</td><td><a href="https://roboworld2026.github.io" target="_blank">官网</a> / <a href="roboworld-2026.html">课程路线</a></td></tr>
+          <tr><td>AI Habitat</td><td>3D 室内导航与交互仿真</td><td>photo-realistic navigation、SPL、路径效率</td><td><a href="https://aihabitat.org" target="_blank">aihabitat.org</a></td></tr>
+          <tr><td>BEHAVIOR</td><td>长时序家庭活动和 human-centered 任务</td><td>多步骤活动分解、日常物体交互</td><td><a href="https://behavior.stanford.edu/index.html" target="_blank">官网</a> / <a href="https://behavior.stanford.edu/challenge/index.html" target="_blank">Challenge</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>机械臂操作</h2>
+      <table>
+        <thead><tr><th>Benchmark</th><th>重点</th><th>适合练什么</th><th>入口</th></tr></thead>
+        <tbody>
+          <tr><td>CALVIN</td><td>language-conditioned long-horizon manipulation</td><td>语言到操作序列、长时序成功率</td><td><a href="http://calvin.cs.uni-freiburg.de" target="_blank">官网</a> / <a href="https://github.com/mees/calvin" target="_blank">GitHub</a></td></tr>
+          <tr><td>LIBERO</td><td>lifelong robot learning 与知识迁移</td><td>任务序列学习、遗忘和迁移</td><td><a href="https://libero-project.github.io" target="_blank">官网</a></td></tr>
+          <tr><td>Meta-World</td><td>multi-task / meta-RL manipulation</td><td>多任务采样效率与策略泛化</td><td><a href="https://meta-world.github.io" target="_blank">官网</a> / <a href="https://github.com/Farama-Foundation/Metaworld" target="_blank">GitHub</a></td></tr>
+          <tr><td>PushT + LeRobot</td><td>二维推动任务，课程本地基础</td><td>数据 schema、offline 训练、闭环评估</td><td><a href="https://github.com/huggingface/lerobot" target="_blank">LeRobot</a> / <a href="https://huggingface.co/datasets/lerobot/pusht" target="_blank">PushT</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>世界模型评估</h2>
+      <table>
+        <thead><tr><th>平台</th><th>评估重点</th><th>适合练什么</th><th>入口</th></tr></thead>
+        <tbody>
+          <tr><td>WorldModelBench</td><td>world model 生成与预测质量</td><td>视觉预测、物理一致性、时序稳定性</td><td><a href="https://worldmodelbench.github.io" target="_blank">worldmodelbench.github.io</a></td></tr>
+          <tr><td>WorldArena</td><td>embodied world model 的感知与功能维度</td><td>从“看起来像”走向“可交互、可用于决策”</td><td><a href="https://world-arena.ai" target="_blank">官网</a> / <a href="https://github.com/tsinghua-fib-lab/WorldArena" target="_blank">GitHub</a></td></tr>
+          <tr><td>DeepMind Control Suite</td><td>连续控制任务族</td><td>latent world model + RL 的闭环控制</td><td><a href="https://arxiv.org/abs/1801.00690" target="_blank">论文</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>真机与平台</h2>
+      <table>
+        <thead><tr><th>平台</th><th>重点</th><th>适合练什么</th><th>入口</th></tr></thead>
+        <tbody>
+          <tr><td>RoboChallenge</td><td>real-robot benchmark 与 policy evaluation</td><td>真机协议、安全、可靠性</td><td><a href="https://robochallenge.ai" target="_blank">robochallenge.ai</a></td></tr>
+          <tr><td>RoboVerse</td><td>统一机器人学习平台与 benchmark</td><td>跨任务/跨仿真器的比较</td><td><a href="https://roboverseorg.github.io" target="_blank">roboverseorg.github.io</a></td></tr>
+          <tr><td>LeRobot</td><td>机器人数据、policy、工具链</td><td>数据集格式、训练、复现实验</td><td><a href="https://huggingface.co/lerobot" target="_blank">Hugging Face</a> / <a href="https://github.com/huggingface/lerobot" target="_blank">GitHub</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>如何选择下一步</h2>
+      <pre><code>你当前的问题是什么？
+├─ 只想验证视频预测质量
+│   └─ WorldModelBench / WorldArena + PSNR、SSIM、LPIPS、FVD、rollout
+├─ 想做语言条件长时序操作
+│   └─ CALVIN / LIBERO
+├─ 想做多任务操作和 meta-learning
+│   └─ Meta-World
+├─ 想做导航或家庭任务
+│   └─ AI Habitat / BEHAVIOR / Embodied AI Workshop
+├─ 想测试真机部署
+│   └─ RoboChallenge + 延迟、安全、鲁棒性
+└─ 想从课程最小实验扩展
+    └─ PushT 图像输入 / richer state / RSSM planning</code></pre>
+    </section>
+
+    <section>
+      <h2>参加比赛前的检查表</h2>
+      <ol>
+        <li>确认任务定义、观测空间、动作空间和 embodiment。</li>
+        <li>确认训练/验证/测试划分以及是否允许外部数据。</li>
+        <li>确认主指标、次要指标、成功判定和 tie-breaker。</li>
+        <li>确认提交格式、推理时间、硬件、网络和上传限制。</li>
+        <li>先复现官方 baseline，再改模型。</li>
+        <li>保留配置、seed、日志和可复现命令。</li>
+        <li>不要把验证集调优结果说成测试集泛化能力。</li>
+      </ol>
+      <div class="callout warn">
+        <strong>时效提示</strong>
+        <p>Challenge 的任务、榜单和截止日期每年会变化。此页不写具体 deadline；报名时请以官方网站当届规则为准。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>相关页面</h2>
+      <ul>
+        <li><a href="basic-introduction.html">基本介绍</a></li>
+        <li><a href="evaluation-system.html">评价体系</a></li>
+        <li><a href="../lessons/0012-capstone.html">Lesson 0012：Capstone 设计</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

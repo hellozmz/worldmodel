@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PushT Data Lab</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><main class="container">
+<header class="hero"><span class="eyebrow">Reference</span><h1>PushT 数据实验手册</h1><p class="meta">把一个机器人数据集读透，再谈模型。</p></header>
+<section><h2>数据事实</h2><table><thead><tr><th>字段</th><th>形状/类型</th><th>解释</th></tr></thead><tbody>
+<tr><td><code>observation.state</code></td><td>float32 × 2</td><td>agent 位置</td></tr>
+<tr><td><code>action</code></td><td>float32 × 2</td><td>目标位置 / 像素坐标动作</td></tr>
+<tr><td><code>observation.image</code></td><td>视频帧，解码为 3×96×96</td><td>俯视相机图像</td></tr>
+<tr><td><code>next.reward</code></td><td>float</td><td>下一步奖励</td></tr>
+<tr><td><code>next.done</code></td><td>bool</td><td>episode 是否结束</td></tr>
+<tr><td><code>next.success</code></td><td>bool</td><td>任务是否成功</td></tr>
+<tr><td><code>episode_index</code></td><td>int</td><td>episode ID，切分必须按它</td></tr>
+</tbody></table></section>
+<section><h2>统计快照</h2><div class="grid"><div class="card"><h3>规模</h3><p>25,650 帧，206 episodes，10 fps。</p></div><div class="card"><h3>长度</h3><p>49 / 124.51 / 246，分别为 min / mean / max。</p></div><div class="card"><h3>任务</h3><p>Push the T-shaped block onto the T-shaped target.</p></div><div class="card"><h3>图像</h3><p>视频解码后为 3×96×96 float tensor。</p></div></div></section>
+<section><h2>实践命令</h2><pre><code>cd /mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset
+source .venv/bin/activate
+python scripts/analyze_pusht.py</code></pre><p>输出：<code>analysis/pusht_summary.json</code>、轨迹图和 contact sheet。</p></section>
+<section><h2>三个不能犯的错</h2><div class="callout warn"><strong>1. 随机按帧切分</strong><p>相邻帧几乎重复，会造成验证集泄漏。必须按 episode 切分。</p></div><div class="callout warn"><strong>2. 只看 action MSE</strong><p>离线误差低不代表闭环能推动 T 块。</p></div><div class="callout warn"><strong>3. 忽略 action 单位</strong><p>这里是像素坐标，不是关节角度或末端位移。</p></div></section>
+<section><h2>和实验对应</h2><ul><li>Tiny imitation policy：state → action MLP。</li><li>Tiny RSSM：state/action 序列 → 下一状态、reward、done。</li><li>gym-pusht：闭环 return / coverage / success。</li></ul></section>
+<figure><img src="../source/worldmodel_embodied_ai/04_lerobot_dataset/analysis/episode0_contact_sheet.png" alt="PushT episode 0 contact sheet"><figcaption>Episode 0 的关键帧：观察遮挡、接触和目标变化。</figcaption></figure>
+<div class="source-note">数据来源：lerobot/pusht v3.0；本地指标来自 2026-10-25 实验。</div>
+</main></body></html>

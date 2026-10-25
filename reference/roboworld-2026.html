@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RoboWorld Challenge 2026：课程目标产出</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <div class="course-topbar"><div class="container compact"><a href="../lessons/index.html">← 课程总目录</a><span>Reference · RoboWorld 2026</span></div></div>
+  <main class="container">
+    <header class="hero">
+      <span class="eyebrow">Target Output</span>
+      <h1>RoboWorld Challenge 2026：课程目标产出</h1>
+      <p class="meta">把 12 课的本地实验推进成一个可复现、可提交、可解释的参赛项目。</p>
+    </header>
+
+    <section>
+      <h2>活动定位</h2>
+      <p><b>RoboWorld Challenge 2026</b> 关注机器人与自动驾驶中的 embodied world modeling，鼓励参赛者结合 world model、VLA 和 embodied policy，让智能体理解语言、预测未来状态并安全行动。官方说明它是与 <b>RoboPAD @ NeurIPS 2026</b> 相关的独立组织 challenge；challenge 参赛与 workshop 论文投稿是两条不同路径。</p>
+      <div class="grid">
+        <article class="card"><h3>官方主页</h3><p><a href="https://roboworld2026.github.io" target="_blank">RoboWorld Challenge 2026</a></p><p>包含三个赛道、注册入口、提交入口和组织者信息。</p></article>
+        <article class="card"><h3>注册入口</h3><p><a href="https://forms.gle/P2jH3c2VoGsNNWXG8" target="_blank">Google Form</a></p><p>以官方页面为准，注册前确认团队信息和参赛规则。</p></article>
+        <article class="card"><h3>Workshop</h3><p><a href="https://roboworld2026.github.io" target="_blank">RoboPAD</a></p><p>官方页面说明 challenge 与 RoboPAD workshop 的关系；不要把参赛等同于论文录用。</p></article>
+      </div>
+      <div class="callout blue">
+        <strong>本课程的目标</strong>
+        <p>不是空喊“参加比赛”，而是产出一个完整的 <b>RoboWorld-ready project package</b>：明确赛道、可复现 baseline、改进假设、验证结果、失败分析和官方提交记录。是否获奖是外生结果，不作为学习成功与否的唯一标准。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>三个官方赛道</h2>
+      <table>
+        <thead><tr><th>Track</th><th>输入 / 环境</th><th>输出</th><th>评估重点</th><th>入口</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>WorldNav</b><br><span class="meta">推荐主目标</span></td>
+            <td>单张初始 egocentric RGB + natural-language instruction；无中间反馈</td>
+            <td>完整未来轨迹：平面位移、yaw、Stop</td>
+            <td>SR、ATE、RPE、full-route fidelity、heading / turn fidelity</td>
+            <td><a href="https://roboworld2026.github.io/track1.html" target="_blank">详情</a> · <a href="https://www.codabench.org/competitions/18135/" target="_blank">CodaBench</a> · <a href="https://github.com/roboworld2026/track1" target="_blank">GitHub</a></td>
+          </tr>
+          <tr>
+            <td><b>HA-VLN 2.0</b><br><span class="meta">进阶目标</span></td>
+            <td>连续 3D 环境中的 RGB-D；动态行人；部分可观测</td>
+            <td>0.25m 前进、15° 转向等导航动作</td>
+            <td>NE、SR、collision rate、social compliance</td>
+            <td><a href="https://roboworld2026.github.io/track2.html" target="_blank">详情</a> · <a href="https://www.codabench.org/competitions/18185/" target="_blank">CodaBench</a> · <a href="https://github.com/roboworld2026/track2" target="_blank">GitHub</a></td>
+          </tr>
+          <tr>
+            <td><b>SafeDrive-VLA</b><br><span class="meta">观察项</span></td>
+            <td>CARLA 车载视觉 + 语言指令；包含指令与场景冲突</td>
+            <td>驾驶轨迹或控制动作</td>
+            <td>导航合规、目标速度误差、Driving Score、事故与违规</td>
+            <td><a href="https://roboworld2026.github.io/track3.html" target="_blank">详情</a> · <a href="https://www.codabench.org/competitions/18333/" target="_blank">CodaBench</a> · <a href="https://github.com/ASGuard-UCI/safedrive-vla" target="_blank">GitHub</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>为什么优先 WorldNav</h2>
+      <ol>
+        <li><b>任务形式贴近课程主线：</b>一张图 + 一句语言 → 未来动作轨迹，正好对应 perception、world model、policy 的边界。</li>
+        <li><b>允许不同层次方法：</b>官方鼓励 world model、VLA 和 policy-only 方法；可以先做可复现 baseline，再逐步加入想象或 VLA 组件。</li>
+        <li><b>产出风险可控：</b>相较 SafeDrive 约 1.2TB 压缩数据，WorldNav 更容易先完成数据审计、baseline 和消融。</li>
+        <li><b>评估指标可学习：</b>SR/ATE/RPE 与本课程的评价体系直接衔接；full-route 和 heading fidelity 补充轨迹质量。</li>
+      </ol>
+      <div class="callout warn">
+        <strong>不要过度承诺</strong>
+        <p>本地 PushT 是二维 manipulation，RoboWorld WorldNav 是语言条件导航。PushT 实验只提供方法训练，不能把 PushT 指标外推为 RoboWorld 排名。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>课程到赛题的映射</h2>
+      <table>
+        <thead><tr><th>课程内容</th><th>本地实验</th><th>迁移到 RoboWorld</th></tr></thead>
+        <tbody>
+          <tr><td>概念边界</td><td>Cosmos / RSSM / SmolVLA 分类</td><td>明确采用 world model、VLA 还是 policy-only 路线</td></tr>
+          <tr><td>数据审计</td><td>PushT schema、episode-safe split</td><td>检查 LCVN 轨迹、语言类型、seen/unseen split</td></tr>
+          <tr><td>视频想象</td><td>Cosmos3-Nano 生成</td><td>分析 future observation prediction 是否能辅助轨迹选择</td></tr>
+          <tr><td>Latent rollout</td><td>Tiny RSSM</td><td>评估 latent imagination 的误差累积与可用性</td></tr>
+          <tr><td>Policy</td><td>Tiny imitation policy</td><td>建立 vision-language → trajectory baseline</td></tr>
+          <tr><td>闭环评估</td><td>gym-pusht closed loop</td><td>理解 HA-VLN 的动态行人、碰撞与 social compliance</td></tr>
+          <tr><td>VLA 接口</td><td>SmolVLA action chunk</td><td>检查动作空间、单位、频率和 embodiment 是否匹配</td></tr>
+          <tr><td>Capstone</td><td>实验设计模板</td><td>整理成参赛技术报告和提交包</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>目标产出包</h2>
+      <pre><code>roboworld_2026/
+├── README.md                 # 赛道选择、方法摘要、复现命令
+├── TEAM.md                   # 分工、时间预算、风险
+├── rules/
+│   ├── official_links.md     # 官方页面、注册、提交入口
+│   └── eligibility.md        # 资格、外部数据、算力、提交格式
+├── data/
+│   ├── schema_audit.md       # 字段、单位、episode、split
+│   └── download_plan.md      # 存储与带宽计划
+├── baselines/
+│   ├── reproduce.md          # 官方/简单 baseline 复现记录
+│   └── metrics.json          # validation 指标
+├── experiments/
+│   ├── hypothesis.md         # 可证伪假设
+│   ├── config.yaml           # 固定配置
+│   ├── ablation.md           # 组件消融
+│   └── failure_analysis.md   # 错例与失败模式
+├── submission/
+│   ├── run.sh                # 一键生成提交
+│   ├── predictions/          # 官方格式输出
+│   └── submission_log.md     # 提交时间、分数、变化
+└── report/
+    ├── RoboWorld_Report.md   # 图表 + 结论 + 边界
+    └── slides.md            # 5 分钟汇报稿</code></pre>
+      <div class="callout good">
+        <strong>最低合格产出</strong>
+        <p>即使暂时不提交官方服务器，也至少要有：数据审计、可复现 baseline、一个改进假设、validation 指标、失败分析和完整报告。这样才能把学习成果沉淀下来。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>五阶段里程碑</h2>
+      <div class="grid">
+        <article class="card"><h3>P0 · Decision</h3><p>确认主赛道为 WorldNav，阅读规则、注册、检查算力和存储。</p></article>
+        <article class="card"><h3>P1 · Reproduce</h3><p>下载数据或最小子集，审计 schema，复现官方/简单 baseline。</p></article>
+        <article class="card"><h3>P2 · Improve</h3><p>加入一个明确组件：语言编码、轨迹解码、latent rollout 或 VLA adapter。</p></article>
+        <article class="card"><h3>P3 · Validate</h3><p>在 seen/unseen validation 上报告 SR、ATE、RPE 和误差分析。</p></article>
+        <article class="card"><h4>P4 · Submit</h4><p>生成官方格式提交，记录分数变化；整理报告和复现包。</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>备选路线</h2>
+      <ul>
+        <li><b>HA-VLN 2.0：</b>如果团队更关注 closed-loop、动态行人和 social navigation，可作为第二阶段目标。</li>
+        <li><b>SafeDrive-VLA：</b>如果后续有足够存储、GPU 和自动驾驶经验，可研究 world-model dreaming 与安全冲突处理。</li>
+        <li><b>非比赛路线：</b>若官方规则或时间不合适，可把同一产出包投给开源 benchmark 复现报告、课程项目或内部技术分享。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>官方事实与边界</h2>
+      <ul>
+        <li>WorldNav 使用 LCVN 数据：官方页写明 39,016 条轨迹和 117,048 条人工校验指令。</li>
+        <li>WorldNav 指标包括 SR、ATE、RPE、full-route fidelity、heading / turn fidelity。</li>
+        <li>HA-VLN 2.0 使用 RGB-D 和连续环境，成功要求距离目标 3m 内且无碰撞。</li>
+        <li>SafeDrive-VLA 训练数据约 1.2TB，评估包含 CARLA-F 和 B2D-C 两组路线。</li>
+        <li>官方时间线当前只列出阶段，未在本页给出具体日期；报名和提交前必须查官网当届信息。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

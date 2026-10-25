@@ -1,0 +1,23 @@
+{
+  "created_utc": "2026-10-25T02:15:41.588241+00:00",
+  "container": "zmz_dev_v2",
+  "python": "3.12.12 (main, Oct 10 2025, 08:52:57) [GCC 11.4.0]",
+  "platform": "Linux-5.15.0-174-generic-x86_64-with-glibc2.35",
+  "include_system_site_packages": false,
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "transformers": "5.4.0",
+    "lerobot": "0.6.2",
+    "datasets": "4.8.5",
+    "huggingface_hub": "1.33.0",
+    "accelerate": "1.15.0",
+    "gym_pusht": "unknown",
+    "gymnasium": "1.4.0",
+    "pyarrow": "26.0.0",
+    "PIL": "12.3.0",
+    "av": "15.1.0"
+  },
+  "torch_cuda_available_in_container": true,
+  "purpose": "Persistent record of the repaired LeRobot/SmolVLA Python environment"
+}

@@ -1,0 +1,94 @@
+{
+  "status": "ok",
+  "purpose": "GPU interface and tensor-shape smoke test; not a PushT performance claim",
+  "created_utc": "2026-10-25T02:19:51.953337+00:00",
+  "host_container": "zmz_dev_v2 (workspace owner; GPU fallback process was host-launched)",
+  "model_path": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/03_vla_smolvla/models/smolvla_base",
+  "tokenizer_path": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/03_vla_smolvla/models/smolvlm2_tokenizer",
+  "dataset_path": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/datasets/pusht",
+  "dataset_repo_id": "lerobot/pusht",
+  "dataset_revision": "v3.0",
+  "frame_index_requested": 0,
+  "frame_index_recorded": 0,
+  "episode_index": 0,
+  "task": "push the T-shaped block to the target pose",
+  "pusht_task": "Push the T-shaped block onto the T-shaped target.",
+  "input_state_original_shape": [
+    2
+  ],
+  "input_state_padded_shape": [
+    6
+  ],
+  "input_image_shape": [
+    3,
+    96,
+    96
+  ],
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA H200",
+  "gpu_index": 0,
+  "parameter_count": 450046176,
+  "trainable_parameter_count": 99880992,
+  "dtype": "torch.float32",
+  "output_shape": [
+    1,
+    50,
+    6
+  ],
+  "action_min": -0.9054855108261108,
+  "action_max": 3.3197460174560547,
+  "action_mean": 1.0244961977005005,
+  "action_std": 1.1015225648880005,
+  "first_action": [
+    -0.9054855108261108,
+    0.5767165422439575,
+    1.949528694152832,
+    -0.15949343144893646,
+    1.675086498260498,
+    -0.4650844931602478
+  ],
+  "load_seconds": 13.005994090810418,
+  "first_run_ms": {
+    "preprocess": 0.7368698716163635,
+    "inference": 490.576034411788,
+    "postprocess": 0.0957641750574112,
+    "total": 491.40866845846176
+  },
+  "repeat_timings_ms": [
+    {
+      "preprocess_ms": 0.3596954047679901,
+      "inference_ms": 145.24431992322206,
+      "postprocess_ms": 0.08270330727100372
+    },
+    {
+      "preprocess_ms": 0.2931132912635803,
+      "inference_ms": 144.89494264125824,
+      "postprocess_ms": 0.07091276347637177
+    },
+    {
+      "preprocess_ms": 0.26689842343330383,
+      "inference_ms": 144.5971056818962,
+      "postprocess_ms": 0.07142405956983566
+    },
+    {
+      "preprocess_ms": 0.26695337146520615,
+      "inference_ms": 144.7547422721982,
+      "postprocess_ms": 0.08177105337381363
+    },
+    {
+      "preprocess_ms": 0.26551540940999985,
+      "inference_ms": 144.99444235116243,
+      "postprocess_ms": 0.07290579378604889
+    }
+  ],
+  "gpu_memory_allocated_bytes": 1247069184,
+  "gpu_memory_reserved_bytes": 1329594368,
+  "max_gpu_memory_allocated_bytes": 1287971328,
+  "embodiment_caveat": "PushT 2-D state was padded into SmolVLA's 6-D input; output actions remain 6-D and are not directly executable in PushT.",
+  "execution_context": {
+    "workspace_container": "zmz_dev_v2",
+    "workspace_path": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai",
+    "gpu_process_launcher": "host runtime using the same bind-mounted workspace and container-created venv",
+    "reason": "A host-side watchdog sent SIGTERM to zmz_dev_v2 whenever docker-exec CUDA work started; analysis/CPU imports still ran in the container."
+  }
+}

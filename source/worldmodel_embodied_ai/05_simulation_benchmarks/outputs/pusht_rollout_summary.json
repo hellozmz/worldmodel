@@ -1,0 +1,225 @@
+{
+  "status": "ok",
+  "created_utc": "2026-10-25T02:19:35.539457+00:00",
+  "environment": "gym_pusht/PushT-v0",
+  "policy_checkpoint": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/policies/tiny_pusht_policy.pt",
+  "device": "cuda:0",
+  "gpu_used": true,
+  "episodes_per_policy": 10,
+  "max_steps": 300,
+  "seed": 2026,
+  "results": {
+    "random": {
+      "episodes": 10,
+      "success_rate": 0.0,
+      "ever_success_rate": 0.0,
+      "mean_return": 1.6239283354732617,
+      "mean_episode_length": 300.0,
+      "mean_final_coverage": 0.0,
+      "episode_details": [
+        {
+          "episode": 0,
+          "steps": 300,
+          "return": 0.008275734935133458,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 2.620649396125595e-05
+        },
+        {
+          "episode": 1,
+          "steps": 300,
+          "return": 0.09188313512519242,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.00029096326122977597
+        },
+        {
+          "episode": 2,
+          "steps": 300,
+          "return": 5.190514643721741,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.016436629705118843
+        },
+        {
+          "episode": 3,
+          "steps": 300,
+          "return": 0.29189015092665954,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.000924318811267755
+        },
+        {
+          "episode": 4,
+          "steps": 300,
+          "return": 0.0,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.0
+        },
+        {
+          "episode": 5,
+          "steps": 300,
+          "return": 5.632189524454947,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.017835266827440677
+        },
+        {
+          "episode": 6,
+          "steps": 300,
+          "return": 0.0,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.0
+        },
+        {
+          "episode": 7,
+          "steps": 300,
+          "return": 2.725680326320532,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.008631321033348346
+        },
+        {
+          "episode": 8,
+          "steps": 300,
+          "return": 1.4564451763076212,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.004612076391640795
+        },
+        {
+          "episode": 9,
+          "steps": 300,
+          "return": 0.8424046629407917,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.002667614765979171
+        }
+      ]
+    },
+    "tiny_policy": {
+      "episodes": 10,
+      "success_rate": 0.0,
+      "ever_success_rate": 0.0,
+      "mean_return": 12.72847271005368,
+      "mean_episode_length": 300.0,
+      "mean_final_coverage": 0.00814813773800272,
+      "episode_details": [
+        {
+          "episode": 0,
+          "steps": 300,
+          "return": 0.0,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.0
+        },
+        {
+          "episode": 1,
+          "steps": 300,
+          "return": 6.891235134389467,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.021822244592233198,
+          "mean_coverage": 0.021822244592233198
+        },
+        {
+          "episode": 2,
+          "steps": 300,
+          "return": 33.4423156193164,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.1059006661278353
+        },
+        {
+          "episode": 3,
+          "steps": 300,
+          "return": 5.80516533324815,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0183830235552858,
+          "mean_coverage": 0.018383023555285795
+        },
+        {
+          "episode": 4,
+          "steps": 300,
+          "return": 0.0,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.0
+        },
+        {
+          "episode": 5,
+          "steps": 300,
+          "return": 40.29230826932648,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.12759230951953393
+        },
+        {
+          "episode": 6,
+          "steps": 300,
+          "return": 0.0,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.0
+        },
+        {
+          "episode": 7,
+          "steps": 300,
+          "return": 24.673571376649956,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.07813297602605825
+        },
+        {
+          "episode": 8,
+          "steps": 300,
+          "return": 3.14557055734053,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.0,
+          "mean_coverage": 0.009960973431578346
+        },
+        {
+          "episode": 9,
+          "steps": 300,
+          "return": 13.034560810265805,
+          "success": false,
+          "ever_success": false,
+          "final_coverage": 0.041276109232508205,
+          "mean_coverage": 0.041276109232508205
+        }
+      ]
+    }
+  },
+  "videos": {
+    "random": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/05_simulation_benchmarks/outputs/pusht_random.mp4",
+    "tiny_policy": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/05_simulation_benchmarks/outputs/pusht_tiny_policy.mp4"
+  },
+  "caveat": "The tiny MLP only maps agent position to action; this is a low-bar imitation baseline, not a VLA or world-model policy.",
+  "runtime_seconds": 14.007738030515611,
+  "execution_context": {
+    "workspace_container": "zmz_dev_v2",
+    "workspace_path": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai",
+    "gpu_process_launcher": "host runtime using the same bind-mounted workspace and container-created venv",
+    "reason": "A host-side watchdog sent SIGTERM to zmz_dev_v2 whenever docker-exec CUDA work started; analysis/CPU imports still ran in the container."
+  }
+}

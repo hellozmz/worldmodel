@@ -1,0 +1,9 @@
+DOWNLOAD lerobot/smolvla_base -> /mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/03_vla_smolvla/models/smolvla_base
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/file_download.py:979: UserWarning: `local_dir_use_symlinks` parameter is deprecated and will be ignored. The process to download files to a local folder has been updated and do not rely on symlinks anymore. You only need to pass a destination folder as`local_dir`.
+For more details, check out https://huggingface.co/docs/huggingface_hub/main/en/guides/download#download-files-to-local-folder.
+  warnings.warn(
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files:  10%|█         | 1/10 [00:00<00:06,  1.44it/s]Fetching 10 files:  20%|██        | 2/10 [00:01<00:03,  2.15it/s]Fetching 10 files:  40%|████      | 4/10 [00:03<00:05,  1.13it/s]Fetching 10 files:  60%|██████    | 6/10 [03:10<02:58, 44.73s/it]Fetching 10 files: 100%|██████████| 10/10 [03:10<00:00, 19.07s/it]
+DONE lerobot/smolvla_base /mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/03_vla_smolvla/models/smolvla_base seconds=190.9
+DOWNLOAD lerobot/pusht -> /mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/datasets/pusht
+Fetching 8 files:   0%|          | 0/8 [00:00<?, ?it/s]Fetching 8 files:  12%|█▎        | 1/8 [00:00<00:06,  1.09it/s]Fetching 8 files: 100%|██████████| 8/8 [00:02<00:00,  3.04it/s]Fetching 8 files: 100%|██████████| 8/8 [00:02<00:00,  2.85it/s]
+DONE lerobot/pusht /mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/datasets/pusht seconds=3.2

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>基本介绍：世界模型与具身智能</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <div class="course-topbar"><div class="container compact"><a href="../lessons/index.html">← 课程总目录</a><span>Reference · Basic Introduction</span></div></div>
+  <main class="container">
+    <header class="hero">
+      <span class="eyebrow">Reference</span>
+      <h1>基本介绍：世界模型与具身智能</h1>
+      <p class="meta">先用一页把概念边界、系统闭环和三条技术路线讲清楚。</p>
+    </header>
+
+    <section>
+      <h2>一句话定义</h2>
+      <table>
+        <thead><tr><th>概念</th><th>一句话定义</th><th>关键判断</th></tr></thead>
+        <tbody>
+          <tr><td><b>World model</b></td><td>给定当前观测和动作，预测未来观测、状态、奖励或结束条件。</td><td>回答“如果我这么做，世界会怎样？”</td></tr>
+          <tr><td><b>Embodied AI</b></td><td>让智能体通过感知、决策和动作与物理或仿真环境交互。</td><td>必须有环境闭环，不只是离线数据拟合。</td></tr>
+          <tr><td><b>Policy</b></td><td>把观测映射为动作，可能还输入语言、目标或内部状态。</td><td>回答“我现在应该怎么做？”</td></tr>
+          <tr><td><b>VLA</b></td><td>Vision-Language-Action model，输入图像/语言/状态，输出机器人动作块。</td><td>通常是 policy，不必然显式预测未来。</td></tr>
+          <tr><td><b>Benchmark</b></td><td>固定任务、数据、指标和比较规则的可复现实验协议。</td><td>决定一个结果能否被公平比较。</td></tr>
+          <tr><td><b>Competition / Challenge</b></td><td>在时间内提交结果并按官方指标排名的比赛形式。</td><td>常有截止日期、算力限制和数据划分规则。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>具身智能闭环</h2>
+      <pre><code>observation / language / proprioception
+        ↓
+perception → representation / world model
+        ↓
+planning 或 policy
+        ↓
+action
+        ↓
+environment simulator / real robot
+        ↓
+next observation, reward, done</code></pre>
+      <div class="callout blue">
+        <strong>最容易混淆的地方</strong>
+        <p>world model 负责想象后果；policy 负责选择动作。一个 agent 可以只有 policy，也可以用 world model 辅助 planning，但不能因为模型能生成视频就直接说它能控制机器人。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>三条技术路线</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>1. Video world model</h3>
+          <p>生成未来视频或交互式视觉未来，关注物理合理性、时序一致性和可控性。</p>
+          <p><b>本地实验：</b>Cosmos3-Nano text-to-video 生成。</p>
+          <p><b>适合评估：</b>视觉质量、rollout 稳定性、动作可控性。</p>
+        </article>
+        <article class="card">
+          <h3>2. Latent control world model</h3>
+          <p>把高维观测压缩成 latent state，在 latent 中预测动态并支持想象训练或规划。</p>
+          <p><b>本地实验：</b>Tiny RSSM 与 64-step open-loop rollout。</p>
+          <p><b>适合评估：</b>observation MSE、rollout 误差随时间变化、闭环控制收益。</p>
+        </article>
+        <article class="card">
+          <h3>3. VLA policy</h3>
+          <p>直接从视觉、语言和状态输出动作块，把大模型知识迁移到机器人控制。</p>
+          <p><b>本地实验：</b>SmolVLA 接口与 GPU 推理测试。</p>
+          <p><b>适合评估：</b>成功率、延迟、泛化、embodiment 匹配。</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>把概念映射到本地实验</h2>
+      <table>
+        <thead><tr><th>对象</th><th>输入</th><th>输出</th><th>本地证据等级</th></tr></thead>
+        <tbody>
+          <tr><td>Cosmos3-Nano</td><td>text prompt / image / action condition（视 pipeline 而定）</td><td>future video</td><td>生成流程和输出视频可用</td></tr>
+          <tr><td>Tiny RSSM</td><td>observation/action sequence</td><td>latent state、future prediction</td><td>offline 训练指标 + rollout 曲线</td></tr>
+          <tr><td>Tiny imitation policy</td><td>agent state</td><td>2-D action</td><td>offline MSE + gym-pusht 闭环评估</td></tr>
+          <tr><td>SmolVLA</td><td>image、state、task text</td><td>action chunk <code>(1, 50, 6)</code></td><td>interface smoke test；不能证明学会 PushT</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>下一步看什么</h2>
+      <ul>
+        <li><a href="evaluation-system.html">评价体系</a>：分清 interface、offline、closed-loop 三种证据。</li>
+        <li><a href="benchmark-map.html">比赛与 Benchmark 地图</a>：知道下一步去哪里比较和练习。</li>
+        <li><a href="../lessons/index.html">课程总目录</a>：按 12 课顺序实践。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>推荐一手资料</h2>
+      <ul>
+        <li><a href="https://www.nature.com/articles/s41586-025-08744-2" target="_blank">DreamerV3</a>：latent world model + actor-critic 的代表工作。</li>
+        <li><a href="https://arxiv.org/abs/2501.03575" target="_blank">NVIDIA Cosmos</a>：视频世界模型与物理 AI。</li>
+        <li><a href="https://arxiv.org/abs/2506.01844" target="_blank">SmolVLA</a>：小型 VLA 的输入、输出和训练方式。</li>
+        <li><a href="https://github.com/huggingface/lerobot" target="_blank">LeRobot</a>：机器人学习代码库、数据集和 policy 生态。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

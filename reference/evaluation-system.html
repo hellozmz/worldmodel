@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>评价体系：从接口测试到闭环证据</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <div class="course-topbar"><div class="container compact"><a href="../lessons/index.html">← 课程总目录</a><span>Reference · Evaluation System</span></div></div>
+  <main class="container">
+    <header class="hero">
+      <span class="eyebrow">Reference</span>
+      <h1>评价体系：从接口测试到闭环证据</h1>
+      <p class="meta">同一个数字，在不同协议下证据强度完全不同。</p>
+    </header>
+
+    <section>
+      <h2>三级证据阶梯</h2>
+      <div class="grid">
+        <article class="card"><h3>1. Interface smoke test</h3><p>验证依赖、张量形状、设备、推理流程能跑通。</p><p><b>能证明：</b>接口正确。<br><b>不能证明：</b>任务性能。</p></article>
+        <article class="card"><h3>2. Offline metric</h3><p>在留出数据上计算 MSE、PSNR、SSIM、LPIPS、rollout error 等。</p><p><b>能证明：</b>拟合和预测能力。<br><b>不能证明：</b>交互中的任务成功。</p></article>
+        <article class="card"><h3>3. Closed-loop evaluation</h3><p>把模型动作送回仿真器或真机，观察未来观测变化。</p><p><b>能证明：</b>控制能力和误差累积下的稳定性。<br><b>仍依赖：</b>环境分布、种子数量和 baseline。</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>World model 常用指标</h2>
+      <table>
+        <thead><tr><th>指标</th><th>衡量什么</th><th>注意点</th></tr></thead>
+        <tbody>
+          <tr><td>PSNR</td><td>像素级重建误差</td><td>高 PSNR 不等于语义或物理正确。</td></tr>
+          <tr><td>SSIM</td><td>结构相似性</td><td>对亮度、对比度、结构更敏感，但仍是图像级指标。</td></tr>
+          <tr><td>LPIPS</td><td>深度特征感知差异</td><td>更接近视觉感知，但依赖特征提取器。</td></tr>
+          <tr><td>FVD</td><td>视频分布质量</td><td>需要足够样本；不同实现可能不可直接比较。</td></tr>
+          <tr><td>Rollout error vs horizon</td><td>误差随预测步数累积的情况</td><td>比单点 validation loss 更关键。</td></tr>
+          <tr><td>Temporal consistency</td><td>帧间物体和相机是否稳定</td><td>可结合物体跟踪或人工评价。</td></tr>
+          <tr><td>Action controllability</td><td>动作改变是否按预期改变未来</td><td>区分“好看视频”和“可控世界模型”。</td></tr>
+          <tr><td>Physical plausibility</td><td>碰撞、重力、接触是否符合规律</td><td>常见于人工协议或专门 benchmark。</td></tr>
+          <tr><td>Latency / throughput</td><td>生成或一步预测耗时</td><td>实时规划和真机控制必须报告。</td></tr>
+          <tr><td>Sample efficiency</td><td>达到目标所需交互或数据量</td><td>对真实机器人尤其重要。</td></tr>
+          <tr><td>Generalization</td><td>unseen scene / task / embodiment 表现</td><td>必须在官方 split 或明确划分上测试。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Policy / VLA 常用指标</h2>
+      <table>
+        <thead><tr><th>指标</th><th>含义</th><th>陷阱</th></tr></thead>
+        <tbody>
+          <tr><td>Success rate</td><td>成功 episode 数 / 总 episode 数</td><td>必须说明 episode 终止条件和随机种子。</td></tr>
+          <tr><td>Return</td><td>奖励累计</td><td>奖励 shaping 可能与人类理解的任务完成不一致。</td></tr>
+          <tr><td>Completion / progress</td><td>任务完成度</td><td>长时序任务中比二值成功更细。</td></tr>
+          <tr><td>Coverage</td><td>目标覆盖率，PushT 常用</td><td>覆盖率提升不等于达到成功阈值。</td></tr>
+          <tr><td>SPL</td><td>导航成功率和路径效率的联合指标</td><td>只适用于有最短路径定义的导航任务。</td></tr>
+          <tr><td>Action MSE</td><td>预测动作与数据动作差异</td><td>低 offline MSE 可能只是学会平滑轨迹。</td></tr>
+          <tr><td>Chunk error</td><td>action chunk 内逐步误差</td><td>要区分首步误差和远步误差。</td></tr>
+          <tr><td>Latency</td><td>首次推理和 warmed-up 推理时间</td><td>真机控制要报告控制频率。</td></tr>
+          <tr><td>Model size / memory</td><td>参数量、显存、能耗</td><td>部署限制下与成功率同样重要。</td></tr>
+          <tr><td>Robustness</td><td>扰动、遮挡、光照、语言变化</td><td>不能只用训练分布测试。</td></tr>
+          <tr><td>Safety</td><td>碰撞、力限、干预率</td><td>真机实验必须有安全协议。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>实验设计检查表</h2>
+      <ol>
+        <li><b>数据划分：</b>按 episode split，不能把同一轨迹的相邻帧分别放进训练/验证。</li>
+        <li><b>Baseline：</b>至少包含 random、previous action、简单监督模型或官方 baseline。</li>
+        <li><b>种子与方差：</b>报告 mean ± std 或多次 run；不要用单次最好结果。</li>
+        <li><b>指标分层：</b>同时报告 offline 和 closed-loop，不能混用结论。</li>
+        <li><b>泛化：</b>标明 seen / unseen scene、task、object、embodiment。</li>
+        <li><b>算力：</b>GPU 型号、训练时间、推理延迟、显存。</li>
+        <li><b>失败判据：</b>提前写清什么结果会推翻假设。</li>
+        <li><b>证据文件：</b>保存命令、配置、JSON、图像、视频和随机种子。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>本地结果怎么解释</h2>
+      <table>
+        <thead><tr><th>本地结果</th><th>能支持</th><th>不能支持</th></tr></thead>
+        <tbody>
+          <tr><td>SmolVLA 输出 <code>(1, 50, 6)</code></td><td>接口和推理流程正常</td><td>SmolVLA 学会 PushT；动作空间并不匹配</td></tr>
+          <tr><td>Tiny policy validation MSE 约 <code>0.0382</code></td><td>在离线验证集上动作预测较好</td><td>闭环一定成功</td></tr>
+          <tr><td>Random return <code>1.624</code>，tiny return <code>12.729</code></td><td>tiny policy 行为优于随机</td><td>解决任务；二者 success 都是 0/10</td></tr>
+          <tr><td>RSSM 64-step rollout MSE 约 <code>212.97</code></td><td>open-loop 预测误差明显</td><td>官方 DreamerV3 性能</td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn">
+        <strong>核心警示</strong>
+        <p>Offline 指标低但闭环失败，通常来自 distribution shift 和 error accumulation：闭环中模型自己的动作会改变后续观测，不再永远停留在数据分布内。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>相关页面</h2>
+      <ul>
+        <li><a href="basic-introduction.html">基本介绍</a></li>
+        <li><a href="benchmark-map.html">比赛与 Benchmark 地图</a></li>
+        <li><a href="../lessons/0009-closed-loop.html">Lesson 0009：闭环评估</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

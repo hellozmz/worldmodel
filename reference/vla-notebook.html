@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VLA Notebook</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><main class="container">
+<header class="hero"><span class="eyebrow">Reference</span><h1>VLA / SmolVLA 速查本</h1><p class="meta">从语言、图像、状态到动作块。</p></header>
+<section><h2>接口定义</h2><pre><code>input:
+  observation.images.camera1
+  observation.state
+  task text
+output:
+  action chunk: (batch, 50, 6)</code></pre></section>
+<section><h2>核心概念</h2><div class="grid"><article class="card"><h3>Action chunk</h3><p>一次输出未来多步动作，减少推理频率并保留短时序结构。</p></article><article class="card"><h3>Flow matching</h3><p>从噪声到动作分布学习速度场，而不是只回归单个均值动作。</p></article><article class="card"><h3>VLM backbone</h3><p>把视觉和语言语义带进动作预测。</p></article><article class="card"><h3>Pre/post processor</h3><p>图像、状态、动作归一化必须和训练分布一致。</p></article></div></section>
+<section><h2>本地 SmolVLA 结果</h2><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>参数量</td><td>450,046,176</td></tr><tr><td>输出</td><td>(1, 50, 6)</td></tr><tr><td>首次推理</td><td>491.41 ms</td></tr><tr><td>warmed-up</td><td>约 144.6–145.2 ms</td></tr><tr><td>GPU allocated</td><td>1.25 GB</td></tr></tbody></table><div class="callout warn"><strong>不能外推</strong><p>PushT 是 2-D action，SmolVLA 是 6-D embodiment。输出形状能跑通，不代表能控制 PushT。</p></div></section>
+<section><h2>阅读线</h2><ul><li><a href="https://arxiv.org/abs/2506.01844" target="_blank">SmolVLA</a></li><li><a href="https://arxiv.org/abs/2307.15818" target="_blank">RT-2</a></li><li><a href="https://arxiv.org/abs/2406.09246" target="_blank">OpenVLA</a></li><li><a href="https://arxiv.org/abs/2410.24164" target="_blank">π0</a></li></ul></section>
+<div class="source-note">VLA 是策略接口，不自动等价于显式 world model。</div>
+</main></body></html>

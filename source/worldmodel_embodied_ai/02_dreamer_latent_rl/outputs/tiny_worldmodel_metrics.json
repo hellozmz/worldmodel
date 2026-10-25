@@ -1,0 +1,263 @@
+{
+  "status": "ok",
+  "created_utc": "2026-10-25T02:08:15.113543+00:00",
+  "claim": "teaching-sized Dreamer-style RSSM; not official DreamerV3/R2-Dreamer performance",
+  "dataset": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/datasets/pusht",
+  "parquet": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/datasets/pusht/data/chunk-000/file-000.parquet",
+  "architecture": {
+    "recurrent": "GRUCell",
+    "hidden": 128,
+    "latent_gaussian": 16,
+    "decoder": "state/reward/done heads"
+  },
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA H200",
+  "seed": 42,
+  "sequence_length": 32,
+  "steps": 1200,
+  "batch_size": 256,
+  "windows": {
+    "train": 15483,
+    "validation": 3781
+  },
+  "episode_split": {
+    "train": 165,
+    "validation": 41,
+    "leakage_check": "split by episode id"
+  },
+  "best_step": 1000,
+  "final_train_metrics": {
+    "loss": 0.25586062694589295,
+    "obs_mse": 0.04254069595287244,
+    "reward_mse": 0.041361546888947484,
+    "done_bce": 0.009183772490359843,
+    "kl": 0.10742669564982256
+  },
+  "final_validation_metrics": {
+    "loss": 0.25720933079719543,
+    "obs_mse": 0.04346286083261172,
+    "reward_mse": 0.04379233109454314,
+    "done_bce": 0.009367235812048118,
+    "kl": 0.11032491972049077
+  },
+  "open_loop_rollout": {
+    "episode": 86,
+    "horizon": 64,
+    "mse_pixels_per_dimension": 212.967529296875
+  },
+  "parameter_count": 105412,
+  "checkpoint": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/02_dreamer_latent_rl/runs/tiny_pusht_worldmodel.pt",
+  "rollout_png": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/02_dreamer_latent_rl/outputs/worldmodel_rollout.png",
+  "loss_png": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/02_dreamer_latent_rl/outputs/worldmodel_loss_curve.png",
+  "history": [
+    {
+      "step": 1,
+      "loss": 1.902517557144165,
+      "obs_mse": 1.029953956604004,
+      "reward_mse": 0.22177757322788239,
+      "done_bce": 0.6503857374191284,
+      "kl": 0.06953638792037964
+    },
+    {
+      "step": 50,
+      "loss": 0.6714975237846375,
+      "obs_mse": 0.3214881420135498,
+      "reward_mse": 0.07330025732517242,
+      "done_bce": 0.1426793336868286,
+      "kl": 0.1307617723941803
+    },
+    {
+      "step": 100,
+      "loss": 0.35309240221977234,
+      "obs_mse": 0.1304789036512375,
+      "reward_mse": 0.04567895457148552,
+      "done_bce": 0.018045607954263687,
+      "kl": 0.12227268517017365
+    },
+    {
+      "step": 150,
+      "loss": 0.31843769550323486,
+      "obs_mse": 0.09728880971670151,
+      "reward_mse": 0.05325693264603615,
+      "done_bce": 0.015823200345039368,
+      "kl": 0.18320776522159576
+    },
+    {
+      "step": 200,
+      "loss": 0.3062795400619507,
+      "obs_mse": 0.08968245983123779,
+      "reward_mse": 0.048106782138347626,
+      "done_bce": 0.011786408722400665,
+      "kl": 0.14819175004959106
+    },
+    {
+      "step": 250,
+      "loss": 0.3039315938949585,
+      "obs_mse": 0.08436499536037445,
+      "reward_mse": 0.0459231361746788,
+      "done_bce": 0.014974262565374374,
+      "kl": 0.06772423535585403
+    },
+    {
+      "step": 300,
+      "loss": 0.2854255437850952,
+      "obs_mse": 0.07347729802131653,
+      "reward_mse": 0.04245144873857498,
+      "done_bce": 0.00770310964435339,
+      "kl": 0.10297845304012299
+    },
+    {
+      "step": 350,
+      "loss": 0.2899409234523773,
+      "obs_mse": 0.07442645728588104,
+      "reward_mse": 0.03850096836686134,
+      "done_bce": 0.011664370074868202,
+      "kl": 0.18910595774650574
+    },
+    {
+      "step": 400,
+      "loss": 0.2801138460636139,
+      "obs_mse": 0.0680343434214592,
+      "reward_mse": 0.050150059163570404,
+      "done_bce": 0.007064484059810638,
+      "kl": 0.1602187603712082
+    },
+    {
+      "step": 450,
+      "loss": 0.2811639606952667,
+      "obs_mse": 0.06577909737825394,
+      "reward_mse": 0.046214595437049866,
+      "done_bce": 0.010763389989733696,
+      "kl": 0.14732041954994202
+    },
+    {
+      "step": 500,
+      "loss": 0.2774064242839813,
+      "obs_mse": 0.05865194648504257,
+      "reward_mse": 0.04753977060317993,
+      "done_bce": 0.01400049403309822,
+      "kl": 0.09395933151245117
+    },
+    {
+      "step": 550,
+      "loss": 0.26964685320854187,
+      "obs_mse": 0.05805607885122299,
+      "reward_mse": 0.04868026077747345,
+      "done_bce": 0.006722745951265097,
+      "kl": 0.07151175290346146
+    },
+    {
+      "step": 600,
+      "loss": 0.27539393305778503,
+      "obs_mse": 0.05648964270949364,
+      "reward_mse": 0.044771693646907806,
+      "done_bce": 0.014427113346755505,
+      "kl": 0.06984822452068329
+    },
+    {
+      "step": 650,
+      "loss": 0.2666148245334625,
+      "obs_mse": 0.05308918282389641,
+      "reward_mse": 0.04321000725030899,
+      "done_bce": 0.00920464750379324,
+      "kl": 0.10213787108659744
+    },
+    {
+      "step": 700,
+      "loss": 0.2600640058517456,
+      "obs_mse": 0.05069906264543533,
+      "reward_mse": 0.036335289478302,
+      "done_bce": 0.005731398705393076,
+      "kl": 0.06643840670585632
+    },
+    {
+      "step": 750,
+      "loss": 0.2625579237937927,
+      "obs_mse": 0.04940544068813324,
+      "reward_mse": 0.037249088287353516,
+      "done_bce": 0.009427554905414581,
+      "kl": 0.07727685570716858
+    },
+    {
+      "step": 800,
+      "loss": 0.25886839628219604,
+      "obs_mse": 0.047483641654253006,
+      "reward_mse": 0.03690183162689209,
+      "done_bce": 0.007694566622376442,
+      "kl": 0.19990131258964539
+    },
+    {
+      "step": 850,
+      "loss": 0.25414368510246277,
+      "obs_mse": 0.04734935611486435,
+      "reward_mse": 0.03751887008547783,
+      "done_bce": 0.0030424250289797783,
+      "kl": 0.19358079135417938
+    },
+    {
+      "step": 900,
+      "loss": 0.2579379975795746,
+      "obs_mse": 0.04411536455154419,
+      "reward_mse": 0.03628746420145035,
+      "done_bce": 0.01019388996064663,
+      "kl": 0.0803065374493599
+    },
+    {
+      "step": 950,
+      "loss": 0.25414755940437317,
+      "obs_mse": 0.043481919914484024,
+      "reward_mse": 0.04279644414782524,
+      "done_bce": 0.006386001594364643,
+      "kl": 0.19036827981472015
+    },
+    {
+      "step": 1000,
+      "loss": 0.2540590763092041,
+      "obs_mse": 0.042118750512599945,
+      "reward_mse": 0.04055304080247879,
+      "done_bce": 0.007885031402111053,
+      "kl": 0.10752841830253601
+    },
+    {
+      "step": 1050,
+      "loss": 0.2533697485923767,
+      "obs_mse": 0.04257892072200775,
+      "reward_mse": 0.041568562388420105,
+      "done_bce": 0.00663397554308176,
+      "kl": 0.13004964590072632
+    },
+    {
+      "step": 1100,
+      "loss": 0.2593550980091095,
+      "obs_mse": 0.042415913194417953,
+      "reward_mse": 0.04208676889538765,
+      "done_bce": 0.012730516493320465,
+      "kl": 0.1401377171278
+    },
+    {
+      "step": 1150,
+      "loss": 0.2565847933292389,
+      "obs_mse": 0.04241154342889786,
+      "reward_mse": 0.042792316526174545,
+      "done_bce": 0.009894004091620445,
+      "kl": 0.14595264196395874
+    },
+    {
+      "step": 1200,
+      "loss": 0.25577205419540405,
+      "obs_mse": 0.04228002578020096,
+      "reward_mse": 0.041993148624897,
+      "done_bce": 0.00929270125925541,
+      "kl": 0.14667487144470215
+    }
+  ],
+  "gpu_memory_allocated_bytes": 75051520,
+  "max_gpu_memory_allocated_bytes": 178860544,
+  "runtime_seconds": 48.393209968693554,
+  "execution_context": {
+    "workspace_container": "zmz_dev_v2",
+    "workspace_path": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai",
+    "gpu_process_launcher": "host runtime using the same bind-mounted workspace and container-created venv",
+    "reason": "A host-side watchdog sent SIGTERM to zmz_dev_v2 whenever docker-exec CUDA work started; analysis/CPU imports still ran in the container."
+  }
+}

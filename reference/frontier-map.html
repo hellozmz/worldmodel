@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Frontier Map</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><main class="container">
+<header class="hero"><span class="eyebrow">Reference</span><h1>研究前沿地图</h1><p class="meta">把代表工作放到同一条坐标轴上。</p></header>
+<section><h2>两条主轴</h2><p><b>轴 1：</b>预测目标在像素空间还是 latent 空间。<br><b>轴 2：</b>系统输出的是未来世界，还是直接输出动作。</p></section>
+<section><table><thead><tr><th>系统</th><th>定位</th><th>看什么</th></tr></thead><tbody>
+<tr><td><a href="https://arxiv.org/abs/2501.03575" target="_blank">Cosmos</a></td><td>生成式视频世界模型</td><td>物理合理性、未来视频、action conditioning</td></tr>
+<tr><td><a href="https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models" target="_blank">Genie 3</a></td><td>交互式环境生成</td><td>可玩性、实时性、一致性</td></tr>
+<tr><td><a href="https://arxiv.org/abs/2506.09985" target="_blank">V-JEPA 2</a></td><td>自监督视频表征 + world model</td><td>latent prediction、规划</td></tr>
+<tr><td><a href="https://www.nature.com/articles/s41586-025-08744-2" target="_blank">DreamerV3</a></td><td>latent world model + RL</td><td>posterior/prior、actor-critic、泛化</td></tr>
+<tr><td><a href="https://arxiv.org/abs/2506.01844" target="_blank">SmolVLA</a></td><td>小型 VLA</td><td>动作块、flow matching、低成本部署</td></tr>
+<tr><td><a href="https://arxiv.org/abs/2410.24164" target="_blank">π0</a></td><td>通用 VLA flow model</td><td>多 embodiment、语义先验</td></tr>
+</tbody></table></section>
+<section><h2>你要形成的判断</h2><div class="callout"><strong>不要问“哪个最强”</strong><p>要问：它的输入是什么，输出是什么，在哪个环境评估，失败边界在哪里。</p></div></section>
+<div class="source-note">持续更新：优先一手论文和官方项目。</div>
+</main></body></html>

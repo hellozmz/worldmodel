@@ -1,0 +1,27 @@
+# Glossary
+
+- **Action (`a`)**: control issued to an environment or robot.
+- **Action chunk**: multiple future actions returned in one inference call.
+- **Actor-critic**: policy plus value function trained together.
+- **Closed-loop evaluation**: policy's own actions affect future observations.
+- **Contact-rich manipulation**: tasks where object interaction depends on precise contact dynamics.
+- **Done (`d`)**: terminal flag.
+- **Embodiment**: robot morphology, sensors, control rate, and action semantics.
+- **Free nats**: minimum KL budget that avoids obsessive early matching.
+- **Flow matching**: learn a velocity field that transports noise toward a data/action distribution.
+- **Imitation learning**: learn behavior from demonstrations, often by supervised action prediction.
+- **Latent state**: compressed learned state used instead of raw pixels.
+- **LeRobot**: Hugging Face robot-learning framework and dataset ecosystem.
+- **Observation (`o`)**: sensor input.
+- **Open-loop rollout**: repeatedly apply a learned dynamics model to its own predictions.
+- **Policy (`π`)**: mapping from observation/history to action.
+- **Posterior (`q`)**: latent encoder given actual observation.
+- **Prior (`p`)**: latent predictor without the future observation.
+- **PushT**: 2-D pushing task with a T-block and target pose.
+- **Reward (`r`)**: scalar feedback signal.
+- **RSSM**: recurrent state-space model combining deterministic recurrence and stochastic latents.
+- **Sim-to-real**: transfer from simulated training/evaluation to real hardware.
+- **Teacher forcing**: during training, supply real previous observations/actions rather than model predictions.
+- **VLA**: Vision-Language-Action model.
+- **VLM**: Vision-Language Model.
+- **World model**: model that predicts environment future state, reward, or observation consequences.

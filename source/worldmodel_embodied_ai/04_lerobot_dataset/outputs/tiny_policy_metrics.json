@@ -1,0 +1,348 @@
+{
+  "status": "ok",
+  "created_utc": "2026-10-25T02:15:40.058800+00:00",
+  "dataset": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/datasets/pusht",
+  "parquet": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/datasets/pusht/data/chunk-000/file-000.parquet",
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA H200",
+  "seed": 42,
+  "epochs": 300,
+  "batch_size": 1024,
+  "learning_rate": 0.001,
+  "parameter_count": 67074,
+  "episode_split": {
+    "train": 165,
+    "validation": 41,
+    "leakage_check": "split by episode id"
+  },
+  "best_epoch": 215,
+  "train_mse_normalized": 0.04050882884235865,
+  "validation_mse_normalized": 0.03816551229638517,
+  "validation_rmse_pixels_per_dimension": 19.28791682388716,
+  "action_units": "PushT pixel-space coordinates",
+  "baselines_mse_unnormalized": {
+    "predict_action_equals_state_mse": 404.8362121582031,
+    "predict_action_equals_train_mean_mse": 9778.3857421875,
+    "predict_action_equals_previous_action_mse": 91.06400299072266
+  },
+  "note": "A small supervised policy; not a claim of state-of-the-art robot control.",
+  "checkpoint": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/policies/tiny_pusht_policy.pt",
+  "loss_curve_png": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/outputs/tiny_policy_loss_curve.png",
+  "predictions_png": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset/outputs/tiny_policy_predictions.png",
+  "history": [
+    {
+      "epoch": 1,
+      "train_mse": 0.18826755828091077,
+      "val_mse": 0.052032555272818935
+    },
+    {
+      "epoch": 5,
+      "train_mse": 0.04136685548084123,
+      "val_mse": 0.039756568008628236
+    },
+    {
+      "epoch": 10,
+      "train_mse": 0.04139965754889306,
+      "val_mse": 0.03891913851196579
+    },
+    {
+      "epoch": 15,
+      "train_mse": 0.04133943557029679,
+      "val_mse": 0.0393788978776003
+    },
+    {
+      "epoch": 20,
+      "train_mse": 0.04145269805476779,
+      "val_mse": 0.0390815931185785
+    },
+    {
+      "epoch": 25,
+      "train_mse": 0.04118564139519419,
+      "val_mse": 0.03928391025449582
+    },
+    {
+      "epoch": 30,
+      "train_mse": 0.041560721007131395,
+      "val_mse": 0.03904918782407107
+    },
+    {
+      "epoch": 35,
+      "train_mse": 0.04148203294192042,
+      "val_mse": 0.03945267587451829
+    },
+    {
+      "epoch": 40,
+      "train_mse": 0.04132125668582462,
+      "val_mse": 0.03879183016404781
+    },
+    {
+      "epoch": 45,
+      "train_mse": 0.04115044165934835,
+      "val_mse": 0.039277087292403146
+    },
+    {
+      "epoch": 50,
+      "train_mse": 0.041134659023511974,
+      "val_mse": 0.039544668069267125
+    },
+    {
+      "epoch": 55,
+      "train_mse": 0.041137908186231344,
+      "val_mse": 0.03997069016771475
+    },
+    {
+      "epoch": 60,
+      "train_mse": 0.04091000556945801,
+      "val_mse": 0.03919708285176934
+    },
+    {
+      "epoch": 65,
+      "train_mse": 0.041418210381553286,
+      "val_mse": 0.04025462460914304
+    },
+    {
+      "epoch": 70,
+      "train_mse": 0.04101851422871862,
+      "val_mse": 0.03901602706546738
+    },
+    {
+      "epoch": 75,
+      "train_mse": 0.0412453045802457,
+      "val_mse": 0.03874530965906235
+    },
+    {
+      "epoch": 80,
+      "train_mse": 0.04132704951223873,
+      "val_mse": 0.03892302645262705
+    },
+    {
+      "epoch": 85,
+      "train_mse": 0.040945730216446374,
+      "val_mse": 0.04070492953604776
+    },
+    {
+      "epoch": 90,
+      "train_mse": 0.04112231571759496,
+      "val_mse": 0.038784432581088324
+    },
+    {
+      "epoch": 95,
+      "train_mse": 0.041412862816027234,
+      "val_mse": 0.03903835233203589
+    },
+    {
+      "epoch": 100,
+      "train_mse": 0.04071771406701633,
+      "val_mse": 0.039617065767966274
+    },
+    {
+      "epoch": 105,
+      "train_mse": 0.04067739187961533,
+      "val_mse": 0.03987462050557986
+    },
+    {
+      "epoch": 110,
+      "train_mse": 0.041068265303259806,
+      "val_mse": 0.03908416720863759
+    },
+    {
+      "epoch": 115,
+      "train_mse": 0.04053285593787829,
+      "val_mse": 0.03866691921593552
+    },
+    {
+      "epoch": 120,
+      "train_mse": 0.04066371811287744,
+      "val_mse": 0.038904493608270856
+    },
+    {
+      "epoch": 125,
+      "train_mse": 0.04129202468764214,
+      "val_mse": 0.039479356102781075
+    },
+    {
+      "epoch": 130,
+      "train_mse": 0.04077563239704995,
+      "val_mse": 0.0386095983304396
+    },
+    {
+      "epoch": 135,
+      "train_mse": 0.04058521045815377,
+      "val_mse": 0.039263769075781794
+    },
+    {
+      "epoch": 140,
+      "train_mse": 0.040653808131104426,
+      "val_mse": 0.03886485609475904
+    },
+    {
+      "epoch": 145,
+      "train_mse": 0.0408011685524668,
+      "val_mse": 0.038921578951705005
+    },
+    {
+      "epoch": 150,
+      "train_mse": 0.040663351792664754,
+      "val_mse": 0.038712709929767525
+    },
+    {
+      "epoch": 155,
+      "train_mse": 0.04055900162174588,
+      "val_mse": 0.03850732185683926
+    },
+    {
+      "epoch": 160,
+      "train_mse": 0.04097339209346544,
+      "val_mse": 0.03875563735539066
+    },
+    {
+      "epoch": 165,
+      "train_mse": 0.040479548807655065,
+      "val_mse": 0.038699981435744046
+    },
+    {
+      "epoch": 170,
+      "train_mse": 0.04057592667994045,
+      "val_mse": 0.03936941097014873
+    },
+    {
+      "epoch": 175,
+      "train_mse": 0.04047060669178054,
+      "val_mse": 0.039052474715836165
+    },
+    {
+      "epoch": 180,
+      "train_mse": 0.040771446589912684,
+      "val_mse": 0.03855471863976945
+    },
+    {
+      "epoch": 185,
+      "train_mse": 0.040436250290700367,
+      "val_mse": 0.038911192736168845
+    },
+    {
+      "epoch": 190,
+      "train_mse": 0.04048237807693936,
+      "val_mse": 0.038721653929987505
+    },
+    {
+      "epoch": 195,
+      "train_mse": 0.04045019689060393,
+      "val_mse": 0.03851536843669103
+    },
+    {
+      "epoch": 200,
+      "train_mse": 0.040662968974737895,
+      "val_mse": 0.038409321815931693
+    },
+    {
+      "epoch": 205,
+      "train_mse": 0.04064904100128582,
+      "val_mse": 0.03867544036768583
+    },
+    {
+      "epoch": 210,
+      "train_mse": 0.04062836351139205,
+      "val_mse": 0.039016876915382755
+    },
+    {
+      "epoch": 215,
+      "train_mse": 0.04082517450054487,
+      "val_mse": 0.03816551229638517
+    },
+    {
+      "epoch": 220,
+      "train_mse": 0.04041323438286781,
+      "val_mse": 0.03854710963257513
+    },
+    {
+      "epoch": 225,
+      "train_mse": 0.04028421161430223,
+      "val_mse": 0.03852880255909827
+    },
+    {
+      "epoch": 230,
+      "train_mse": 0.040353400366646905,
+      "val_mse": 0.038476142067807306
+    },
+    {
+      "epoch": 235,
+      "train_mse": 0.040294431149959564,
+      "val_mse": 0.0384728215746906
+    },
+    {
+      "epoch": 240,
+      "train_mse": 0.040610779963788535,
+      "val_mse": 0.038260366269169774
+    },
+    {
+      "epoch": 245,
+      "train_mse": 0.04046556051997911,
+      "val_mse": 0.03844188379089887
+    },
+    {
+      "epoch": 250,
+      "train_mse": 0.040238061298926674,
+      "val_mse": 0.03831305318849009
+    },
+    {
+      "epoch": 255,
+      "train_mse": 0.04063019830556143,
+      "val_mse": 0.03853668490762476
+    },
+    {
+      "epoch": 260,
+      "train_mse": 0.040468049191293265,
+      "val_mse": 0.03840174338974277
+    },
+    {
+      "epoch": 265,
+      "train_mse": 0.040485085653407235,
+      "val_mse": 0.03847667289365404
+    },
+    {
+      "epoch": 270,
+      "train_mse": 0.04045795826684861,
+      "val_mse": 0.038393884448899414
+    },
+    {
+      "epoch": 275,
+      "train_mse": 0.04032150159279505,
+      "val_mse": 0.038416518923411365
+    },
+    {
+      "epoch": 280,
+      "train_mse": 0.040496669887077244,
+      "val_mse": 0.03843085122127337
+    },
+    {
+      "epoch": 285,
+      "train_mse": 0.04039853598390307,
+      "val_mse": 0.03845148584904977
+    },
+    {
+      "epoch": 290,
+      "train_mse": 0.04049244931056386,
+      "val_mse": 0.038420757979319764
+    },
+    {
+      "epoch": 295,
+      "train_mse": 0.04020763951398078,
+      "val_mse": 0.03842852064662761
+    },
+    {
+      "epoch": 300,
+      "train_mse": 0.040465474128723145,
+      "val_mse": 0.038430176173895006
+    }
+  ],
+  "gpu_memory_allocated_bytes": 69235712,
+  "max_gpu_memory_allocated_bytes": 75546624,
+  "runtime_seconds": 26.61212622281164,
+  "execution_context": {
+    "workspace_container": "zmz_dev_v2",
+    "workspace_path": "/mnt/models_2296/zmz/workspace/worldmodel_embodied_ai",
+    "gpu_process_launcher": "host runtime using the same bind-mounted workspace and container-created venv",
+    "reason": "A host-side watchdog sent SIGTERM to zmz_dev_v2 whenever docker-exec CUDA work started; analysis/CPU imports still ran in the container."
+  }
+}

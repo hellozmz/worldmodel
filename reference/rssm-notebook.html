@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RSSM Notebook</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><main class="container">
+<header class="hero"><span class="eyebrow">Reference</span><h1>RSSM / Dreamer 速查本</h1><p class="meta">用最小公式看懂 latent world model。</p></header>
+<section><h2>核心循环</h2><pre><code>posterior q(z_t | o_t, h_t)   # 看到真实观测时编码
+prior     p(z_t | h_t)       # 想象时预测
+h_t       = GRU(z_t, a_t, h_t)
+decoder   z_t → o_t / r_t / done_t
+KL        q ‖ p</code></pre></section>
+<section><h2>五个组件</h2><div class="grid"><article class="card"><h3>Posterior</h3><p>训练时有观测，用它把 <code>o_t</code> 压进 latent。</p></article><article class="card"><h3>Prior</h3><p>想象时没有未来观测，只能靠 recurrent state 预测 latent。</p></article><article class="card"><h3>GRU</h3><p>携带历史信息，形成 <code>h_t</code>。</p></article><article class="card"><h3>Decoder</h3><p>把 latent 还原成状态/奖励/结束，保证 latent 不塌缩成无信息向量。</p></article><article class="card"><h3>KL / free nats</h3><p>约束 prior 靠近 posterior，同时防止早期过度匹配。</p></article></div></section>
+<section><h2>本地教学模型指标</h2><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody>
+<tr><td>hidden</td><td>128</td></tr><tr><td>latent</td><td>16-D Gaussian</td></tr><tr><td>sequence length</td><td>32</td></tr><tr><td>train/val windows</td><td>15,483 / 3,781</td></tr><tr><td>val loss</td><td>0.25721</td></tr><tr><td>val obs MSE</td><td>0.04346</td></tr><tr><td>64-step rollout MSE</td><td>212.97 px/coordinate</td></tr></tbody></table></section>
+<section><h2>读图要点</h2><figure><img src="../source/worldmodel_embodied_ai/02_dreamer_latent_rl/outputs/worldmodel_rollout.png" alt="Tiny RSSM rollout"><figcaption>Open-loop rollout：真实轨迹 vs 模型预测。误差会随步数累积。</figcaption></figure></section>
+<section><h2>一手资料</h2><ul><li><a href="https://www.nature.com/articles/s41586-025-08744-2" target="_blank">DreamerV3 Nature 2025</a></li><li><a href="https://github.com/danijar/dreamerv3" target="_blank">DreamerV3 官方代码</a></li><li><a href="https://github.com/NM512/r2dreamer" target="_blank">R2-Dreamer 代码</a></li></ul></section>
+<div class="source-note">本页只覆盖教学要点，完整推导请回论文。</div>
+</main></body></html>
