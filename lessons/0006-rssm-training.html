@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>训练一个 RSSM 式 latent world model</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0006 · Module D · Latent world models</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module D · Latent world models</span><h1>训练一个 RSSM 式 latent world model</h1><p class="meta">25 分钟 · 目标：能说清 posterior、prior、GRU、decoder、KL 各自的作用。</p><p><a class="badge" href="../reference/rssm-notebook.html">RSSM notebook</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>Dreamer 的关键思想</h2><p>不要在像素上直接学习全部动态，而是学习一个紧凑 latent state，再在这个 latent 空间里想象未来并训练策略。</p>
+<pre><code>posterior: q(z_t | o_t, h_t)
+prior:     p(z_t | h_t)
+recurrent: h_t = GRU(z_t, a_t, h_t)
+decode:    z_t → o_t, r_t, done_t
+loss:      reconstruction + reward + done + KL</code></pre></section>
+<section><h2>本地教学模型</h2><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>hidden</td><td>128</td></tr><tr><td>latent</td><td>16</td></tr><tr><td>sequence length</td><td>32</td></tr><tr><td>steps</td><td>1200</td></tr><tr><td>val loss</td><td>0.25721</td></tr><tr><td>val obs MSE</td><td>0.04346</td></tr></tbody></table></section>
+<section><h2>实践：跑训练</h2><pre><code>ssh h200_1727
+docker exec -it zmz_dev_v2 bash
+cd /mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/02_dreamer_latent_rl
+source ../04_lerobot_dataset/.venv/bin/activate
+python scripts/train_tiny_worldmodel.py --steps 1200</code></pre>
+<p>观察 loss、obs MSE、KL 是否同时下降或进入平衡。</p></section>
+<section><h2>读图</h2><figure><img src="../source/worldmodel_embodied_ai/02_dreamer_latent_rl/outputs/worldmodel_loss_curve.png" alt="RSSM loss curve"><figcaption>训练诊断：如果 KL 塌缩，decoder 可能失去信息。</figcaption></figure></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>RSSM 中 prior 的作用是什么？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>无观测时预测</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>压缩当前图像</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>解码奖励信号</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>归一化动作数值</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">prior 只依赖 recurrent state，在想象阶段没有真实观测时用来预测 latent。</div></div></section>
+<section><h2>本课一手来源</h2><p>一手资料：<a href='https://www.nature.com/articles/s41586-025-08744-2' target='_blank'>DreamerV3</a>；代码参考 <a href='https://github.com/danijar/dreamerv3' target='_blank'>官方实现</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0005-video-latent.html">从像素到 latent：视频生成组件拆解</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0007-open-loop-rollout.html">诊断 open-loop rollout 的误差累积</a></div></nav><div class="source-note">Course file: lessons/0006-rssm-training.html</div></main><script src="../assets/course.js"></script></body></html>

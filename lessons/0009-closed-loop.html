@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>闭环评估：offline 好不等于任务成功</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0009 · Module E · Policies</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module E · Policies</span><h1>闭环评估：offline 好不等于任务成功</h1><p class="meta">25 分钟 · 目标：能解释 return、coverage、success rate 和 offline metric 的差别。</p><p><a class="badge" href="../reference/evaluation-system.html">Evaluation system</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>为什么必须闭环</h2><p>离线预测中，每一步输入都来自数据集；闭环中，模型自己的动作会改变未来观测。分布会漂移，小错误会累积。</p></section>
+<section><h2>本地结果</h2><table><thead><tr><th>Policy</th><th>Success</th><th>Mean return</th><th>Final coverage</th></tr></thead><tbody><tr><td>Random</td><td>0/10</td><td>1.624</td><td>0.000</td></tr><tr><td>Tiny imitation</td><td>0/10</td><td>12.728</td><td>0.00815</td></tr></tbody></table><p>tiny policy 在 return/coverage 上优于随机，但严格成功率仍为 0。</p></section>
+<section><h2>实践：比较两个视频</h2><div class="grid"><figure><video controls src="../source/worldmodel_embodied_ai/05_simulation_benchmarks/outputs/pusht_random.mp4"></video><figcaption>Random policy</figcaption></figure><figure><video controls src="../source/worldmodel_embodied_ai/05_simulation_benchmarks/outputs/pusht_tiny_policy.mp4"></video><figcaption>Tiny imitation policy</figcaption></figure></div>
+<ol><li>找出 tiny policy 更稳定的行为。</li><li>指出它仍然失败的原因。</li><li>写一个改进假设，例如加入 block pose / goal pose / image。</li></ol></section>
+<section><h2>结论模板</h2><div class="callout good"><strong>正确表述</strong><p>“Tiny policy improves return and coverage over random but does not solve PushT.”</p></div></section>
+<section><h2>实践：套用评价体系</h2><p>打开 <a href="../reference/evaluation-system.html">评价体系</a>，把本实验填入三级证据阶梯，并写出每个数字“能证明什么 / 不能证明什么”。</p></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>Closed-loop evaluation 的关键特征是什么？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>动作改变未来</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>数据完全随机</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>奖励必须为零</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>模型无需环境</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">闭环中策略的动作影响后续观测，因此会暴露复合误差和分布漂移。</div></div></section>
+<section><h2>本课一手来源</h2><p>评估环境：gym-pusht；数据：<a href='https://huggingface.co/datasets/lerobot/pusht' target='_blank'>lerobot/pusht</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0008-imitation-policy.html">训练一个小型 imitation policy</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0010-smolvla-interface.html">SmolVLA：检查一个 VLA 接口</a></div></nav><div class="source-note">Course file: lessons/0009-closed-loop.html</div></main><script src="../assets/course.js"></script></body></html>

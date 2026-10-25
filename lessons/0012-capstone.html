@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设计你的 world model + embodied AI capstone</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0012 · Module G · Integration</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module G · Integration</span><h1>设计你的 world model + embodied AI capstone</h1><p class="meta">30–40 分钟 · 目标：能写出一页可执行、可证伪的实验设计。</p><p><a class="badge" href="../reference/field-map.html">Field map</a> <a class="badge" href="../reference/frontier-map.html">Frontier map</a> <a class="badge" href="../reference/evaluation-system.html">Evaluation system</a> <a class="badge" href="../reference/benchmark-map.html">Benchmark map</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>把课程串起来</h2><p>一个好的具身智能实验必须同时说明：<b>世界模型</b>、<b>策略</b>、<b>数据</b>、<b>评估</b>和<b>失败判据</b>。</p></section>
+<section><h2>Capstone 模板</h2><pre><code>1. Hypothesis: 加入 block pose + goal pose 会降低 PushT 闭环误差
+2. Model: state(s, block, goal) → action; 或 RSSM + policy
+3. Baselines: random / previous action / tiny MLP
+4. Data split: episode-safe 80/20
+5. Offline metric: action MSE / rollout MSE
+6. Closed-loop metric: return, coverage, success rate
+7. Failure criterion: 若 success 不提升或 coverage 下降，则假设失败
+8. Compute: 1×H200, 预算 1 小时
+9. Evidence: JSON + PNG + MP4 + command</code></pre></section>
+<section><h2>三个可选方向</h2><div class="grid"><article class="card"><h3>A. richer-state policy</h3><p>把 block pose 和 goal pose 加入 tiny MLP。</p></article><article class="card"><h3>B. image policy</h3><p>用 PushT 图像替代 2 维 state。</p></article><article class="card"><h3>C. world-model planning</h3><p>用 RSSM rollout 候选动作，选择高价值动作。</p></article></div></section>
+<section><h2>实践：写一页实验设计</h2><ol><li>选择一个方向。</li><li>写出 hypothesis 和 null result。</li><li>列出输入/输出张量。</li><li>列出至少两个 baseline。</li><li>说明如何避免泄漏。</li><li>定义成功和失败阈值。</li></ol><div class="callout good"><strong>完成标准</strong><p>别人只看你的设计，就能复现实验并判断结果是否支持假设。</p></div></section>
+<section><h2>实践：选择外部 Benchmark</h2><p>打开 <a href="../reference/benchmark-map.html">比赛与 Benchmark 地图</a>，根据你的方向选择一个下一步平台，并说明任务族、指标、算力和提交要求。</p></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>一个 capstone 设计最不可缺少的是什么？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>可证伪判据</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>更大模型</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>更多论文</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>更长训练</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">没有失败判据，结果无法被科学评估；模型规模和训练时长只是手段。</div></div></section>
+<section><h2>本课一手来源</h2><p>综合参考：<a href='https://www.nature.com/articles/s41586-025-08744-2' target='_blank'>DreamerV3</a>、<a href='https://arxiv.org/abs/2506.01844' target='_blank'>SmolVLA</a>、<a href='https://arxiv.org/abs/2501.03575' target='_blank'>Cosmos</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0011-embodiment-mismatch.html">发现 embodiment mismatch</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0013-roboworld-output.html">RoboWorld 2026：把课程学习变成参赛产出</a></div></nav><div class="source-note">Course file: lessons/0012-capstone.html</div></main><script src="../assets/course.js"></script></body></html>

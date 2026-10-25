@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>读懂一个机器人数据集：LeRobot PushT</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0002 · Module B · Data</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module B · Data</span><h1>读懂一个机器人数据集：LeRobot PushT</h1><p class="meta">20 分钟 · 目标：能解释 PushT 的字段、规模、单位和 episode 结构。</p><p><a class="badge" href="../reference/pusht-lab.html">Dataset lab</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>先看数据，再看模型</h2><p>PushT 是一个二维推动任务：agent 要把 T 形块推到 T 形目标上。这个任务简单到可以快速实验，又包含了接触、遮挡和目标条件。</p>
+<div class="grid"><article class="card"><h3>25,650 帧</h3><p>总观测-动作样本。</p></article><article class="card"><h3>206 episodes</h3><p>完整轨迹，不是独立图片。</p></article><article class="card"><h3>10 fps</h3><p>相邻帧高度相关。</p></article><article class="card"><h3>state/action 都是 2 维</h3><p>对应平面坐标，单位是像素空间。</p></article></div></section>
+<section><h2>实践：读 schema</h2><pre><code>ssh h200_1727
+docker exec -it zmz_dev_v2 bash
+cd /mnt/models_2296/zmz/workspace/worldmodel_embodied_ai/04_lerobot_dataset
+source .venv/bin/activate
+python scripts/analyze_pusht.py</code></pre>
+<p>打开 <code>analysis/pusht_summary.json</code>，找到：<code>observation.state</code>、<code>action</code>、<code>episode_index</code>、<code>next.success</code>。</p></section>
+<section><h2>观察关键帧</h2><figure><img src="../source/worldmodel_embodied_ai/04_lerobot_dataset/analysis/episode0_contact_sheet.png" alt="PushT contact sheet"><figcaption>Contact sheet：看接触、遮挡和目标变化，而不是只看统计均值。</figcaption></figure></section>
+<section><h2>你要掌握的三个判断</h2><ol><li>这个数据集是轨迹数据，不是独立同分布图片。</li><li>动作是绝对像素位置，不是关节角。</li><li>判断成功必须看 <code>next.success</code> / coverage，不能只看 loss。</li></ol></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>为什么训练/验证必须按 episode 切分？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>相邻帧高度相关</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>模型参数太多</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>图像分辨率太低</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>奖励函数太稀疏</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">同一 episode 的相邻帧几乎重复，随机按帧切分会把近似样本同时放进训练和验证，造成泄漏。</div></div></section>
+<section><h2>本课一手来源</h2><p>本地数据来自 <a href='https://huggingface.co/datasets/lerobot/pusht' target='_blank'>lerobot/pusht</a>；代码框架见 <a href='https://github.com/huggingface/lerobot' target='_blank'>LeRobot</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0001-mental-map.html">建立世界模型与具身智能的心智地图</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0003-baseline-leakage.html">设计不泄漏的 baseline 和验证集</a></div></nav><div class="source-note">Course file: lessons/0002-pusht-dataset.html</div></main><script src="../assets/course.js"></script></body></html>

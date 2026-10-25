@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>建立世界模型与具身智能的心智地图</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0001 · Module A · Orientation</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module A · Orientation</span><h1>建立世界模型与具身智能的心智地图</h1><p class="meta">15–20 分钟 · 目标：能用一句话说清 world model、policy、VLA、dataset、benchmark、challenge 的边界。</p><p><a class="badge" href="../reference/basic-introduction.html">Basic intro</a> <a class="badge" href="../reference/benchmark-map.html">Benchmark map</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>为什么这张地图重要</h2><p>世界模型和具身智能的论文经常混用“模型”两个字：有时指预测未来的 <b>world model</b>，有时指决策的 <b>policy</b>，有时指整个 <b>agent</b>。如果不先分清，你会把“能生成视频”误认为“能控制机器人”。</p>
+<div class="grid">
+<article class="card"><h3>World model</h3><p>学习 <code>(o,a)→o'</code>、<code>r</code>、<code>done</code> 或未来视频。它回答：如果我这么做，世界会怎样？</p></article>
+<article class="card"><h3>Policy</h3><p>学习 <code>o→a</code>。它回答：我现在应该怎么做？</p></article>
+<article class="card"><h3>VLA</h3><p>输入图像、语言、状态，输出动作块。通常是 policy，不必然显式预测未来。</p></article>
+<article class="card"><h3>Embodied AI</h3><p>把感知、决策、动作和真实/仿真环境连成闭环。</p></article>
+<article class="card"><h3>Benchmark / Challenge</h3><p>Benchmark 是固定协议；challenge 是按官方指标排名的比赛。先看指标，再看榜单。</p></article>
+</div></section>
+<section><h2>本课程使用的五个对象</h2><table><thead><tr><th>对象</th><th>本地代表</th><th>核心问题</th></tr></thead><tbody>
+<tr><td>Video world model</td><td>Cosmos3-Nano</td><td>未来画面是否合理？</td></tr>
+<tr><td>Latent world model</td><td>Tiny RSSM</td><td>低维状态能否预测未来？</td></tr>
+<tr><td>VLA</td><td>SmolVLA</td><td>语言+图像+状态如何输出动作？</td></tr>
+<tr><td>Dataset</td><td>LeRobot PushT</td><td>数据分布和 action 空间是什么？</td></tr>
+<tr><td>Benchmark</td><td>gym-pusht</td><td>闭环 return / coverage / success 如何？</td></tr>
+</tbody></table></section>
+<section><h2>实践：三分钟分类训练</h2><ol><li>打开 <a href="../reference/basic-introduction.html">基本介绍</a> 和 <a href="../reference/field-map.html">Field Map</a>。</li><li>把 Cosmos、RSSM、SmolVLA、PushT 数据集、gym-pusht 分别写在纸上。</li><li>给每个对象标注：输入、输出、是否显式预测未来、是否直接输出动作。</li><li>检查你是否能说出每个对象的证据等级：interface / offline / closed-loop。</li><li>用一句话说明 benchmark、leaderboard、challenge 的差别，再查看 <a href="../reference/benchmark-map.html">比赛与 Benchmark 地图</a>。</li></ol>
+<div class="callout blue"><strong>小胜利</strong><p>完成后，你应该能把“会预测”和“会行动”分成两条线，并知道它们可以组合。</p></div></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>SmolVLA 输出 action chunk 时，最准确的分类是什么？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>Vision-Language-Action policy</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>Generative video model</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>Latent dynamics model</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>Robot benchmark dataset</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">SmolVLA 的公开接口是把图像、语言和状态映射为动作块，因此是 VLA policy；它不显式输出未来画面。</div></div></section>
+<section><h2>本课一手来源</h2><p>DreamerV3 与 Cosmos 是理解两条主线的起点：<a href='https://www.nature.com/articles/s41586-025-08744-2' target='_blank'>DreamerV3</a>、<a href='https://arxiv.org/abs/2501.03575' target='_blank'>Cosmos</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0002-pusht-dataset.html">读懂一个机器人数据集：LeRobot PushT</a></div></nav><div class="source-note">Course file: lessons/0001-mental-map.html</div></main><script src="../assets/course.js"></script></body></html>

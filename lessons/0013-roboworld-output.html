@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RoboWorld 2026：把课程学习变成参赛产出</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0013 · Module H · Target Output</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module H · Target Output</span><h1>RoboWorld 2026：把课程学习变成参赛产出</h1><p class="meta">30–45 分钟 · 目标：能把前 12 课的方法训练转化为一个明确的 RoboWorld 项目包和提交计划。</p><p><a class="badge" href="../reference/roboworld-2026.html">RoboWorld 2026</a> <a class="badge" href="../reference/evaluation-system.html">Evaluation system</a> <a class="badge" href="../reference/benchmark-map.html">Benchmark map</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>为什么要有目标活动</h2><p>只学习概念容易停在“我看过论文、跑过 demo”。一个明确的外部产出会迫使你回答更实际的问题：任务是什么、指标是什么、baseline 在哪里、我的改进是否真的有效、别人能否复现。</p>
+<div class="callout blue"><strong>本课程选择</strong><p>主目标采用 <b>RoboWorld Challenge 2026 · WorldNav</b>：单张初始 RGB 图像和自然语言指令输入，输出完整未来导航轨迹。它同时覆盖 language grounding、world model、policy 和 trajectory evaluation，和课程主线最一致。</p></div></section>
+<section><h2>三个赛道的取舍</h2><table><thead><tr><th>Track</th><th>定位</th><th>为什么选 / 不选</th></tr></thead><tbody>
+<tr><td>WorldNav</td><td><b>主目标</b></td><td>任务形式与课程最贴近：vision + language → future trajectory；允许 world model、VLA 和 policy-only 方法。</td></tr>
+<tr><td>HA-VLN 2.0</td><td><b>进阶目标</b></td><td>闭环 RGB-D 导航、动态行人和 social compliance 很有价值，但系统复杂度更高。</td></tr>
+<tr><td>SafeDrive-VLA</td><td><b>观察目标</b></td><td>world-model dreaming 与安全冲突很有启发，但训练数据约 1.2TB，不适合作为第一参赛目标。</td></tr>
+</tbody></table>
+<p>完整对比见 <a href="../reference/roboworld-2026.html">RoboWorld 2026 参考页</a>。</p></section>
+<section><h2>课程能力如何迁移</h2><div class="grid">
+<article class="card"><h3>从 Cosmos 迁移</h3><p>关注 future observation prediction 是否能帮助选择动作，而不是只生成好看的视频。</p></article>
+<article class="card"><h3>从 RSSM 迁移</h3><p>用 rollout error vs horizon 检验想象稳定性，避免只看 teacher-forced loss。</p></article>
+<article class="card"><h3>从 SmolVLA 迁移</h3><p>审计 action chunk、单位、坐标系、Stop 语义和 embodiment，不把接口跑通当作任务掌握。</p></article>
+<article class="card"><h3>从 PushT 迁移</h3><p>把 episode-safe split、baseline、offline/closed-loop 证据阶梯带到官方数据审计。</p></article>
+</div></section>
+<section><h2>产出路线</h2><pre><code>P0 Decision       阅读规则、注册、确认算力/存储、选择 WorldNav
+P1 Reproduce       审计 schema、下载最小子集、复现 baseline
+P2 Improve         只加入一个明确组件：语言编码 / 轨迹解码 / latent rollout / VLA adapter
+P3 Validate        在 seen + unseen validation 上报告 SR、ATE、RPE、route fidelity
+P4 Submit          生成官方格式预测、记录分数变化、写技术报告
+P5 Archive         固化配置、seed、命令、失败案例和下一版计划</code></pre>
+<p>项目目录模板和详细检查表见 <code>ROBOWORLD_2026_PLAN.md</code>。</p></section>
+<section><h2>实践：写你的参赛立项页</h2><ol><li>创建 <code>roboworld_2026/README.md</code>。</li><li>写下团队、主赛道、方法路线和第一个 baseline。</li><li>列出输入张量、输出张量、单位和官方指标。</li><li>定义 P0–P5 里程碑和每阶段的可交付文件。</li><li>写出风险：数据下载、算力、动作空间、 unseen 泛化、提交格式。</li><li>明确失败判据：什么结果说明该组件没有价值。</li></ol>
+<div class="callout good"><strong>完成标准</strong><p>队友只读你的 README 和 <code>run.sh</code>，就能复现数据审计、baseline、validation 和提交文件生成流程。</p></div></section>
+<section><h2>证据边界</h2><ul><li>PushT 是二维 manipulation，WorldNav 是语言条件导航；本地结果不能预测官方排名。</li><li>WorldNav 是 open-loop trajectory evaluation；HA-VLN 才提供更强的闭环交互评估。</li><li>官方页面当前只列时间线阶段，报名和提交前必须核对当届具体日期和规则。</li><li>比赛排名是外部结果；课程产出以可复现实验、清晰报告和失败分析为准。</li></ul></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>什么才算本课程面向 RoboWorld 的有效产出？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>可复现项目包、验证结果和失败分析</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>只提交一次排行榜分数</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>只写一份想法文档</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>只跑通模型下载</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">有效产出的核心是可复现性和证据链：官方指标、baseline、消融、失败案例、提交记录和报告共同构成完整证据。</div></div></section>
+<section><h2>本课一手来源</h2><p>官方信息见 <a href='https://roboworld2026.github.io' target='_blank'>RoboWorld Challenge 2026</a>、<a href='https://roboworld2026.github.io/track1.html' target='_blank'>WorldNav</a>、<a href='https://roboworld2026.github.io/track2.html' target='_blank'>HA-VLN 2.0</a>、<a href='https://roboworld2026.github.io/track3.html' target='_blank'>SafeDrive-VLA</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0012-capstone.html">设计你的 world model + embodied AI capstone</a></div><div style="text-align:right"><span class="meta">继续</span><br><a href="index.html">回到课程目录</a></div></nav><div class="source-note">Course file: lessons/0013-roboworld-output.html</div></main><script src="../assets/course.js"></script></body></html>

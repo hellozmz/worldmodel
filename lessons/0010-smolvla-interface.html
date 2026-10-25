@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SmolVLA：检查一个 VLA 接口</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0010 · Module F · VLA</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module F · VLA</span><h1>SmolVLA：检查一个 VLA 接口</h1><p class="meta">25 分钟 · 目标：能解释 action chunk、flow matching 和 VLA 的输入输出。</p><p><a class="badge" href="../reference/vla-notebook.html">VLA notebook</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>SmolVLA 在做什么</h2><p>SmolVLA 把图像、机器人状态和任务语言映射为动作块。它不是先生成完整未来视频再规划，而是直接输出动作。</p>
+<pre><code>observation.images.camera1
+observation.state
+task text
+        ↓
+   SmolVLA
+        ↓
+action chunk: (1, 50, 6)</code></pre></section>
+<section><h2>本地 GPU 结果</h2><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>参数</td><td>450M</td></tr><tr><td>首次推理</td><td>491ms</td></tr><tr><td>warmed-up</td><td>约 145ms</td></tr><tr><td>显存</td><td>1.25GB</td></tr></tbody></table></section>
+<section><h2>实践：读 JSON</h2><p>打开 <code>source/worldmodel_embodied_ai/03_vla_smolvla/outputs/smolvla_gpu_metrics.json</code>，找出：</p><ol><li>input state shape</li><li>output shape</li><li>first run vs repeat timings</li><li>GPU memory</li></ol></section>
+<section><h2>Flow matching 直觉</h2><p>不是输出唯一动作均值，而是学习从噪声分布移动到动作分布的路径，因此能表示多模态行为。</p></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>Action chunk 的直接优点是什么？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>减少推理次数</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>消除动作噪声</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>保证任务成功</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>替代环境仿真</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">一次输出多步动作可以降低推理频率，并保留短时序结构；但它不保证成功。</div></div></section>
+<section><h2>本课一手来源</h2><p>一手资料：<a href='https://arxiv.org/abs/2506.01844' target='_blank'>SmolVLA 论文</a>；对比 <a href='https://arxiv.org/abs/2410.24164' target='_blank'>π0</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0009-closed-loop.html">闭环评估：offline 好不等于任务成功</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0011-embodiment-mismatch.html">发现 embodiment mismatch</a></div></nav><div class="source-note">Course file: lessons/0010-smolvla-interface.html</div></main><script src="../assets/course.js"></script></body></html>

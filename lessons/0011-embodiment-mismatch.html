@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>发现 embodiment mismatch</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0011 · Module F · VLA</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module F · VLA</span><h1>发现 embodiment mismatch</h1><p class="meta">20 分钟 · 目标：能判断一个 VLA 结果能否跨机器人/任务外推。</p><p><a class="badge" href="../reference/vla-notebook.html">VLA notebook</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>问题</h2><p>本地 SmolVLA 实验把 PushT 的 2 维 state pad 到 6 维，并把 PushT 图像作为 camera1。这能让张量形状跑通，但不能说明模型理解了 PushT。</p>
+<div class="grid"><article class="card"><h3>维度不同</h3><p>PushT action 是 2 维，SmolVLA 输出 6 维。</p></article><article class="card"><h3>物理含义不同</h3><p>像素平面位置 ≠ 关节/夹爪动作。</p></article><article class="card"><h3>数据分布不同</h3><p>SmolVLA 的训练 embodiment 与 PushT 不一致。</p></article></div></section>
+<section><h2>三种处理方式</h2><ol><li><b>不处理：</b>只作为 interface smoke test。</li><li><b>Adapter：</b>显式映射状态/动作，但必须说明假设。</li><li><b>Finetune + closed-loop eval：</b>在匹配数据上微调，再用仿真/真机验证。</li></ol></section>
+<section><h2>实践：判断结论能否外推</h2><p>阅读以下句子，标出能否成立：</p><ul><li>“SmolVLA 在本地 GPU 上能输出 (1,50,6)。” <b>能成立。</b></li><li>“SmolVLA 已学会 PushT。” <b>不能成立。</b></li><li>“SmolVLA 可用于 PushT 控制。” <b>需要 finetune/adapter 和闭环验证。</b></li></ul></section>
+<section><h2>一手资料</h2><p>比较 <a href='https://arxiv.org/abs/2307.15818' target='_blank'>RT-2</a>、<a href='https://arxiv.org/abs/2406.09246' target='_blank'>OpenVLA</a> 和 <a href='https://arxiv.org/abs/2506.01844' target='_blank'>SmolVLA</a> 如何定义 embodiment 与数据分布。</p></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>本实验为什么不能声称 SmolVLA 学会了 PushT？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>动作空间不匹配</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>GPU 数量不足</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>提示词太短</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>视频帧率过高</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">PushT 是 2 维平面动作，而 SmolVLA 输出 6 维动作；接口通过 padding 跑通，不等于语义匹配。</div></div></section>
+<section><h2>本课一手来源</h2><p>VLA 跨 embodiment 的核心约束来自各自论文的训练数据与动作空间定义。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0010-smolvla-interface.html">SmolVLA：检查一个 VLA 接口</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0012-capstone.html">设计你的 world model + embodied AI capstone</a></div></nav><div class="source-note">Course file: lessons/0011-embodiment-mismatch.html</div></main><script src="../assets/course.js"></script></body></html>

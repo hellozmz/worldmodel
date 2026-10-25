@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>从像素到 latent：视频生成组件拆解</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0005 · Module C · Video world models</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module C · Video world models</span><h1>从像素到 latent：视频生成组件拆解</h1><p class="meta">20 分钟 · 目标：能把 VAE、diffusion/flow、Transformer attention 对应到视频生成流程。</p><p><a class="badge" href="../reference/frontier-map.html">Frontier map</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>为什么要压缩到 latent</h2><p>直接在像素上做长视频注意力太贵。常见做法是先用 VAE 把视频压成 latent，再在 latent 空间去噪，最后解码回像素。</p>
+<pre><code>prompt → text tokenizer
+video → VAE encoder → latent
+noise + latent + condition → DiT / diffusion / flow
+denoised latent → VAE decoder → MP4</code></pre></section>
+<section><h2>三个组件</h2><div class="grid"><article class="card"><h3>VAE</h3><p>学习像素和 latent 的双向映射。</p></article><article class="card"><h3>Diffusion / flow</h3><p>从噪声逐步走向数据分布。</p></article><article class="card"><h3>Transformer attention</h3><p>建模时间和空间依赖。</p></article></div></section>
+<section><h2>实践：组件排序</h2><p>打开本地 <code>cosmos3_nano_worldmodel_tutorial/model/model_index.json</code>（如有远端权限则在 H200 上查看），列出 pipeline 组件。然后把下面流程排序：</p><ol><li>VAE decoder</li><li>text tokenizer</li><li>latent 去噪</li><li>MP4 封装</li></ol><p>正确顺序应为：2 → 3 → 1 → 4。</p></section>
+<section><h2>和 RSSM 的联系</h2><p>Cosmos 在像素/latent 视频空间预测；RSSM 在更低维状态 latent 中预测。前者适合想象，后者更适合控制和 RL。</p></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>VAE 在视频生成中的主要作用是什么？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>压缩并表示视频</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>选择最优策略</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>计算环境奖励</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>切分训练数据</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">VAE 负责像素和 latent 的映射，降低后续生成模型的计算负担。</div></div></section>
+<section><h2>本课一手来源</h2><p>阅读 <a href='https://arxiv.org/abs/2501.03575' target='_blank'>Cosmos 论文</a> 的模型结构部分；后续可对比 <a href='https://arxiv.org/abs/2506.09985' target='_blank'>V-JEPA 2</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0004-cosmos-video.html">视频世界模型：让模型想象未来</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0006-rssm-training.html">训练一个 RSSM 式 latent world model</a></div></nav><div class="source-note">Course file: lessons/0005-video-latent.html</div></main><script src="../assets/course.js"></script></body></html>

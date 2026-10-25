@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>视频世界模型：让模型想象未来</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0004 · Module C · Video world models</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module C · Video world models</span><h1>视频世界模型：让模型想象未来</h1><p class="meta">20–25 分钟 · 目标：理解 Cosmos T2V 的输入、输出和物理一致性评估。</p><p></p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>视频世界模型在做什么</h2><p>给定 prompt，模型生成一段未来可能的视频。它不是在求唯一正确答案，而是在学习一个合理的未来分布。</p>
+<div class="grid"><article class="card"><h3>T2V</h3><p>从文本想象场景。</p></article><article class="card"><h3>I2V</h3><p>给定当前帧预测未来。</p></article><article class="card"><h3>Action conditioning</h3><p>当前画面 + 动作序列 → 未来画面。</p></article><article class="card"><h3>Reasoner / policy</h3><p>同一基础模型可以扩展到规划与动作。</p></article></div></section>
+<section><h2>实践：看本地生成结果</h2><figure><video controls src="../cosmos3_nano_worldmodel_tutorial/outputs/worldmodel_t2v_20261024_192234.mp4"></video><figcaption>448×256、25 帧、12fps。观察相机运动、遮挡、阴影和物体稳定性。</figcaption></figure>
+<p>打开 <code>outputs/worldmodel_t2v_20261024_192234_request.json</code>，找到 <code>prompt</code>、<code>num_frames</code>、<code>guidance_scale</code>、<code>seed</code>。</p></section>
+<section><h2>评估三件事</h2><ol><li><b>时间一致性：</b>物体是否突然消失或变形？</li><li><b>物理合理性：</b>阴影、遮挡、碰撞是否符合直觉？</li><li><b>可控性：</b>改 prompt 或 action 后，画面是否按预期变化？</li></ol><div class="callout"><strong>边界</strong><p>视频漂亮说明生成能力强，不等于它能稳定用于控制。</p></div></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>视频世界模型最核心的输出是什么？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>未来画面分布</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>最优动作序列</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>奖励函数参数</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>数据集标注结果</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">它的核心是预测未来观测；动作输出属于 policy 或 action-conditioning 扩展，不是 T2V 本身。</div></div></section>
+<section><h2>本课一手来源</h2><p>一手资料：<a href='https://arxiv.org/abs/2501.03575' target='_blank'>NVIDIA Cosmos 论文</a>；可对比 <a href='https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models' target='_blank'>Genie 3</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0003-baseline-leakage.html">设计不泄漏的 baseline 和验证集</a></div><div style="text-align:right"><span class="meta">下一课</span><br><a href="0005-video-latent.html">从像素到 latent：视频生成组件拆解</a></div></nav><div class="source-note">Course file: lessons/0004-cosmos-video.html</div></main><script src="../assets/course.js"></script></body></html>
