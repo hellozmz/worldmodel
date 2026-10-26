@@ -9,7 +9,15 @@
 output:
   action chunk: (batch, 50, 6)</code></pre></section>
 <section><h2>核心概念</h2><div class="grid"><article class="card"><h3>Action chunk</h3><p>一次输出未来多步动作，减少推理频率并保留短时序结构。</p></article><article class="card"><h3>Flow matching</h3><p>从噪声到动作分布学习速度场，而不是只回归单个均值动作。</p></article><article class="card"><h3>VLM backbone</h3><p>把视觉和语言语义带进动作预测。</p></article><article class="card"><h3>Pre/post processor</h3><p>图像、状态、动作归一化必须和训练分布一致。</p></article></div></section>
+<section><h2>VLA 与 WAM 的分界</h2><table><thead><tr><th>模型族</th><th>核心接口</th><th>关键词</th><th>常见误读</th></tr></thead><tbody>
+<tr><td>VLA</td><td>image/language/state → action chunk</td><td>semantic generalization、reactive policy</td><td>不必然显式预测未来世界。</td></tr>
+<tr><td>World model</td><td>state/action → future state/observation/reward</td><td>rollout、action conditioning</td><td>视频质量不等价于控制可靠。</td></tr>
+<tr><td>WAM</td><td>future world prediction + executable action</td><td>action alignment、world/action factorization</td><td>不是 VLA 换名。</td></tr>
+<tr><td>DreamZero</td><td>video diffusion backbone jointly models video + action</td><td>zero-shot policy、cross-embodiment、7Hz</td><td>不能推广为所有 video model 都是 policy。</td></tr>
+</tbody></table>
+<div class="callout blue"><strong>一句话</strong><p>VLA 问“现在怎么动”；world model 问“动了之后世界会怎样”；WAM 把两个问题放进同一个学习目标。</p></div></section>
 <section><h2>本地 SmolVLA 结果</h2><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>参数量</td><td>450,046,176</td></tr><tr><td>输出</td><td>(1, 50, 6)</td></tr><tr><td>首次推理</td><td>491.41 ms</td></tr><tr><td>warmed-up</td><td>约 144.6–145.2 ms</td></tr><tr><td>GPU allocated</td><td>1.25 GB</td></tr></tbody></table><div class="callout warn"><strong>不能外推</strong><p>PushT 是 2-D action，SmolVLA 是 6-D embodiment。输出形状能跑通，不代表能控制 PushT。</p></div></section>
 <section><h2>阅读线</h2><ul><li><a href="https://arxiv.org/abs/2506.01844" target="_blank">SmolVLA</a></li><li><a href="https://arxiv.org/abs/2307.15818" target="_blank">RT-2</a></li><li><a href="https://arxiv.org/abs/2406.09246" target="_blank">OpenVLA</a></li><li><a href="https://arxiv.org/abs/2410.24164" target="_blank">π0</a></li></ul></section>
+<section><h2>WAM / action controllability 阅读线</h2><ul><li><a href="https://arxiv.org/abs/2609.16074" target="_blank">World-Action Models for Robot Learning and Control: A Survey</a></li><li><a href="https://arxiv.org/abs/2602.15922" target="_blank">World Action Models are Zero-shot Policies (DreamZero)</a></li><li><a href="https://arxiv.org/abs/2608.24885" target="_blank">Do Robotic World Models Really Follow Actions?</a></li></ul></section>
 <div class="source-note">VLA 是策略接口，不自动等价于显式 world model。</div>
 </main></body></html>

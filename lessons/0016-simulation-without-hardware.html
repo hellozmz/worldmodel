@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>没有真机怎么做具身智能实验：仿真平台、仓库与操作流程</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0016 · Module K · Simulation Without Hardware</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module K · Simulation Without Hardware</span><h1>没有真机怎么做具身智能实验：仿真平台、仓库与操作流程</h1><p class="meta">35–45 分钟 · 目标：能在没有真机时选择合适仿真平台，并按 P0–P10 流程产出可复现证据。</p><p><a class="badge" href="../reference/benchmark-map.html">Benchmark map</a> <a class="badge" href="../reference/pusht-lab.html">PushT lab</a> <a class="badge" href="../reference/evaluation-system.html">Evaluation system</a> <a class="badge" href="../reference/research-competition-portfolio.html">Research portfolio</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>仿真解决什么问题</h2><p>没有真机时，仿真仍然能提供三件事：可重复的 environment、可定义的 action space、可自动计算的 reward / success / return。但它不能自动证明真机成功。正确说法是：<b>simulation closed-loop evidence</b>，不是 real-robot success。</p>
+<div class="callout blue"><strong>路线原则</strong><p>先用最小 CPU 环境跑通学习闭环，再进入 GPU 并行和更复杂机器人。不要一开始就安装最重的平台。</p></div></section>
+<section><h2>平台选择表</h2><table><thead><tr><th>平台 / 仓库</th><th>最适合</th><th>硬件</th><th>课程角色</th></tr></thead><tbody>
+<tr><td><a href='https://github.com/huggingface/gym-pusht' target='_blank'>gym-pusht</a></td><td>2D manipulation、closed-loop metrics</td><td>CPU 友好</td><td>第一环境</td></tr>
+<tr><td><a href='https://github.com/huggingface/lerobot' target='_blank'>LeRobot</a></td><td>dataset schema、policy、SmolVLA、PushT 生态</td><td>低门槛</td><td>主生态</td></tr>
+<tr><td><a href='https://github.com/google-deepmind/mujoco_playground' target='_blank'>MuJoCo Playground</a></td><td>locomotion / manipulation / sim-to-real</td><td>GPU</td><td>进阶物理</td></tr>
+<tr><td><a href='https://github.com/mani-skill/ManiSkill' target='_blank'>ManiSkill</a></td><td>GPU-parallel manipulation</td><td>Linux + NVIDIA 最完整</td><td>进阶 benchmark</td></tr>
+<tr><td><a href='https://isaac-sim.github.io/IsaacLab' target='_blank'>Isaac Lab</a></td><td>高性能 robot learning、domain randomization</td><td>NVIDIA 生态</td><td>高级平台</td></tr>
+<tr><td>Habitat / CALVIN / LIBERO / BEHAVIOR</td><td>navigation、language、long-horizon、household</td><td>视任务而定</td><td>扩展路线</td></tr>
+</tbody></table></section>
+<section><h2>P0：CPU 最小闭环——PushT</h2><p>gym-pusht 的 action 是连续 2 维 <code>[x,y]</code>，范围 <code>[0,512]</code>；state observation 是 <code>agent_x, agent_y, block_x, block_y, block_angle</code>；reward 是 block 覆盖 goal zone 的比例，成功阈值是至少 95% coverage。</p>
+<pre><code>conda create -y -n pusht python=3.10
+conda activate pusht
+pip install gym-pusht
+
+cat &gt; smoke_pusht.py &lt;&lt;'PY'
+import gymnasium as gym
+import gym_pusht
+
+env = gym.make("gym_pusht/PushT-v0", obs_type="state", render_mode="rgb_array")
+obs, info = env.reset(seed=0)
+returns = 0.0
+for step in range(300):
+    action = env.action_space.sample()
+    obs, reward, terminated, truncated, info = env.step(action)
+    returns += float(reward)
+    frame = env.render()
+    if terminated or truncated:
+        break
+print({"steps": step + 1, "return": returns, "coverage": info.get("coverage"), "success": info.get("success")})
+PY
+python smoke_pusht.py</code></pre>
+<div class="callout warn"><strong>证据等级</strong><p>random policy 只能证明环境、action space 和渲染跑通；它是 interface smoke test，不是有效控制。</p></div></section>
+<section><h2>P1：接入 LeRobot 生态</h2><p>当你需要统一的数据格式、imitation policy、SmolVLA 或复现实验时，再进入 LeRobot。官方安装文档推荐 Python 3.12，并按 workflow 安装可选 extras。</p>
+<pre><code>conda create -y -n lerobot python=3.12
+conda activate lerobot
+
+git clone https://github.com/huggingface/lerobot.git
+cd lerobot
+pip install -e ".[core_scripts]"
+pip install -e ".[training]"
+pip install -e ".[pusht]"
+
+python -c "import gym_pusht; print('PushT extra ready')"</code></pre>
+<p>在这一层要补齐：episode-safe split、dataset schema audit、action normalization、baseline、训练日志和复现命令。</p></section>
+<section><h2>P2：GPU 与更复杂机器人</h2><p>如果目标从 2D PushT 升级到 locomotion、manipulation、视觉渲染和大规模并行，再考虑以下路线。</p>
+<pre><code># MuJoCo Playground，官方源码路线
+git clone git@github.com:google-deepmind/mujoco_playground.git
+cd mujoco_playground
+uv venv --python 3.12
+source .venv/bin/activate
+uv pip install -U "jax[cuda12]" --index-url https://pypi.org/simple
+uv --no-config sync --all-extras
+python -c "import mujoco_playground; print('Success')"
+python -c "from mujoco_playground import locomotion; locomotion.load('G1JoystickFlatTerrain')"</code></pre>
+<pre><code># ManiSkill，Linux + NVIDIA 支持最完整
+pip install --upgrade mani_skill
+pip install torch
+# 渲染还需按官方文档配置 Vulkan</code></pre>
+<p>Isaac Lab 适合 NVIDIA Isaac Sim 生态中的高性能仿真、向量化渲染、domain randomization 和 cloud workflow。先确认 GPU、驱动、安装路线和任务需求，再迁移。</p></section>
+<section><h2>没有本地 GPU 时怎么办</h2><ul><li><b>优先：</b>使用你已有的远端 H200 容器，环境锁定最稳。</li><li><b>次优：</b>官方 Colab 只用于快速理解 GPU-parallel simulation，不适合当作长期可复现实验环境。</li><li><b>浏览器 demo：</b>适合建立直觉，不能作为研究指标。</li><li><b>纯 CPU：</b>PushT + state observation 足够完成第一轮 schema、baseline、offline metric 和闭环实验。</li></ul></section>
+<section><h2>P0–P10 标准操作流程</h2><table><thead><tr><th>阶段</th><th>动作</th><th>必须留下的证据</th></tr></thead><tbody>
+<tr><td>P0 Choose</td><td>选择 PushT，而不是先选最重平台</td><td>一页理由：任务、指标、硬件、时间预算</td></tr>
+<tr><td>P1 Install</td><td>独立环境 + lock/requirements</td><td>Python、CUDA、库版本</td></tr>
+<tr><td>P2 Smoke</td><td>random policy 跑通</td><td>视频、日志、info 字段</td></tr>
+<tr><td>P3 Schema</td><td>审计 observation/action/reward/done</td><td>schema 文档和分布图</td></tr>
+<tr><td>P4 Split</td><td>episode-safe 划分</td><td>split JSON 与泄漏检查</td></tr>
+<tr><td>P5 Baselines</td><td>random / previous action / tiny policy</td><td>统一结果表</td></tr>
+<tr><td>P6 Offline</td><td>action MSE、rollout MSE、视觉指标</td><td>mean ± std，多 seed</td></tr>
+<tr><td>P7 Closed-loop</td><td>策略动作影响后续观测</td><td>return / coverage / success JSON</td></tr>
+<tr><td>P8 Model</td><td>接入 RSSM / VLA / WAM 实验</td><td>同一协议下的对比</td></tr>
+<tr><td>P9 Cost</td><td>记录失败案例和资源</td><td>GPU time、latency、memory、failure cases</td></tr>
+<tr><td>P10 Report</td><td>写 reproduction report</td><td>命令、配置、图表、limitations</td></tr>
+</tbody></table>
+<div class="callout good"><strong>最小可信产出</strong><p>不是“我安装成功”，而是：环境锁定 + smoke 视频 + schema + episode-safe split + 至少三个 baseline + offline 与 closed-loop 分列 + 3 seeds + 成本与失败案例。</p></div></section>
+<section><h2>证据边界</h2><ul><li>仿真成功不能写成真机成功；如要主张 sim-to-real，必须报告真机协议和失败条件。</li><li>domain randomization 可以提高鲁棒性，但不能保证迁移成功。</li><li>GPU 并行提高采样效率，不等于结果更正确。</li><li>官方 Colab 适合理解接口，长期实验要固定环境版本。</li><li>不同平台的 action space、控制频率和物理参数不可直接比较。</li></ul></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>没有真机时，哪一组证据最能支撑一个仿真实验结论？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>锁定环境版本 + episode-safe split + baseline + offline/closed-loop 指标 + 多 seed +成本与失败案例</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>浏览器 demo 能播放</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>安装命令没有报错</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>一张生成的机器人图片</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">仿真实验的证据来自协议、划分、对照、闭环指标、重复性和失败分析；接口跑通只是第一步。</div></div></section>
+<section><h2>本课一手来源</h2><p><a href='https://github.com/huggingface/gym-pusht' target='_blank'>gym-pusht 官方仓库</a>；<a href='https://huggingface.co/docs/lerobot/en/installation' target='_blank'>LeRobot installation</a>；<a href='https://github.com/google-deepmind/mujoco_playground' target='_blank'>MuJoCo Playground</a>；<a href='https://github.com/mani-skill/ManiSkill' target='_blank'>ManiSkill</a>；<a href='https://isaac-sim.github.io/IsaacLab' target='_blank'>Isaac Lab</a>。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0015-vla-wam-supermimic-frontier.html">VLA、WAM 与 SuperMimic：最新研究前沿与行动可控性</a></div><div style="text-align:right"><span class="meta">继续</span><br><a href="index.html">回到课程目录</a></div></nav><div class="source-note">Course file: lessons/0016-simulation-without-hardware.html</div></main><script src="../assets/course.js"></script></body></html>

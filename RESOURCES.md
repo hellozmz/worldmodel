@@ -22,10 +22,39 @@
   Flow matching 与通用机器人控制的结合。
 - [Paper: SmolVLA](https://arxiv.org/abs/2506.01844)
   小型、可负担 VLA 的代表，直接对应本地实验。
+- [Project / Paper: SuperMimic](https://supermimic.github.io) / [arXiv:2610.28480](https://arxiv.org/abs/2610.28480)
+  一个 learned differentiable world model 用于 humanoid whole-body control；注意官方结果主要证明 motion coverage、scaling 与训练效率，不等价于 unseen-task generalization。
+- [Paper: World-Action Models for Robot Learning and Control](https://arxiv.org/abs/2609.16074)
+  WAM 综述：future world prediction 与 executable action generation 的耦合、分类、应用和挑战。
+- [Paper: World Action Models are Zero-shot Policies / DreamZero](https://arxiv.org/abs/2602.15922)
+  video diffusion backbone 联合建模未来视频与动作的 WAM 代表。
+- [Paper: Do Robotic World Models Really Follow Actions?](https://arxiv.org/abs/2608.24885)
+  action-conditioned world model 在 expert 与 off-expert 动作分布上的可控性诊断。
 - [Repo: Hugging Face LeRobot](https://github.com/huggingface/lerobot)
   机器人学习代码库与数据集生态，本地 PushT 实验直接基于它。
 - [Dataset: lerobot/pusht](https://huggingface.co/datasets/lerobot/pusht)
   本课程的数据与闭环任务来源。
+
+## Simulation Without Hardware
+
+- [gym-pusht](https://github.com/huggingface/gym-pusht)
+  CPU 友好的 PushT Gymnasium 环境；2D action、state observation、coverage reward、95% success 阈值。
+- [LeRobot installation](https://huggingface.co/docs/lerobot/en/installation)
+  官方安装路线，包含 Python 3.12、可选 extras、PushT simulation extra 和平台注意事项。
+- [MuJoCo Playground](https://github.com/google-deepmind/mujoco_playground)
+  基于 MuJoCo MJX 的 GPU 加速 robot learning 与 sim-to-real 环境。
+- [ManiSkill](https://github.com/mani-skill/ManiSkill)
+  GPU-parallel manipulation 框架；Linux + NVIDIA 支持最完整，并提供 Colab 入口。
+- [Isaac Lab](https://isaac-sim.github.io/IsaacLab)
+  NVIDIA Isaac Sim 上的模块化 robot learning 框架，覆盖 RL、learning from demonstrations、motion planning、domain randomization 与 cloud workflows。
+- [Habitat-Lab](https://github.com/facebookresearch/habitat-lab)
+  3D 导航与具身智能仿真实验框架。
+- [CALVIN](https://github.com/mees/calvin)
+  language-conditioned long-horizon manipulation benchmark。
+- [LIBERO](https://github.com/Lifelong-Robot-Learning/LIBERO)
+  lifelong robot learning benchmark。
+- [BEHAVIOR-1K](https://github.com/StanfordVL/BEHAVIOR-1K)
+  长时序家庭活动与日常任务仿真 benchmark。
 
 ## Wisdom (Communities)
 
@@ -57,7 +86,7 @@
 - [Course reference: Research & Competition Portfolio](reference/research-competition-portfolio.html)
   Challenge、workshop paper / technical report、benchmark / reproduction 三条产出线与机会筛选表。
 - [Course plan: RESEARCH_PORTFOLIO_PLAN.md](RESEARCH_PORTFOLIO_PLAN.md)
-  4 个研究问题、2/6/12 周里程碑、最低实验标准和停止/切换条件。
+  5 个研究问题、2/6/12 周里程碑、最低实验标准和停止/切换条件。
 
 - [Course reference: evaluation-system](reference/evaluation-system.html)
   课程内的评价体系速查：interface / offline / closed-loop、world model 指标、policy 指标和实验检查表。

@@ -44,9 +44,6 @@ _Avoid_: 域差距泛化成一切问题
 按 episode 划分训练/验证，避免相邻高度相关帧同时出现在两边。
 _Avoid_: 随机切分、IID 假设
 
-**Closed-loop evaluation**:
-策略自己产生的动作影响后续观测，并在环境中连续评估。
-_Avoid_: 离线指标外推
 
 **Interface smoke test**:
 只验证依赖、输入输出形状、设备和推理流程是否跑通，不证明任务性能。
@@ -75,3 +72,43 @@ _Avoid_: 只贴一个最好分数
 **Negative result**:
 在清晰协议下没有得到预期改进，但能排除一种解释或揭示评估陷阱的结果。
 _Avoid_: 等同于失败或没有价值
+
+**WAM / World-Action Model**:
+同时建模未来世界和可执行动作的系统；不是简单把 VLA 换名。
+_Avoid_: 与 reactive VLA、action-conditioned video generator 混称
+
+**Differentiable world model**:
+对动作到未来状态的映射使用可微学习模型，常用于把梯度传回 policy 或 planner。
+_Avoid_: 等同于 differentiable simulator
+
+**Learned dynamics**:
+从数据中学到的状态转移函数，通常拟合 logged transitions，而不是直接调用解析物理引擎。
+_Avoid_: 与物理仿真器本身混称
+
+**Imagined rollout**:
+在 learned model 内部连续预测未来，而不是在真实环境或官方仿真器中执行。
+_Avoid_: 与 closed-loop evaluation 混称
+
+**Backpropagation-through-time, BPTT**:
+沿时间展开的计算图反传梯度；在 SuperMimic 中通过 learned world model 的短 rollout 更新 policy。
+_Avoid_: 以为梯度穿过 MuJoCo simulator
+
+**Action controllability**:
+固定初始状态、改变动作序列时，模型预测的未来是否发生相应分化。
+_Avoid_: 只用 expert trajectory MSE 代替
+
+**Motion coverage**:
+在一组 motion library 上能稳定跟踪或完成的运动覆盖范围。
+_Avoid_: 直接等同于 unseen-task generalization
+
+**Sim-to-real**:
+把仿真中学习的策略迁移到真实机器人，并报告真机协议、成功率和失败条件。
+_Avoid_: 把仿真成功直接说成真机成功
+
+**Domain randomization**:
+训练时随机化视觉、物理或动态参数，以提高策略对部署差异的鲁棒性。
+_Avoid_: 视为迁移成功的保证
+
+**Closed-loop evaluation**:
+策略自己产生的动作影响后续观测，并在环境中连续评估。
+_Avoid_: 离线指标外推

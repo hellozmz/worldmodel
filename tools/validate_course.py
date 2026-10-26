@@ -42,7 +42,7 @@ expected_refs={'field-map.html','pusht-lab.html','rssm-notebook.html','vla-noteb
 if {p.name for p in refs} != expected_refs: errors.append(f'reference set mismatch: {expected_refs} != {{p.name for p in refs}}')
 
 lessons=sorted((ROOT/'lessons').glob('0*.html'))
-if len(lessons)!=14: errors.append(f'expected 14 lessons, found {len(lessons)}')
+if len(lessons)!=16: errors.append(f'expected 16 lessons, found {len(lessons)}')
 for p in lessons:
     text=p.read_text(encoding='utf-8')
     parser=valid_html(p)
@@ -64,7 +64,7 @@ idx=ROOT/'lessons/index.html'
 if not idx.is_file(): errors.append('missing lessons/index.html')
 else:
     text=idx.read_text(encoding='utf-8')
-    for i in range(1,15):
+    for i in range(1,17):
         if f'{i:04d}-' not in text: errors.append(f'index missing lesson {i:04d}')
     parser=valid_html(idx)
     for raw in parser.links+parser.images+parser.scripts:

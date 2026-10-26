@@ -54,6 +54,39 @@ a { color: #5b21b6; text-decoration-thickness: 1px; text-underline-offset: 3px; 
 a:hover { color: #1d4ed8; }
 .meta { color: var(--muted); font-size: 14px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.route-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  counter-reset: route;
+}
+.route-map article {
+  position: relative;
+  padding: 18px;
+  border: 1px solid #ddd6fe;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff, #f8f5ff);
+}
+.route-map article strong { display: block; margin-bottom: 6px; color: #4c1d95; }
+.route-map span {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(14,165,233,.12);
+  color: #075985;
+  font-size: 12px;
+  font-weight: 750;
+}
+.route-map p { margin: 0; color: var(--muted); font-size: 14px; }
+.stage-tag {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+}
 .card {
   padding: 22px;
   border: 1px solid var(--line);

@@ -2,7 +2,14 @@
 
 目标：把本地/远端已准备好的实验，组织成一门“知识点 + 实践”的课程。每课 15–30 分钟，包含概念、动手任务、自动反馈 quiz、证据解读和下一步。
 
-入口：`lessons/index.html` 是课程总目录，包含模块地图、14 课学习路线和全部参考手册。
+入口：`lessons/index.html` 是课程总目录，包含课程主线、16 课学习路线和全部参考手册。
+
+整体结构是「总—分—总—延伸」：
+
+1. 0001 建立总框架；
+2. 0002–0011 分学数据、想象、行动、VLA；
+3. 0012–0014 收束为 capstone / challenge / research portfolio；
+4. 0015–0016 补充最新前沿与无真机仿真实验流程。
 
 ## Module A — Orientation
 
@@ -90,9 +97,28 @@
 ### Lesson 0014 — Build a research and competition portfolio
 - Challenge / workshop paper / benchmark reproduction 三条产出线
 - RoboWorld WorldNav 是默认 challenge 路线，但不是唯一出口
-- R1 offline vs closed-loop mismatch、R2 action controllability、R3 VLA embodiment mismatch、R4 world-model-assisted planning
+- R1 offline vs closed-loop mismatch、R2 action controllability、R3 VLA embodiment mismatch、R4 world-model-assisted planning、R5 differentiable / action-conditioned world models
 - 最低实验标准：baseline、seed、split、offline/closed-loop、ablation、cost、failure analysis、reproduction
 - 实践：建立机会雷达和 `research_portfolio/decision.md`
+
+## Module J — VLA / WAM Frontier
+
+### Lesson 0015 — VLA, WAM, and SuperMimic
+- VLA / world model / WAM / SuperMimic / action controllability 的接口边界
+- SuperMimic：learned differentiable dynamics、BPTT、短 imagined rollout、motion coverage / training efficiency
+- DreamZero：video diffusion WAM、联合未来视频与动作、7Hz closed-loop
+- 证据边界：training motions 上的 coverage/scaling 不等于 unseen-task generalization
+- 实践：固定 initial state，比较 K 组动作序列的 latent/image/state divergence 与 horizon 曲线
+
+## Module K — Simulation Without Hardware
+
+### Lesson 0016 — Run embodied AI experiments without hardware
+- 仿真能提供 environment / action space / reward / success，但不能直接证明真机成功
+- CPU 路线：gym-pusht → LeRobot
+- GPU 路线：MuJoCo Playground、ManiSkill、Isaac Lab
+- 扩展路线：Habitat、CALVIN、LIBERO、BEHAVIOR
+- P0 Choose → P1 Install → P2 Smoke → P3 Schema → P4 Split → P5 Baselines → P6 Offline → P7 Closed-loop → P8 Model → P9 Cost/Failure → P10 Report
+- 实践：产出 lock 文件、smoke 视频、schema 文档、split JSON、baseline 表、闭环 JSON、成本与失败案例
 
 ## Reference Pages
 
@@ -110,6 +136,7 @@
 ### 比赛与 Benchmark 地图
 - 导航与通用具身智能：Embodied AI Workshop、AI Habitat、BEHAVIOR
 - 机械臂操作：CALVIN、LIBERO、Meta-World、PushT/LeRobot
+- 无真机仿真：gym-pusht、LeRobot、MuJoCo Playground、ManiSkill、Isaac Lab
 - 世界模型：WorldModelBench、WorldArena、DeepMind Control Suite
 - 真机与平台：RoboChallenge、RoboVerse、LeRobot
 

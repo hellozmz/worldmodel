@@ -18,7 +18,7 @@ Research & Competition Portfolio
 | Track | 核心问题 | 最小交付物 | 当前状态 |
 |---|---|---|---|
 | Challenge | 官方指标是否提高？提交是否合法？ | 规则记录、baseline、validation、submission log、报告 | RoboWorld WorldNav 是默认路线 |
-| Paper / report | claim 是否清楚，证据是否足够？ | 问题定义、协议、baseline、seed、ablation、failure analysis | 先从 R1–R4 中选择一个问题 |
+| Paper / report | claim 是否清楚，证据是否足够？ | 问题定义、协议、baseline、seed、ablation、failure analysis | 先从 R1–R5 中选择一个问题 |
 | Benchmark / reproduction | 别人能否复现？误差来自哪里？ | 协议、环境、配置、命令、结果表、敏感性分析 | PushT/RSSM/SmolVLA 证据链已具备雏形 |
 
 ## 推荐研究问题
@@ -89,6 +89,28 @@ gym-pusht closed-loop evaluation
 
 这是最贴近世界模型主线、也最适合升级成 challenge / paper 双出口的方向。
 
+### R5 · Differentiable / action-conditioned world models
+
+问题：一个小型 differentiable dynamics model 能否让 PushT 上的局部 action search / planning 更高效，并且这个改进能否经受闭环评估？
+
+前沿连接：
+
+- SuperMimic 说明 learned differentiable dynamics 与短 imagined rollout 可以显著提升训练效率；
+- WAM / DreamZero 强调 future prediction 与 action generation 的联合建模；
+- `Do Robotic World Models Really Follow Actions?` 提醒我们必须审计 expert 与 off-expert 动作分布上的 action following。
+
+最小扩展：
+
+- random / tiny policy / RSSM planner
+- action controllability score
+- closed-loop return / coverage / success
+- 3 seeds
+- rollout horizon ablation
+- compute、latency、memory
+- 失败案例分类
+
+边界：如果改进只出现在 imagined rollout 指标，而没有提升 closed-loop success / coverage / return，不能声称控制性能提升。
+
 ## 里程碑
 
 ### Week 0–2：证据整理
@@ -100,7 +122,7 @@ gym-pusht closed-loop evaluation
 
 ### Week 3–6：单问题深化
 
-- 从 R1–R4 中只选一个问题。
+- 从 R1–R5 中只选一个问题。
 - 增加 stronger baseline 和 3 seeds。
 - 完成一个关键 ablation。
 - 报告 offline、closed-loop、latency、显存和训练时长。

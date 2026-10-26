@@ -34,6 +34,27 @@
     </section>
 
     <section>
+      <h2>没有真机：先选仿真路线</h2>
+      <p>仿真提供可重复环境、明确 action space 和自动指标；但结果只能写成 simulation closed-loop evidence，不能直接写成 real-robot success。</p>
+      <table>
+        <thead><tr><th>平台 / 仓库</th><th>定位</th><th>硬件</th><th>课程建议</th><th>入口</th></tr></thead>
+        <tbody>
+          <tr><td>gym-pusht</td><td>2D manipulation、coverage / success</td><td>CPU 友好</td><td>第一环境</td><td><a href="https://github.com/huggingface/gym-pusht" target="_blank">GitHub</a></td></tr>
+          <tr><td>LeRobot</td><td>dataset、policy、SmolVLA、PushT 生态</td><td>低门槛</td><td>主生态</td><td><a href="https://github.com/huggingface/lerobot" target="_blank">GitHub</a> / <a href="https://huggingface.co/docs/lerobot/en/installation" target="_blank">安装文档</a></td></tr>
+          <tr><td>MuJoCo Playground</td><td>GPU 加速 locomotion / manipulation / sim-to-real</td><td>GPU</td><td>进阶物理</td><td><a href="https://github.com/google-deepmind/mujoco_playground" target="_blank">GitHub</a></td></tr>
+          <tr><td>ManiSkill</td><td>GPU-parallel manipulation</td><td>Linux + NVIDIA 最完整</td><td>进阶 benchmark</td><td><a href="https://github.com/mani-skill/ManiSkill" target="_blank">GitHub</a></td></tr>
+          <tr><td>Isaac Lab</td><td>NVIDIA Isaac Sim 上的 robot learning 框架</td><td>NVIDIA 生态</td><td>高级平台</td><td><a href="https://isaac-sim.github.io/IsaacLab" target="_blank">官方文档</a></td></tr>
+          <tr><td>Habitat / CALVIN / LIBERO / BEHAVIOR</td><td>navigation、language、long-horizon、household</td><td>视任务而定</td><td>扩展路线</td><td><a href="https://github.com/facebookresearch/habitat-lab" target="_blank">Habitat</a> / <a href="https://github.com/mees/calvin" target="_blank">CALVIN</a> / <a href="https://github.com/Lifelong-Robot-Learning/LIBERO" target="_blank">LIBERO</a> / <a href="https://github.com/StanfordVL/BEHAVIOR-1K" target="_blank">BEHAVIOR</a></td></tr>
+        </tbody>
+      </table>
+      <div class="callout blue">
+        <strong>推荐顺序</strong>
+        <p>gym-pusht → LeRobot → MuJoCo Playground / ManiSkill → Isaac Lab / Habitat / BEHAVIOR。先完成 CPU 最小闭环，再进入 GPU 并行与复杂机器人。</p>
+      </div>
+      <p>详细安装命令、P0–P10 流程和证据表见 <a href="../lessons/0016-simulation-without-hardware.html">Lesson 0016</a>。</p>
+    </section>
+
+    <section>
       <h2>导航与通用具身智能</h2>
       <table>
         <thead><tr><th>平台</th><th>任务类型</th><th>适合练什么</th><th>入口</th></tr></thead>

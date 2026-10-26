@@ -308,6 +308,146 @@ decision.md 必须回答：
 "quiz":{"q":"哪种结果最能支撑一个研究或参赛产出？","opts":[("可复现实验 + 多 baseline + 官方指标或清晰协议 + 失败分析","true"),("单个最好分数截图","false"),("只有模型参数文件","false"),("只有一段生成的视频","false")],"answer":0,"exp":"研究产出依赖证据链：协议、对照、重复性、指标边界和失败分析比单次高分更重要。"},
 "artifacts":[("Research portfolio","../reference/research-competition-portfolio.html"),("Benchmark map","../reference/benchmark-map.html"),("Evaluation system","../reference/evaluation-system.html"),("RoboWorld 2026","../reference/roboworld-2026.html")],
 },
+{
+"num":"0015","slug":"vla-wam-supermimic-frontier","title":"VLA、WAM 与 SuperMimic：最新研究前沿与行动可控性","module":"Module J · VLA / WAM Frontier",
+"minutes":"30–40 分钟","goal":"能区分 VLA、world model、WAM 与 SuperMimic，并设计一个 action controllability 审计实验。",
+"body":"""
+<section><h2>先解决命名混乱</h2><p>最近论文常把 video generation、policy、world model、WAM 放在一起讲。判断它们时不要看名字，而要看接口：输入什么、输出什么、是否显式预测未来、未来预测是否会影响动作。</p>
+<table><thead><tr><th>概念</th><th>接口</th><th>本质</th><th>常见误读</th></tr></thead><tbody>
+<tr><td><b>VLA</b></td><td>image/language/state → action chunk</td><td>通常是 policy；不必然显式预测未来。</td><td>把会输出动作等同于理解世界动态。</td></tr>
+<tr><td><b>World model</b></td><td>state/action → future state / observation / reward</td><td>预测世界演化。</td><td>把视频好看等同于可用于控制。</td></tr>
+<tr><td><b>WAM</b></td><td>jointly predict future world + generate action</td><td>把未来预测和可执行动作生成耦合在一个目标里。</td><td>把它当作 VLA 换名。</td></tr>
+<tr><td><b>SuperMimic</b></td><td>learned differentiable dynamics + imagined rollout + policy gradients</td><td>用学习到的动力学模型加速 policy 优化。</td><td>以为它用了 differentiable simulator。</td></tr>
+<tr><td><b>Action controllability</b></td><td>same initial state + different actions → futures</td><td>审计模型是否真的响应动作。</td><td>只看 expert 轨迹上的 MSE。</td></tr>
+</tbody></table>
+<div class="callout blue"><strong>边界句</strong><p>VLA 不是自动等于 world model；WAM 不是 VLA 换名，而是显式耦合 future prediction 与 action generation。</p></div></section>
+<section><h2>SuperMimic 在做什么</h2><p><a href='https://arxiv.org/abs/2610.28480' target='_blank'>SuperMimic</a> 学习一个共享的可微 humanoid dynamics model；这个模型从普通刚体仿真器 MuJoCo Warp 的 logged transitions 中拟合而来。policy 和 world model 在同一循环中训练，policy gradient 通过 learned model 的短 imagined rollouts 反传。官方项目页明确说明：它<b>不</b>对 simulator 微分，梯度不穿过 MuJoCo。</p>
+<table><thead><tr><th>项目页报告</th><th>数字</th><th>课程解读</th></tr></thead><tbody>
+<tr><td>1 GPU × 3h</td><td>超过 SONIC released checkpoint 的 return</td><td>训练效率证据很强。</td></tr>
+<tr><td>GPU-hours</td><td>声称相比 SONIC 128 GPUs × 7 days 减少超过 1000×</td><td>硬件不同，仍需读 compute accounting。</td></tr>
+<tr><td>129,514 motions</td><td>SONIC 179 failures；SuperMimic 1 GPU×3h 25 failures；2 GPUs×9.8h 0 failures</td><td>这是 motion coverage / scaling，不是 unseen-task generalization。</td></tr>
+<tr><td>World model error</td><td>从 1 到 264 小时 motion 数据保持稳定</td><td>支持 scaling 叙事，但仍要看任务与分布。</td></tr>
+<tr><td>真机</td><td>一个 policy 转移到 physical Unitree G1</td><td>是 sim-to-real 证据，不等于所有 humanoid 任务已解决。</td></tr>
+</tbody></table>
+<div class="callout warn"><strong>证据边界</strong><p>项目页说明 129,514 个 benchmark motions 对两种方法都是 training motions，所以主结果应解释为大规模 motion library 上的 coverage、scaling 与训练效率提升，而不是 unseen-task generalization 的直接证明。World model 也不是全局冻结；它只在单次 policy update 内固定，跨 iteration 持续更新。Imagined rollout 为 32 步，超出部分由 critic bootstrap；没有 critic 时 16 步及以下训练失败。</p></div></section>
+<section><h2>WAM 与 DreamZero</h2><p><a href='https://arxiv.org/abs/2609.16074' target='_blank'>World-Action Models survey</a> 把 WAM 定义为同时做 future world prediction 和 executable action generation 的系统，并用 action alignment、world/action factorization、multi-view consistency、long-horizon memory、neural simulation、efficient inference 等问题组织这个方向。</p>
+<p><a href='https://arxiv.org/abs/2602.15922' target='_blank'>DreamZero</a> 是 WAM 路线的代表：基于 pretrained video diffusion backbone，联合建模未来 video 和 action。论文报告在真实机器人实验中，对新任务/环境的泛化相比 SOTA VLA 超过 2× 提升；通过系统和模型优化，让 14B autoregressive video diffusion model 以 7Hz 做 closed-loop control；还报告跨 embodiment 的 video-only demonstration 与少量 play data 适应。</p>
+<div class="callout"><strong>不要过度推广</strong><p>DreamZero 不能证明“所有 video model 都天然是 policy”。它支持的是：当模型显式联合预测未来视频与动作，并把闭环延迟做进去时，video backbone 可以成为 action 系统的一部分。</p></div></section>
+<section><h2>实践：审计 action controllability</h2><p><a href='https://arxiv.org/abs/2608.24885' target='_blank'>Do Robotic World Models Really Follow Actions?</a> 指出：现有模型在 expert 动作上可能表现合理，但在 diverse off-expert trajectories 上可能忽略指令或生成无效 rollout。你可以把这个思想转成最小实验。</p>
+<pre><code># 实验设计，不只是跑脚本
+1. 固定同一个 initial state
+2. 构造 K 组动作序列：
+   - expert replay
+   - 反向动作
+   - 左右扰动
+   - 随机动作
+   - 恒定动作
+3. 每组动作都 rollout H 步
+4. 记录：
+   - latent distance
+   - decoded image LPIPS / SSIM
+   - state MSE / trajectory alignment
+   - 视觉合法性人工分类
+5. 画出 divergence vs horizon
+6. 对照 action-conditioned model 与 unconditional predictor</code></pre>
+<table><thead><tr><th>现象</th><th>可能解释</th></tr></thead><tbody>
+<tr><td>不同动作的未来几乎不分化</td><td>模型可能只学到了数据惯性与时间延续。</td></tr>
+<tr><td>短期分化、长期合并</td><td>action controllability 随 horizon 衰减。</td></tr>
+<tr><td>latent 分化但图像不变</td><td>decoder 可能丢掉了 latent 中的动作相关信息。</td></tr>
+<tr><td>图像剧烈变化但物理无效</td><td>生成质量与 dynamics 正确性不是一回事。</td></tr>
+</tbody></table>
+<div class="callout good"><strong>产出</strong><p>把结果写成 `action_controllability_report.md`：K 组动作、H 个 horizon、每个 case 的视频/GIF、指标表和失败解释。它可以直接成为 Research Portfolio 的 R2/R5 证据。</p></div></section>
+<section><h2>这门课如何接上新前沿</h2><ul><li><b>Lesson 0006–0007：</b>tiny RSSM 已经给你 latent dynamics 和 rollout 误差的基础。</li><li><b>Lesson 0008–0009：</b>policy 与 closed-loop evaluation 告诉你为什么只在想象中变好还不够。</li><li><b>Lesson 0010–0011：</b>VLA 接口与 embodiment mismatch 帮你识别 WAM 要解决的 action alignment 问题。</li><li><b>Lesson 0014：</b>研究组合把这些前沿问题变成可执行 claim、baseline 和失败分析。</li></ul></section>
+""",
+"source":"SuperMimic：<a href='https://supermimic.github.io' target='_blank'>官方项目页</a> / <a href='https://arxiv.org/abs/2610.28480' target='_blank'>arXiv:2610.28480</a>；WAM：<a href='https://arxiv.org/abs/2609.16074' target='_blank'>World-Action Models survey</a>；DreamZero：<a href='https://arxiv.org/abs/2602.15922' target='_blank'>World Action Models are Zero-shot Policies</a>；action controllability：<a href='https://arxiv.org/abs/2608.24885' target='_blank'>Do Robotic World Models Really Follow Actions?</a>。",
+"quiz":{"q":"SuperMimic 的 129,514 motion benchmark 结果最应该被解释为什么？","opts":[("大规模 motion library 上的 coverage、scaling 与训练效率提升，而不是 unseen-task generalization 的直接证明","true"),("证明所有 humanoid 控制问题已解决","false"),("证明 differentiable simulator 是必需品","false"),("证明视频生成模型已经能替代机器人 policy","false")],"answer":0,"exp":"官方项目页说明这些 benchmark motions 对两种方法都是 training motions；结果应解读为 coverage/scaling 与训练效率，而非 unseen-task generalization。"},
+"artifacts":[("Frontier map","../reference/frontier-map.html"),("VLA notebook","../reference/vla-notebook.html"),("Research portfolio","../reference/research-competition-portfolio.html"),("Evaluation system","../reference/evaluation-system.html")],
+},
+{
+"num":"0016","slug":"simulation-without-hardware","title":"没有真机怎么做具身智能实验：仿真平台、仓库与操作流程","module":"Module K · Simulation Without Hardware",
+"minutes":"35–45 分钟","goal":"能在没有真机时选择合适仿真平台，并按 P0–P10 流程产出可复现证据。",
+"body":"""
+<section><h2>仿真解决什么问题</h2><p>没有真机时，仿真仍然能提供三件事：可重复的 environment、可定义的 action space、可自动计算的 reward / success / return。但它不能自动证明真机成功。正确说法是：<b>simulation closed-loop evidence</b>，不是 real-robot success。</p>
+<div class="callout blue"><strong>路线原则</strong><p>先用最小 CPU 环境跑通学习闭环，再进入 GPU 并行和更复杂机器人。不要一开始就安装最重的平台。</p></div></section>
+<section><h2>平台选择表</h2><table><thead><tr><th>平台 / 仓库</th><th>最适合</th><th>硬件</th><th>课程角色</th></tr></thead><tbody>
+<tr><td><a href='https://github.com/huggingface/gym-pusht' target='_blank'>gym-pusht</a></td><td>2D manipulation、closed-loop metrics</td><td>CPU 友好</td><td>第一环境</td></tr>
+<tr><td><a href='https://github.com/huggingface/lerobot' target='_blank'>LeRobot</a></td><td>dataset schema、policy、SmolVLA、PushT 生态</td><td>低门槛</td><td>主生态</td></tr>
+<tr><td><a href='https://github.com/google-deepmind/mujoco_playground' target='_blank'>MuJoCo Playground</a></td><td>locomotion / manipulation / sim-to-real</td><td>GPU</td><td>进阶物理</td></tr>
+<tr><td><a href='https://github.com/mani-skill/ManiSkill' target='_blank'>ManiSkill</a></td><td>GPU-parallel manipulation</td><td>Linux + NVIDIA 最完整</td><td>进阶 benchmark</td></tr>
+<tr><td><a href='https://isaac-sim.github.io/IsaacLab' target='_blank'>Isaac Lab</a></td><td>高性能 robot learning、domain randomization</td><td>NVIDIA 生态</td><td>高级平台</td></tr>
+<tr><td>Habitat / CALVIN / LIBERO / BEHAVIOR</td><td>navigation、language、long-horizon、household</td><td>视任务而定</td><td>扩展路线</td></tr>
+</tbody></table></section>
+<section><h2>P0：CPU 最小闭环——PushT</h2><p>gym-pusht 的 action 是连续 2 维 <code>[x,y]</code>，范围 <code>[0,512]</code>；state observation 是 <code>agent_x, agent_y, block_x, block_y, block_angle</code>；reward 是 block 覆盖 goal zone 的比例，成功阈值是至少 95% coverage。</p>
+<pre><code>conda create -y -n pusht python=3.10
+conda activate pusht
+pip install gym-pusht
+
+cat &gt; smoke_pusht.py &lt;&lt;'PY'
+import gymnasium as gym
+import gym_pusht
+
+env = gym.make("gym_pusht/PushT-v0", obs_type="state", render_mode="rgb_array")
+obs, info = env.reset(seed=0)
+returns = 0.0
+for step in range(300):
+    action = env.action_space.sample()
+    obs, reward, terminated, truncated, info = env.step(action)
+    returns += float(reward)
+    frame = env.render()
+    if terminated or truncated:
+        break
+print({"steps": step + 1, "return": returns, "coverage": info.get("coverage"), "success": info.get("success")})
+PY
+python smoke_pusht.py</code></pre>
+<div class="callout warn"><strong>证据等级</strong><p>random policy 只能证明环境、action space 和渲染跑通；它是 interface smoke test，不是有效控制。</p></div></section>
+<section><h2>P1：接入 LeRobot 生态</h2><p>当你需要统一的数据格式、imitation policy、SmolVLA 或复现实验时，再进入 LeRobot。官方安装文档推荐 Python 3.12，并按 workflow 安装可选 extras。</p>
+<pre><code>conda create -y -n lerobot python=3.12
+conda activate lerobot
+
+git clone https://github.com/huggingface/lerobot.git
+cd lerobot
+pip install -e ".[core_scripts]"
+pip install -e ".[training]"
+pip install -e ".[pusht]"
+
+python -c "import gym_pusht; print('PushT extra ready')"</code></pre>
+<p>在这一层要补齐：episode-safe split、dataset schema audit、action normalization、baseline、训练日志和复现命令。</p></section>
+<section><h2>P2：GPU 与更复杂机器人</h2><p>如果目标从 2D PushT 升级到 locomotion、manipulation、视觉渲染和大规模并行，再考虑以下路线。</p>
+<pre><code># MuJoCo Playground，官方源码路线
+git clone git@github.com:google-deepmind/mujoco_playground.git
+cd mujoco_playground
+uv venv --python 3.12
+source .venv/bin/activate
+uv pip install -U "jax[cuda12]" --index-url https://pypi.org/simple
+uv --no-config sync --all-extras
+python -c "import mujoco_playground; print('Success')"
+python -c "from mujoco_playground import locomotion; locomotion.load('G1JoystickFlatTerrain')"</code></pre>
+<pre><code># ManiSkill，Linux + NVIDIA 支持最完整
+pip install --upgrade mani_skill
+pip install torch
+# 渲染还需按官方文档配置 Vulkan</code></pre>
+<p>Isaac Lab 适合 NVIDIA Isaac Sim 生态中的高性能仿真、向量化渲染、domain randomization 和 cloud workflow。先确认 GPU、驱动、安装路线和任务需求，再迁移。</p></section>
+<section><h2>没有本地 GPU 时怎么办</h2><ul><li><b>优先：</b>使用你已有的远端 H200 容器，环境锁定最稳。</li><li><b>次优：</b>官方 Colab 只用于快速理解 GPU-parallel simulation，不适合当作长期可复现实验环境。</li><li><b>浏览器 demo：</b>适合建立直觉，不能作为研究指标。</li><li><b>纯 CPU：</b>PushT + state observation 足够完成第一轮 schema、baseline、offline metric 和闭环实验。</li></ul></section>
+<section><h2>P0–P10 标准操作流程</h2><table><thead><tr><th>阶段</th><th>动作</th><th>必须留下的证据</th></tr></thead><tbody>
+<tr><td>P0 Choose</td><td>选择 PushT，而不是先选最重平台</td><td>一页理由：任务、指标、硬件、时间预算</td></tr>
+<tr><td>P1 Install</td><td>独立环境 + lock/requirements</td><td>Python、CUDA、库版本</td></tr>
+<tr><td>P2 Smoke</td><td>random policy 跑通</td><td>视频、日志、info 字段</td></tr>
+<tr><td>P3 Schema</td><td>审计 observation/action/reward/done</td><td>schema 文档和分布图</td></tr>
+<tr><td>P4 Split</td><td>episode-safe 划分</td><td>split JSON 与泄漏检查</td></tr>
+<tr><td>P5 Baselines</td><td>random / previous action / tiny policy</td><td>统一结果表</td></tr>
+<tr><td>P6 Offline</td><td>action MSE、rollout MSE、视觉指标</td><td>mean ± std，多 seed</td></tr>
+<tr><td>P7 Closed-loop</td><td>策略动作影响后续观测</td><td>return / coverage / success JSON</td></tr>
+<tr><td>P8 Model</td><td>接入 RSSM / VLA / WAM 实验</td><td>同一协议下的对比</td></tr>
+<tr><td>P9 Cost</td><td>记录失败案例和资源</td><td>GPU time、latency、memory、failure cases</td></tr>
+<tr><td>P10 Report</td><td>写 reproduction report</td><td>命令、配置、图表、limitations</td></tr>
+</tbody></table>
+<div class="callout good"><strong>最小可信产出</strong><p>不是“我安装成功”，而是：环境锁定 + smoke 视频 + schema + episode-safe split + 至少三个 baseline + offline 与 closed-loop 分列 + 3 seeds + 成本与失败案例。</p></div></section>
+<section><h2>证据边界</h2><ul><li>仿真成功不能写成真机成功；如要主张 sim-to-real，必须报告真机协议和失败条件。</li><li>domain randomization 可以提高鲁棒性，但不能保证迁移成功。</li><li>GPU 并行提高采样效率，不等于结果更正确。</li><li>官方 Colab 适合理解接口，长期实验要固定环境版本。</li><li>不同平台的 action space、控制频率和物理参数不可直接比较。</li></ul></section>
+""",
+"source":"<a href='https://github.com/huggingface/gym-pusht' target='_blank'>gym-pusht 官方仓库</a>；<a href='https://huggingface.co/docs/lerobot/en/installation' target='_blank'>LeRobot installation</a>；<a href='https://github.com/google-deepmind/mujoco_playground' target='_blank'>MuJoCo Playground</a>；<a href='https://github.com/mani-skill/ManiSkill' target='_blank'>ManiSkill</a>；<a href='https://isaac-sim.github.io/IsaacLab' target='_blank'>Isaac Lab</a>。",
+"quiz":{"q":"没有真机时，哪一组证据最能支撑一个仿真实验结论？","opts":[("锁定环境版本 + episode-safe split + baseline + offline/closed-loop 指标 + 多 seed +成本与失败案例","true"),("浏览器 demo 能播放","false"),("安装命令没有报错","false"),("一张生成的机器人图片","false")],"answer":0,"exp":"仿真实验的证据来自协议、划分、对照、闭环指标、重复性和失败分析；接口跑通只是第一步。"},
+"artifacts":[("Benchmark map","../reference/benchmark-map.html"),("PushT lab","../reference/pusht-lab.html"),("Evaluation system","../reference/evaluation-system.html"),("Research portfolio","../reference/research-competition-portfolio.html")],
+},
 ]
 
 def render_lesson(lesson, prev, nxt):
@@ -333,36 +473,74 @@ def render_lesson(lesson, prev, nxt):
 
 def render_index(lessons):
     cards=[]
+    stage_by_num = {
+        "0001":"Stage 0 · 建立总框架",
+        "0002":"Stage 1 · 数据与证据",
+        "0003":"Stage 1 · 数据与证据",
+        "0004":"Stage 2 · 学会想象",
+        "0005":"Stage 2 · 学会想象",
+        "0006":"Stage 2 · 学会想象",
+        "0007":"Stage 2 · 学会想象",
+        "0008":"Stage 3 · 学会行动",
+        "0009":"Stage 3 · 学会行动",
+        "0010":"Stage 3 · 学会行动",
+        "0011":"Stage 3 · 学会行动",
+        "0012":"Stage 4 · 整合与产出",
+        "0013":"Stage 4 · 整合与产出",
+        "0014":"Stage 4 · 整合与产出",
+        "0015":"Stage 5 · 前沿补强",
+        "0016":"Stage 5 · 实验扩展",
+    }
+    prereq_by_num = {
+        "0001":"无；先建立术语边界",
+        "0002":"0001 的 world model / policy / dataset 分类",
+        "0003":"0002 的 episode 结构与字段",
+        "0004":"0001 的预测目标分类",
+        "0005":"0004 的视频生成输入输出",
+        "0006":"0005 的 latent 表示",
+        "0007":"0006 的 dynamics 与 decoder",
+        "0008":"0002–0003 的数据与泄漏控制",
+        "0009":"0007 的 rollout 与 0008 的 policy",
+        "0010":"0008–0009 的 policy / 闭环证据",
+        "0011":"0010 的 action 空间与 embodiment",
+        "0012":"001–011 的完整证据链",
+        "0013":"0012 的 capstone 设计",
+        "0014":"0013 的目标产出",
+        "0015":"0010–0011 的 VLA 边界；0014 的研究问题",
+        "0016":"0002–0003 的数据审计；0009 的闭环评估",
+    }
     for l in lessons:
         artifacts = "".join(f'<a class="badge" href="{href}">{name}</a> ' for name,href in l.get("artifacts",[]))
-        cards.append(f'''<article class="card track"><h3><a href="{l['num']}-{l['slug']}.html">{l['num']} · {html.escape(l['title'])}</a></h3><p class="meta">{html.escape(l['module'])} · {html.escape(l['minutes'])}</p><p>{html.escape(l['goal'])}</p><p>{artifacts}</p><label><input type="checkbox"><span>已完成</span></label></article>''')
+        stage = stage_by_num.get(l["num"], "")
+        prereq = prereq_by_num.get(l["num"], "")
+        cards.append(f'''<article class="card track"><p class="meta stage-tag">{html.escape(stage)}</p><h3><a href="{l['num']}-{l['slug']}.html">{l['num']} · {html.escape(l['title'])}</a></h3><p class="meta">{html.escape(l['module'])} · {html.escape(l['minutes'])}</p><p><b>承接：</b>{html.escape(prereq)}</p><p>{html.escape(l['goal'])}</p><p>{artifacts}</p><label><input type="checkbox"><span>已完成</span></label></article>''')
     refs = ''.join(f'<article class="card"><h3><a href="../reference/{p}">{t}</a></h3><p>{d}</p></article>' for p,t,d in [
         ('basic-introduction.html','基本介绍','概念边界、闭环流程、三条路线'),
         ('evaluation-system.html','评价体系','interface / offline / closed-loop 与指标陷阱'),
-        ('benchmark-map.html','比赛与 Benchmark 地图','导航、操作、世界模型、真机平台'),
+        ('benchmark-map.html','比赛与 Benchmark 地图','导航、操作、世界模型、无真机仿真与真机平台'),
         ('roboworld-2026.html','RoboWorld 2026 产出','WorldNav 主目标、里程碑、提交包'),
         ('research-competition-portfolio.html','Research & Competition Portfolio','比赛、论文、benchmark 三条产出线'),
         ('field-map.html','World Model 全景图','五个层次和证据等级'),
         ('pusht-lab.html','PushT 数据手册','schema、统计和实践命令'),
         ('rssm-notebook.html','RSSM 速查本','posterior/prior/GRU/decoder'),
-        ('vla-notebook.html','VLA 速查本','action chunk、flow matching、embodiment'),
-        ('frontier-map.html','研究前沿地图','Cosmos、Dreamer、Genie、V-JEPA、VLA'),
+        ('vla-notebook.html','VLA / WAM 速查本','action chunk、flow matching、embodiment、VLA 与 WAM 边界'),
+        ('frontier-map.html','研究前沿地图','Cosmos、Dreamer、Genie、V-JEPA、DreamZero、SuperMimic'),
     ])
     return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World Models & Embodied AI Course</title><link rel="stylesheet" href="../assets/course.css"></head>
-<body><div class="course-topbar"><div class="container compact"><a href="#learning-route">课程总目录</a><span>14 lessons · 10 references</span></div></div>
+<body><div class="course-topbar"><div class="container compact"><a href="#course-spine">课程主线</a> · <a href="#learning-route">课程总目录</a><span>16 lessons · 10 references</span></div></div>
 <div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">课程进度 <strong class="progress-percent">0%</strong></div></div></div>
-<main class="container track"><header class="hero"><span class="eyebrow">Course</span><h1>World Models & Embodied AI</h1><p class="meta">14 lessons · knowledge + practice · Cosmos / Dreamer / PushT / SmolVLA · research portfolio</p>
+<main class="container track"><header class="hero"><span class="eyebrow">Course</span><h1>World Models & Embodied AI</h1><p class="meta">16 lessons · knowledge + practice · Cosmos / RSSM / PushT / SmolVLA / WAM / SuperMimic / simulation · research portfolio</p>
 <ul class="checklist"><li><label><input type="checkbox"><span>我已经读过 MISSION.md</span></label></li><li><label><input type="checkbox"><span>我已经准备好远端实验环境</span></label></li><li><label><input type="checkbox"><span>我知道课程进度会保存在本浏览器</span></label></li></ul></header>
-<section id="learning-route"><h2>目录总览</h2><table><thead><tr><th>模块</th><th>课程</th><th>学完后能做什么</th><th>推荐入口</th></tr></thead><tbody>
-<tr><td>A · Orientation</td><td><a href="0001-mental-map.html">0001</a></td><td>分清 world model、policy、VLA、benchmark、challenge。</td><td><a class="badge" href="../reference/basic-introduction.html">基本介绍</a> <a class="badge" href="../reference/field-map.html">全景图</a></td></tr>
-<tr><td>B · Data</td><td><a href="0002-pusht-dataset.html">0002</a> · <a href="0003-baseline-leakage.html">0003</a></td><td>读机器人数据集 schema，设计不泄漏的 baseline。</td><td><a class="badge" href="../reference/pusht-lab.html">PushT 手册</a></td></tr>
-<tr><td>C · Video world models</td><td><a href="0004-cosmos-video.html">0004</a> · <a href="0005-video-latent.html">0005</a></td><td>理解 Cosmos 视频生成和 latent 组件。</td><td><a class="badge" href="../reference/frontier-map.html">前沿地图</a></td></tr>
-<tr><td>D · Latent world models</td><td><a href="0006-rssm-training.html">0006</a> · <a href="0007-open-loop-rollout.html">0007</a></td><td>训练 RSSM，诊断 rollout 误差累积。</td><td><a class="badge" href="../reference/rssm-notebook.html">RSSM 速查本</a></td></tr>
-<tr><td>E · Policies</td><td><a href="0008-imitation-policy.html">0008</a> · <a href="0009-closed-loop.html">0009</a></td><td>训练 imitation policy，解释闭环指标。</td><td><a class="badge" href="../reference/evaluation-system.html">评价体系</a></td></tr>
-<tr><td>F · VLA</td><td><a href="0010-smolvla-interface.html">0010</a> · <a href="0011-embodiment-mismatch.html">0011</a></td><td>检查 VLA 接口，识别 embodiment mismatch。</td><td><a class="badge" href="../reference/vla-notebook.html">VLA 速查本</a></td></tr>
-<tr><td>G · Integration</td><td><a href="0012-capstone.html">0012</a></td><td>写出可复现、可证伪的 capstone 设计。</td><td><a class="badge" href="../reference/benchmark-map.html">Benchmark 地图</a></td></tr>
-<tr><td>H · Challenge Output</td><td><a href="0013-roboworld-output.html">0013</a></td><td>把课程成果整理为 RoboWorld WorldNav 项目包和提交计划。</td><td><a class="badge" href="../reference/roboworld-2026.html">RoboWorld 2026</a></td></tr>
-<tr><td>I · Research Portfolio</td><td><a href="0014-research-portfolio.html">0014</a></td><td>把同一套能力扩展到比赛、论文和 benchmark 三条产出线。</td><td><a class="badge" href="../reference/research-competition-portfolio.html">Portfolio 地图</a></td></tr>
+<section id="course-spine"><h2>课程主线：不是平行专题列表</h2><p>这门课采用<b>总—分—总—延伸</b>。第一课先给总框架；中间分别学数据、想象、行动和语言条件接口；随后用 capstone / challenge / portfolio 收束；最后两课补上 2026 前沿和无真机实验扩展。</p>
+<div class="route-map"><article><strong>0 · 先定义问题</strong><span>0001</span><p>world model、policy、VLA、benchmark 的边界。</p></article><article><strong>1 · 数据与证据</strong><span>0002–0003</span><p>schema、episode、baseline、防泄漏。</p></article><article><strong>2 · 学会想象</strong><span>0004–0007</span><p>从视频预测到 latent rollout。</p></article><article><strong>3 · 学会行动</strong><span>0008–0011</span><p>从 policy 到 VLA，再到闭环评估。</p></article><article><strong>4 · 收束产出</strong><span>0012–0014</span><p>capstone、RoboWorld、research portfolio。</p></article><article><strong>5 · 补强扩展</strong><span>0015–0016</span><p>WAM/SuperMimic 前沿与无真机仿真流程。</p></article></div>
+<div class="callout blue"><strong>怎么判断顺序是否合理</strong><p>每一课都应该回答上一课留下的问题：有概念后看数据；有数据后看预测；能预测后再行动；能行动后再接语言与前沿；最后把所有证据变成比赛、论文或复现报告。</p></div></section>
+<section id="learning-route"><h2>目录总览</h2><table><thead><tr><th>阶段 / 模块</th><th>课程</th><th>上一阶段给它什么</th><th>本阶段新增能力</th><th>推荐入口</th></tr></thead><tbody>
+<tr><td>Stage 0<br>A · Orientation</td><td><a href="0001-mental-map.html">0001</a></td><td>无</td><td>分清 world model、policy、VLA、benchmark、challenge。</td><td><a class="badge" href="../reference/basic-introduction.html">基本介绍</a> <a class="badge" href="../reference/field-map.html">全景图</a></td></tr>
+<tr><td>Stage 1<br>B · Data</td><td><a href="0002-pusht-dataset.html">0002</a> · <a href="0003-baseline-leakage.html">0003</a></td><td>0001 的对象分类</td><td>读 schema，设计 episode-safe split 和不泄漏 baseline。</td><td><a class="badge" href="../reference/pusht-lab.html">PushT 手册</a></td></tr>
+<tr><td>Stage 2<br>C–D · Imagination</td><td><a href="0004-cosmos-video.html">0004</a> · <a href="0005-video-latent.html">0005</a> · <a href="0006-rssm-training.html">0006</a> · <a href="0007-open-loop-rollout.html">0007</a></td><td>数据的 observation/action 结构</td><td>从 Cosmos 视频生成走到 RSSM latent rollout，并诊断误差累积。</td><td><a class="badge" href="../reference/frontier-map.html">前沿地图</a> <a class="badge" href="../reference/rssm-notebook.html">RSSM 速查本</a></td></tr>
+<tr><td>Stage 3<br>E–F · Action</td><td><a href="0008-imitation-policy.html">0008</a> · <a href="0009-closed-loop.html">0009</a> · <a href="0010-smolvla-interface.html">0010</a> · <a href="0011-embodiment-mismatch.html">0011</a></td><td>可预测的 state/action 分布与 rollout 证据</td><td>训练 policy，解释闭环指标，检查 VLA 与 embodiment mismatch。</td><td><a class="badge" href="../reference/evaluation-system.html">评价体系</a> <a class="badge" href="../reference/vla-notebook.html">VLA 速查本</a></td></tr>
+<tr><td>Stage 4<br>G–I · Output</td><td><a href="0012-capstone.html">0012</a> · <a href="0013-roboworld-output.html">0013</a> · <a href="0014-research-portfolio.html">0014</a></td><td>前 11 课的证据链</td><td>整合成 capstone、RoboWorld 项目包和 research portfolio。</td><td><a class="badge" href="../reference/benchmark-map.html">Benchmark 地图</a> <a class="badge" href="../reference/roboworld-2026.html">RoboWorld 2026</a> <a class="badge" href="../reference/research-competition-portfolio.html">Portfolio 地图</a></td></tr>
+<tr><td>Stage 5<br>J–K · Extension</td><td><a href="0015-vla-wam-supermimic-frontier.html">0015</a> · <a href="0016-simulation-without-hardware.html">0016</a></td><td>VLA 边界、R2 研究问题、闭环评估</td><td>理解 WAM / SuperMimic / action controllability；无真机时用仿真平台完成 P0–P10 流程。</td><td><a class="badge" href="../reference/frontier-map.html">前沿地图</a> <a class="badge" href="../reference/benchmark-map.html">仿真地图</a></td></tr>
 </tbody></table></section>
 <section><h2>学习路线</h2><div class="grid">{''.join(cards)}</div></section>
 <section><h2>参考手册</h2><div class="grid">{refs}</div></section>
