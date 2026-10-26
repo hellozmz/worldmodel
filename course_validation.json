@@ -1,0 +1,41 @@
+{
+  "status": "ok",
+  "lessons": [
+    "0001-mental-map.html",
+    "0002-pusht-dataset.html",
+    "0003-baseline-leakage.html",
+    "0004-cosmos-video.html",
+    "0005-video-latent.html",
+    "0006-rssm-training.html",
+    "0007-open-loop-rollout.html",
+    "0008-imitation-policy.html",
+    "0009-closed-loop.html",
+    "0010-smolvla-interface.html",
+    "0011-embodiment-mismatch.html",
+    "0012-capstone.html",
+    "0013-roboworld-output.html",
+    "0014-research-portfolio.html"
+  ],
+  "references": [
+    "basic-introduction.html",
+    "benchmark-map.html",
+    "evaluation-system.html",
+    "field-map.html",
+    "frontier-map.html",
+    "pusht-lab.html",
+    "research-competition-portfolio.html",
+    "roboworld-2026.html",
+    "rssm-notebook.html",
+    "vla-notebook.html"
+  ],
+  "required_root": [
+    "MISSION.md",
+    "RESOURCES.md",
+    "NOTES.md",
+    "GLOSSARY.md",
+    "COURSE_OUTLINE.md",
+    "START_HERE.md"
+  ],
+  "source_artifacts_verified": 5,
+  "errors": []
+}

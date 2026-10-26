@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>从课程到研究组合：比赛、论文与 Benchmark 三条产出线</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><div class="course-topbar"><div class="container compact"><a href="index.html">课程总目录</a><span>Lesson 0014 · Module I · Research Portfolio</span></div></div>
+<div class="progress-wrap"><div class="container" style="padding:0"><div class="progress-bar"><span></span></div><div class="meta" style="margin-top:6px">学习进度 <strong class="progress-percent">0%</strong></div></div></div>
+<main class="container track">
+<header class="hero"><span class="eyebrow">Module I · Research Portfolio</span><h1>从课程到研究组合：比赛、论文与 Benchmark 三条产出线</h1><p class="meta">35–50 分钟 · 目标：能把同一套实验能力规划成 challenge、workshop paper/technical report 或 benchmark reproduction 三条可并行退出的产出线。</p><p><a class="badge" href="../reference/research-competition-portfolio.html">Research portfolio</a> <a class="badge" href="../reference/benchmark-map.html">Benchmark map</a> <a class="badge" href="../reference/evaluation-system.html">Evaluation system</a> <a class="badge" href="../reference/roboworld-2026.html">RoboWorld 2026</a> </p>
+<ul class="checklist"><li><label><input type="checkbox"><span>我能复述本课核心概念</span></label></li><li><label><input type="checkbox"><span>我完成了实践任务</span></label></li><li><label><input type="checkbox"><span>我通过了检索练习</span></label></li></ul></header>
+
+<section><h2>为什么不要只押一个比赛</h2><p>RoboWorld WorldNav 仍然是本课程的默认 challenge 路线，但它不是唯一出口。比赛有报名窗口、资格规则、数据体量和提交格式的不确定性；如果把学习目标完全绑定在一个外部时间表上，规则变化或截稿错过会让成果没有落点。</p>
+<div class="callout blue"><strong>研究组合思维</strong><p>把已有实验拆成三个互相复用的出口：<b>Challenge</b> 面向官方指标和排名，<b>Workshop paper / technical report</b> 面向问题和证据链，<b>Benchmark / reproduction report</b> 面向协议、baseline 和复现性。它们共享数据审计、实验代码和失败分析。</p></div></section>
+<section><h2>三条产出线怎么选</h2><table><thead><tr><th>产出线</th><th>核心问题</th><th>最低证据</th><th>适合时机</th></tr></thead><tbody>
+<tr><td>Challenge submission</td><td>官方指标是否提高？提交格式是否合法？</td><td>官方 baseline、validation 提交、规则记录、分数日志</td><td>官方窗口仍在，且数据/算力可承受</td></tr>
+<tr><td>Workshop paper / technical report</td><td>研究问题是否清晰？结果能否解释？</td><td>多 baseline、多 seed、消融、seen/unseen、失败分析</td><td>有一个可检验假设，即使结果为负也有价值</td></tr>
+<tr><td>Benchmark / reproduction report</td><td>别人能否复现？边界在哪里？</td><td>协议、环境、配置、命令、表格、误差来源</td><td>算力有限，或官方活动已过窗口</td></tr>
+</tbody></table>
+<div class="callout"><strong>优先级建议</strong><p>第一层先把 PushT/RSSM/VLA 实验整理成可复现记录；第二层选择一个 challenge 作为外部压力测试；第三层把最稳定的问题沉淀成 workshop-level 报告或 benchmark 报告。不要一开始同时写论文、冲榜和重构全部代码。</p></div></section>
+<section><h2>从本地实验到研究问题</h2><div class="grid">
+<article class="card"><h3>R1 · Offline / closed-loop mismatch</h3><p>为什么 action MSE 或 rollout MSE 变好，闭环 success 仍可能不变？本地 tiny policy 已经给出一个可扩展现象。</p></article>
+<article class="card"><h3>R2 · Action controllability</h3><p>同一初始状态、不同动作序列，world model 预测的未来是否真的分叉？可比较 latent/image/state divergence。</p></article>
+<article class="card"><h3>R3 · VLA embodiment mismatch</h3><p>SmolVLA 的 6-D action chunk 与 PushT 的 2-D 平面动作不匹配；接口跑通不是 embodiment 迁移。</p></article>
+<article class="card"><h3>R4 · World-model-assisted planning</h3><p>用 RSSM 想象候选动作的未来，再选择动作，最后在 gym-pusht 闭环验证。这是最贴近世界模型主线的方向。</p></article>
+</div></section>
+<section><h2>实践：建立机会雷达</h2><ol><li>打开 <a href="../reference/research-competition-portfolio.html">Research & Competition Portfolio</a>。</li><li>建立三列表：<b>入口</b>、<b>它测什么</b>、<b>我需要补什么证据</b>。</li><li>把 RoboWorld、AGIBOT World、RoboChallenge、GigaBrain、Embodied AI Workshop、WorldModelBench、WorldArena 各归入 challenge、benchmark 或观察项。</li><li>再查 CoRL / CVPR / ICRA / IROS / NeurIPS / ICLR workshop 页面，只记录仍在征稿或可等待下一届的入口。</li><li>为每个入口写一个停止条件：如果数据不可得、baseline 复现失败或算力超预算，就切到另一条产出线。</li></ol>
+<div class="callout"><strong>日期纪律</strong><p>2026 年 10 月末时，许多 2026 会议 workshop 或 ICRA/CVPR 周期已经过了截稿。课程页面不猜日期；任何报名或提交前必须打开官方页面核对当届 deadline、资格和提交格式。</p></div></section>
+<section><h2>实践：写一页 portfolio decision</h2><pre><code>portfolio/
+├── decision.md         # 4 周内主线、6 周备选线、停止条件
+├── challenge_track/    # 官方规则、baseline、提交日志
+├── paper_track/        # 问题、实验表、图表、limitations
+└── benchmark_track/    # 协议、复现命令、结果表
+
+decision.md 必须回答：
+1. 我的 claim 是什么？
+2. 哪个官方/公开协议能检验它？
+3. 至少 3 个 baseline 是什么？
+4. 3 个 seed 是否可跑？
+5. seen/unseen 如何划分？
+6. offline 和 closed-loop 指标分别是什么？
+7. latency / memory 是否报告？
+8. 失败案例如何归档？</code></pre>
+<div class="callout good"><strong>完成标准</strong><p>你能在 10 分钟内向队友说明：为什么选这个入口、第一周复现什么、第三周验证什么、哪个结果出现时立即切换路线。</p></div></section>
+<section><h2>最低实验标准</h2><ul><li><b>Baseline：</b>random / previous action / tiny policy / stronger published baseline，至少三者可比。</li><li><b>Seeds：</b>核心表格至少 3 个 seed，报告 mean ± std 或完整分布。</li><li><b>Split：</b>episode-safe，明确 seen 与 unseen。</li><li><b>Metrics：</b>offline 与 closed-loop 分开，不混写一个“性能”。</li><li><b>Ablation：</b>移除核心组件，证明改进不是随机波动。</li><li><b>Cost：</b>记录 GPU、训练时长、推理 latency 和显存。</li><li><b>Failure：</b>保留最差案例和失败分类，不只展示成功案例。</li><li><b>Reproduction：</b>固定配置、seed、命令、环境版本和数据校验。</li></ul></section>
+<section><h2>论文线不是“必须惊天结果”</h2><p>Workshop paper / technical report 可以承载更小的贡献：一个证据层级分析、一个 action controllability 度量、一个跨 embodiment 接口审计、或一个负结果复现报告。关键不是把名词堆高，而是把问题、协议、对照和边界写清楚。</p>
+<pre><code>Paper skeleton:
+1. One-sentence claim
+2. Evidence gap in current evaluation
+3. Protocol and baselines
+4. Main result with uncertainty
+5. Ablation
+6. Failure taxonomy
+7. Compute / latency cost
+8. Limitations and next experiment</code></pre></section>
+<section><h2>证据边界</h2><ul><li>RoboWorld 是默认 challenge 路线，不代表其他活动价值更低。</li><li>外部活动入口会变化；本课列的是发现渠道和检查方法，不是报名状态的实时数据库。</li><li>PushT、tiny RSSM、SmolVLA 的本地结果只能证明当前实验，不可外推为 SOTA 或跨任务成功。</li><li>没有 baseline、seed、split、失败分析的表格，不足以支撑论文 claim。</li><li>错过某个 2026 deadline 时，可以把成果转为 reproduction report、开源项目或下一届投稿。</li></ul></section>
+
+<section><h2>检索练习</h2><div class="quiz"><h3>哪种结果最能支撑一个研究或参赛产出？</h3><div class="options"><button class="option" data-correct="true" type="button"><span>A</span><span>可复现实验 + 多 baseline + 官方指标或清晰协议 + 失败分析</span></button><button class="option" data-correct="false" type="button"><span>B</span><span>单个最好分数截图</span></button><button class="option" data-correct="false" type="button"><span>C</span><span>只有模型参数文件</span></button><button class="option" data-correct="false" type="button"><span>D</span><span>只有一段生成的视频</span></button></div><div class="feedback">选择一个答案</div><div class="explanation">研究产出依赖证据链：协议、对照、重复性、指标边界和失败分析比单次高分更重要。</div></div></section>
+<section><h2>本课一手来源</h2><p>入口与检查方法见 <a href='https://roboworld2026.github.io' target='_blank'>RoboWorld</a>、<a href='https://embodied-ai.org' target='_blank'>Embodied AI Workshop</a>、<a href='https://www.corl.org/program/workshops' target='_blank'>CoRL workshops</a>、<a href='https://openreview.net' target='_blank'>OpenReview</a>、<a href='https://www.codabench.org' target='_blank'>CodaBench</a>；课程内汇总见 Research & Competition Portfolio。</p><div class="callout blue"><strong>有疑问就问</strong><p>把不理解的地方直接发给老师/agent，最好附上你观察到的现象和报错。</p></div></section>
+<nav class="lesson-nav"><div><span class="meta">上一课</span><br><a href="0013-roboworld-output.html">RoboWorld 2026：把课程学习变成参赛产出</a></div><div style="text-align:right"><span class="meta">继续</span><br><a href="index.html">回到课程目录</a></div></nav><div class="source-note">Course file: lessons/0014-research-portfolio.html</div></main><script src="../assets/course.js"></script></body></html>

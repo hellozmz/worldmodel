@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Research & Competition Portfolio</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <div class="course-topbar"><div class="container compact"><a href="../lessons/index.html">← 课程总目录</a><span>Reference · Research Portfolio</span></div></div>
+  <main class="container">
+    <header class="hero">
+      <span class="eyebrow">Reference</span>
+      <h1>Research &amp; Competition Portfolio</h1>
+      <p class="meta">把比赛、论文和 benchmark 复现当成三条可切换出口，而不是把学习绑在一个截止日期上。</p>
+    </header>
+
+    <section>
+      <h2>核心原则</h2>
+      <div class="grid">
+        <article class="card"><h3>一个能力池</h3><p>数据审计、baseline、world model、policy、闭环评估、失败分析，先沉淀成可复用实验组件。</p></article>
+        <article class="card"><h3>三个出口</h3><p>Challenge 看官方指标；paper 看研究问题；benchmark report 看协议和复现性。</p></article>
+        <article class="card"><h3>随时可切换</h3><p>官方窗口关闭时，改投 workshop、整理 technical report，或做公开 benchmark 复现。</p></article>
+        <article class="card"><h3>证据优先</h3><p>排行榜分数只是证据之一；无协议、无 baseline、无 seed 的分数不能变成研究结论。</p></article>
+      </div>
+      <div class="callout blue">
+        <strong>当前默认组合</strong>
+        <p>RoboWorld WorldNav 是默认 challenge 路线；同时维护一条 workshop paper / technical report 线和一条 benchmark reproduction 线，避免错过一个窗口后成果没有落点。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>三条产出线</h2>
+      <table>
+        <thead><tr><th>Track</th><th>你要回答</th><th>最小交付物</th><th>风险</th></tr></thead>
+        <tbody>
+          <tr><td>Challenge submission</td><td>官方指标是否提高，提交是否合法？</td><td>规则记录、baseline、validation 结果、submission log、技术报告</td><td>窗口、数据体量、格式、资格和服务器评分的不确定性</td></tr>
+          <tr><td>Workshop paper / technical report</td><td>问题是否清楚，证据是否支撑 claim？</td><td>问题定义、协议、多 baseline、多 seed、消融、失败分析、limitations</td><td>实验规模不足或贡献被表述成过度 claim</td></tr>
+          <tr><td>Benchmark / reproduction report</td><td>结果能否被别人复现，误差来自哪里？</td><td>协议、环境、配置、命令、结果表、敏感性分析</td><td>需要耐心整理工程细节，短期曝光可能较低</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>机会筛选表</h2>
+      <p>报名或投稿前逐项填写。任何一项无法满足，就先降级为观察项或寻找替代出口。</p>
+      <table>
+        <thead><tr><th>维度</th><th>必须确认</th><th>不合格时的处理</th></tr></thead>
+        <tbody>
+          <tr><td>Data</td><td>能否合法下载？大小多少？split 是否明确？字段和单位是否可审计？</td><td>改用公开小规模 benchmark 或最小子集复现</td></tr>
+          <tr><td>Compute fit</td><td>训练、微调、推理分别需要多少 GPU / 显存 / 时间？</td><td>缩小模型、减少 seed 中的探索实验、只保留正式 3 seed</td></tr>
+          <tr><td>Baseline</td><td>官方或公开 baseline 是否可复现？有没有至少三个可比对象？</td><td>先完成 reproduction report，不做方法改进</td></tr>
+          <tr><td>Official metric</td><td>主指标、tie-break、test server 限制、外部数据规则是什么？</td><td>切换到协议清晰的公开 benchmark</td></tr>
+          <tr><td>Reproducibility</td><td>配置、seed、环境、命令、checksum 能否固定？</td><td>先补实验记录，不进入写作阶段</td></tr>
+          <tr><td>Time budget</td><td>距离 deadline 是否至少有复现 + 改进 + 失败重启三轮时间？</td><td>转下一届、workshop report 或内部技术分享</td></tr>
+          <tr><td>Value</td><td>得到的是排名、研究问题、公开资产，还是工程能力？</td><td>若三者都不是，归档为 rejected_ideas</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>World model / embodied AI 机会地图</h2>
+      <table>
+        <thead><tr><th>入口</th><th>主要任务 / 议题</th><th>适合承载的产出</th><th>官方入口</th></tr></thead>
+        <tbody>
+          <tr><td>RoboWorld Challenge 2026</td><td>WorldNav、HA-VLN 2.0、SafeDrive-VLA</td><td>默认 challenge：轨迹预测、闭环导航、安全驾驶</td><td><a href="https://roboworld2026.github.io" target="_blank">官网</a> / <a href="roboworld-2026.html">课程路线</a></td></tr>
+          <tr><td>AGIBOT WORLD Challenge 2026</td><td>open-world understanding、manipulation、world modeling、Sim2Real</td><td>操作与世界模型比赛；注意当届线上/线下阶段可能已结束</td><td><a href="https://agibot-world.com/challenge2026" target="_blank">官网</a></td></tr>
+          <tr><td>RoboChallenge</td><td>robot foundation models、VLA、policy evaluation、long-horizon tasks</td><td>真机/机器人基础模型 benchmark 与比赛观察</td><td><a href="https://robochallenge.ai" target="_blank">官网</a></td></tr>
+          <tr><td>GigaBrain Challenge</td><td>world model empowered VLA、simulation、real-world evaluation</td><td>与 RoboWorld 并行的 challenge 候选</td><td><a href="https://gigaai-research.github.io/GigaBrain-Challenge-2026" target="_blank">官网</a></td></tr>
+          <tr><td>Embodied AI Workshop</td><td>navigation、rearrangement、VLN 等 challenge</td><td>具身导航与指令跟随任务族入口</td><td><a href="https://embodied-ai.org" target="_blank">官网</a></td></tr>
+          <tr><td>WorldModelBench</td><td>视觉预测质量、物理合理性、时序一致性</td><td>world model 评估与 benchmark report</td><td><a href="https://worldmodelbench.github.io" target="_blank">官网</a></td></tr>
+          <tr><td>WorldArena</td><td>embodied world model 的感知与功能维度</td><td>世界模型评价协议对比</td><td><a href="https://world-arena.ai" target="_blank">官网</a> / <a href="https://github.com/tsinghua-fib-lab/WorldArena" target="_blank">GitHub</a></td></tr>
+          <tr><td>CoRL workshops</td><td>robot learning、manipulation、learned simulation、world models</td><td>技术报告或 workshop paper 的长期出口</td><td><a href="https://www.corl.org/program/workshops" target="_blank">官网</a></td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <strong>时间边界</strong>
+        <p>本页更新于 2026-10-26。许多 CVPR 2026、ICRA 2026、ICLR 2026、NeurIPS 2026 workshop 周期可能已经结束。不要从本页推断报名状态；进入任何活动前先核对官方页面和 CFP。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>去哪里找新机会</h2>
+      <div class="grid">
+        <article class="card"><h3>Conference workshops</h3><p>CVPR、ICCV、ECCV、NeurIPS、ICLR、CoRL、ICRA、IROS 的 workshop / challenge 页面。</p></article>
+        <article class="card"><h3>Challenge 平台</h3><p><a href="https://www.codabench.org" target="_blank">CodaBench</a>、<a href="https://eval.ai" target="_blank">EvalAI</a>，按 robotics、embodied AI、world model 检索。</p></article>
+        <article class="card"><h3>OpenReview</h3><p><a href="https://openreview.net" target="_blank">OpenReview</a> 查 workshop CFP、审稿标准、接收论文和常见问题定义。</p></article>
+        <article class="card"><h3>Paper discovery</h3><p><a href="https://arxiv.org" target="_blank">arXiv</a> 找新方法；<a href="https://paperswithcode.com" target="_blank">Papers with Code</a> 找代码、数据集和 baseline。</p></article>
+        <article class="card"><h3>Embodied AI hubs</h3><p>Embodied AI Workshop、<a href="https://aihabitat.org" target="_blank">AI Habitat</a>、<a href="https://behavior.stanford.edu/index.html" target="_blank">BEHAVIOR</a>、<a href="https://github.com/huggingface/lerobot" target="_blank">LeRobot</a>。</p></article>
+        <article class="card"><h3>官方 GitHub</h3><p>比赛 repo 的 README、issue、release 和 submission template 常比二级新闻更可靠。</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>四个可研究问题</h2>
+      <table>
+        <thead><tr><th>方向</th><th>研究问题</th><th>最小扩展实验</th><th>可能产物</th></tr></thead>
+        <tbody>
+          <tr><td>Offline / closed-loop mismatch</td><td>为什么 offline MSE 改善没有带来闭环 success？</td><td>更多 seed、rollout horizon 曲线、distribution shift、failure taxonomy</td><td>Evidence-hierarchy 报告或 workshop paper</td></tr>
+          <tr><td>Action controllability</td><td>改变 action 后，未来预测是否真的按语义分叉？</td><td>同初始状态多动作、action-conditioned vs unconditional、divergence 指标</td><td>评估指标 + benchmark report</td></tr>
+          <tr><td>VLA embodiment mismatch</td><td>接口匹配是否等于 embodiment 迁移？</td><td>action-space audit、adapter、zero-shot vs finetune、闭环评估、延迟显存</td><td>技术报告或负结果论文</td></tr>
+          <tr><td>World-model-assisted planning</td><td>想象未来能否改善动作选择？</td><td>RSSM rollout 候选动作、imagined scoring、gym-pusht 闭环</td><td>课程 capstone → challenge/paper 双出口</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Portfolio 目录模板</h2>
+      <pre><code>research_portfolio/
+├── README.md
+├── decision.md
+├── challenge_track/
+│   ├── roboworld/
+│   ├── other_challenge/
+│   └── submission_log.md
+├── paper_track/
+│   ├── main.md
+│   ├── figures/
+│   ├── tables/
+│   ├── experiments.json
+│   ├── reproduction.md
+│   └── limitations.md
+├── benchmark_track/
+│   ├── protocol.md
+│   ├── baselines.md
+│   ├── results.json
+│   └── report.md
+└── archive/
+    ├── rejected_ideas.md
+    └── negative_results.md</code></pre>
+    </section>
+
+    <section>
+      <h2>最低实验标准</h2>
+      <div class="callout good">
+        <strong>Publishable / submission-ready checklist</strong>
+        <p>至少 3 个 baseline；至少 3 个正式 seed；episode-safe train/validation/test split；offline 与 closed-loop 指标分列；seen/unseen 结果分列；关键 ablation；latency、显存和训练成本；失败案例分类；精确命令、配置和随机种子。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>与课程的连接</h2>
+      <ul>
+        <li><a href="../lessons/0012-capstone.html">Lesson 0012</a>：先把问题写成可证伪实验。</li>
+        <li><a href="../lessons/0013-roboworld-output.html">Lesson 0013</a>：执行默认 challenge 出口。</li>
+        <li><a href="../lessons/0014-research-portfolio.html">Lesson 0014</a>：把成果扩展为三线 portfolio。</li>
+        <li><a href="evaluation-system.html">Evaluation system</a>：区分 interface、offline、closed-loop 证据。</li>
+        <li><a href="benchmark-map.html">Benchmark map</a>：查找具体平台与任务族。</li>
+      </ul>
+    </section>
+  </main>
+  <script src="../assets/course.js"></script>
+</body>
+</html>

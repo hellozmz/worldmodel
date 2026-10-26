@@ -1,14 +1,24 @@
-# World Model Lessons
+# World Models & Embodied AI Course
 
-Online course pages:
+这是一个基于本地 Cosmos、PushT、Dreamer-style RSSM、SmolVLA 和 gym-pusht 实验做成的教学课程。
 
-- GitHub Pages: https://hellozmz.github.io/worldmodel/
-- Lessons directory: https://hellozmz.github.io/worldmodel/lessons/
+## 入口
 
-## Local preview
+- 在线课程：<https://hellozmz.github.io/worldmodel/>
+- 课程目录：[`lessons/index.html`](lessons/index.html)
+- 课程大纲：[`COURSE_OUTLINE.md`](COURSE_OUTLINE.md)
+- 开始说明：[`START_HERE.md`](START_HERE.md)
+- 教学目标：[`MISSION.md`](MISSION.md)
+- 资源清单：[`RESOURCES.md`](RESOURCES.md)
+- 研究组合计划：[`RESEARCH_PORTFOLIO_PLAN.md`](RESEARCH_PORTFOLIO_PLAN.md)
 
-```bash
-python3 -m http.server 8000
+## 结构
+
+```text
+lessons/     14 节交互课程
+reference/   可打印参考手册
+source/      已保存的实验指标、图片和视频
+assets/      课程样式与交互脚本
 ```
 
-Then open http://localhost:8000/lessons/.
+课程会自动在浏览器本地保存完成进度。

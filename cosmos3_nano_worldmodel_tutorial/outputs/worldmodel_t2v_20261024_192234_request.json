@@ -1,0 +1,14 @@
+{
+  "model": "cosmos3-nano",
+  "prompt": "Physical AI world-model simulation: a small autonomous delivery robot navigates through a bright warehouse. It slows down, turns left around a stacked cardboard box, and its shadow and reflected highlights move consistently. The camera follows smoothly while shelves show stable parallax.",
+  "negative_prompt": "blurry, distorted objects, jittery motion, physically impossible movement, low quality",
+  "size": "448x256",
+  "num_frames": "25",
+  "fps": "12",
+  "num_inference_steps": "12",
+  "guidance_scale": "6.0",
+  "max_sequence_length": "4096",
+  "flow_shift": "10.0",
+  "seed": "20261025",
+  "extra_params": "{\"use_resolution_template\":false,\"use_duration_template\":false,\"guardrails\":false}"
+}

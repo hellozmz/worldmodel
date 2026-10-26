@@ -1,0 +1,25 @@
+{
+  "timestamp_utc": "2026-10-24T19:22:36.013531+00:00",
+  "base_url": "http://127.0.0.1:18000",
+  "request_file": "/mnt/models_2296/zmz/workspace/cosmos3_nano_worldmodel/outputs/worldmodel_t2v_20261024_192234_request.json",
+  "output_file": "/mnt/models_2296/zmz/workspace/cosmos3_nano_worldmodel/outputs/worldmodel_t2v_20261024_192234.mp4",
+  "http_status": 200,
+  "content_type": "video/mp4",
+  "elapsed_seconds": 1.128,
+  "bytes": 408109,
+  "sha256": "a15b2695a263ef956d40a01d0e7c392f3de2c2b77144f8f9e220501ce035b613",
+  "media": {
+    "available": true,
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 448,
+        "height": 256,
+        "r_frame_rate": "12/1",
+        "duration": "2.083333",
+        "nb_read_frames": "25"
+      }
+    ]
+  }
+}
