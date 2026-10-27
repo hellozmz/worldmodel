@@ -1,0 +1,194 @@
+{
+  "format_version": 1,
+  "output_root": "/mnt/models_2296/zmz/workspace/roboworld2026/data/simplevln_har2r",
+  "annotation": "/mnt/models_2296/zmz/workspace/roboworld2026/data/simplevln_har2r/eval_data/r2r/val_unseen/val_unseen.json.gz",
+  "annotation_sha256": "0c2260a4910ff1e81bc1eee28204bd7aedbc4ac26433d7268504ada20318b014",
+  "navigation_compatibility": {
+    "episodes": 1839,
+    "navigation_exact_match_count": 1839
+  },
+  "scene_manifest_count": 44,
+  "scene_present_count": 0,
+  "scene_missing_count": 44,
+  "scene_installed_now": 0,
+  "missing_scene_files": [
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/2azQ1b91cZZ/2azQ1b91cZZ.glb",
+      "scan": "2azQ1b91cZZ"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/2azQ1b91cZZ/2azQ1b91cZZ.navmesh",
+      "scan": "2azQ1b91cZZ"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/2azQ1b91cZZ/2azQ1b91cZZ.house",
+      "scan": "2azQ1b91cZZ"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/2azQ1b91cZZ/2azQ1b91cZZ_semantic.ply",
+      "scan": "2azQ1b91cZZ"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/8194nk5LbLH/8194nk5LbLH.glb",
+      "scan": "8194nk5LbLH"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/8194nk5LbLH/8194nk5LbLH.navmesh",
+      "scan": "8194nk5LbLH"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/8194nk5LbLH/8194nk5LbLH.house",
+      "scan": "8194nk5LbLH"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/8194nk5LbLH/8194nk5LbLH_semantic.ply",
+      "scan": "8194nk5LbLH"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/EU6Fwq7SyZv/EU6Fwq7SyZv.glb",
+      "scan": "EU6Fwq7SyZv"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/EU6Fwq7SyZv/EU6Fwq7SyZv.navmesh",
+      "scan": "EU6Fwq7SyZv"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/EU6Fwq7SyZv/EU6Fwq7SyZv.house",
+      "scan": "EU6Fwq7SyZv"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/EU6Fwq7SyZv/EU6Fwq7SyZv_semantic.ply",
+      "scan": "EU6Fwq7SyZv"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/QUCTc6BB5sX/QUCTc6BB5sX.glb",
+      "scan": "QUCTc6BB5sX"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/QUCTc6BB5sX/QUCTc6BB5sX.navmesh",
+      "scan": "QUCTc6BB5sX"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/QUCTc6BB5sX/QUCTc6BB5sX.house",
+      "scan": "QUCTc6BB5sX"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/QUCTc6BB5sX/QUCTc6BB5sX_semantic.ply",
+      "scan": "QUCTc6BB5sX"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/TbHJrupSAjP/TbHJrupSAjP.glb",
+      "scan": "TbHJrupSAjP"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/TbHJrupSAjP/TbHJrupSAjP.navmesh",
+      "scan": "TbHJrupSAjP"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/TbHJrupSAjP/TbHJrupSAjP.house",
+      "scan": "TbHJrupSAjP"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/TbHJrupSAjP/TbHJrupSAjP_semantic.ply",
+      "scan": "TbHJrupSAjP"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/X7HyMhZNoso/X7HyMhZNoso.glb",
+      "scan": "X7HyMhZNoso"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/X7HyMhZNoso/X7HyMhZNoso.navmesh",
+      "scan": "X7HyMhZNoso"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/X7HyMhZNoso/X7HyMhZNoso.house",
+      "scan": "X7HyMhZNoso"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/X7HyMhZNoso/X7HyMhZNoso_semantic.ply",
+      "scan": "X7HyMhZNoso"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/Z6MFQCViBuw/Z6MFQCViBuw.glb",
+      "scan": "Z6MFQCViBuw"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/Z6MFQCViBuw/Z6MFQCViBuw.navmesh",
+      "scan": "Z6MFQCViBuw"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/Z6MFQCViBuw/Z6MFQCViBuw.house",
+      "scan": "Z6MFQCViBuw"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/Z6MFQCViBuw/Z6MFQCViBuw_semantic.ply",
+      "scan": "Z6MFQCViBuw"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/oLBMNvg9in8/oLBMNvg9in8.glb",
+      "scan": "oLBMNvg9in8"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/oLBMNvg9in8/oLBMNvg9in8.navmesh",
+      "scan": "oLBMNvg9in8"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/oLBMNvg9in8/oLBMNvg9in8.house",
+      "scan": "oLBMNvg9in8"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/oLBMNvg9in8/oLBMNvg9in8_semantic.ply",
+      "scan": "oLBMNvg9in8"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/pLe4wQe7qrG/pLe4wQe7qrG.glb",
+      "scan": "pLe4wQe7qrG"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/pLe4wQe7qrG/pLe4wQe7qrG.navmesh",
+      "scan": "pLe4wQe7qrG"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/pLe4wQe7qrG/pLe4wQe7qrG.house",
+      "scan": "pLe4wQe7qrG"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/pLe4wQe7qrG/pLe4wQe7qrG_semantic.ply",
+      "scan": "pLe4wQe7qrG"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/x8F5xyUWy9e/x8F5xyUWy9e.glb",
+      "scan": "x8F5xyUWy9e"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/x8F5xyUWy9e/x8F5xyUWy9e.navmesh",
+      "scan": "x8F5xyUWy9e"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/x8F5xyUWy9e/x8F5xyUWy9e.house",
+      "scan": "x8F5xyUWy9e"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/x8F5xyUWy9e/x8F5xyUWy9e_semantic.ply",
+      "scan": "x8F5xyUWy9e"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/zsNo4HB9uLZ/zsNo4HB9uLZ.glb",
+      "scan": "zsNo4HB9uLZ"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/zsNo4HB9uLZ/zsNo4HB9uLZ.navmesh",
+      "scan": "zsNo4HB9uLZ"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/zsNo4HB9uLZ/zsNo4HB9uLZ.house",
+      "scan": "zsNo4HB9uLZ"
+    },
+    {
+      "path": "scene_datasets/v1/tasks/mp3d/zsNo4HB9uLZ/zsNo4HB9uLZ_semantic.ply",
+      "scan": "zsNo4HB9uLZ"
+    }
+  ],
+  "all_scene_files_ready": false,
+  "gpu_execution_started": false
+}

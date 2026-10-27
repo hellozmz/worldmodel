@@ -1,0 +1,439 @@
+{
+  "format_version": 1,
+  "expected_glb_relative_paths": [
+    "scene_datasets/mp3d/17DRP5sb8fy/17DRP5sb8fy.glb",
+    "scene_datasets/mp3d/1LXtFkjw3qL/1LXtFkjw3qL.glb",
+    "scene_datasets/mp3d/1pXnuDYAj8r/1pXnuDYAj8r.glb",
+    "scene_datasets/mp3d/29hnd4uzFmX/29hnd4uzFmX.glb",
+    "scene_datasets/mp3d/2azQ1b91cZZ/2azQ1b91cZZ.glb",
+    "scene_datasets/mp3d/2n8kARJN3HM/2n8kARJN3HM.glb",
+    "scene_datasets/mp3d/5LpN3gDmAk7/5LpN3gDmAk7.glb",
+    "scene_datasets/mp3d/5q7pvUzZiYa/5q7pvUzZiYa.glb",
+    "scene_datasets/mp3d/759xd9YjKW5/759xd9YjKW5.glb",
+    "scene_datasets/mp3d/7y3sRwLe3Va/7y3sRwLe3Va.glb",
+    "scene_datasets/mp3d/8194nk5LbLH/8194nk5LbLH.glb",
+    "scene_datasets/mp3d/82sE5b5pLXE/82sE5b5pLXE.glb",
+    "scene_datasets/mp3d/8WUmhLawc2A/8WUmhLawc2A.glb",
+    "scene_datasets/mp3d/B6ByNegPMKs/B6ByNegPMKs.glb",
+    "scene_datasets/mp3d/D7G3Y4RVNrH/D7G3Y4RVNrH.glb",
+    "scene_datasets/mp3d/D7N2EKCX4Sj/D7N2EKCX4Sj.glb",
+    "scene_datasets/mp3d/E9uDoFAP3SH/E9uDoFAP3SH.glb",
+    "scene_datasets/mp3d/EDJbREhghzL/EDJbREhghzL.glb",
+    "scene_datasets/mp3d/EU6Fwq7SyZv/EU6Fwq7SyZv.glb",
+    "scene_datasets/mp3d/GdvgFV5R1Z5/GdvgFV5R1Z5.glb",
+    "scene_datasets/mp3d/HxpKQynjfin/HxpKQynjfin.glb",
+    "scene_datasets/mp3d/JF19kD82Mey/JF19kD82Mey.glb",
+    "scene_datasets/mp3d/JeFG25nYj2p/JeFG25nYj2p.glb",
+    "scene_datasets/mp3d/JmbYfDe2QKZ/JmbYfDe2QKZ.glb",
+    "scene_datasets/mp3d/PX4nDJXEHrG/PX4nDJXEHrG.glb",
+    "scene_datasets/mp3d/Pm6F8kyY3z2/Pm6F8kyY3z2.glb",
+    "scene_datasets/mp3d/PuKPg4mmafe/PuKPg4mmafe.glb",
+    "scene_datasets/mp3d/QUCTc6BB5sX/QUCTc6BB5sX.glb",
+    "scene_datasets/mp3d/S9hNv5qa7GM/S9hNv5qa7GM.glb",
+    "scene_datasets/mp3d/SN83YJsR3w2/SN83YJsR3w2.glb",
+    "scene_datasets/mp3d/TbHJrupSAjP/TbHJrupSAjP.glb",
+    "scene_datasets/mp3d/ULsKaCPVFJR/ULsKaCPVFJR.glb",
+    "scene_datasets/mp3d/Uxmj2M2itWa/Uxmj2M2itWa.glb",
+    "scene_datasets/mp3d/V2XKFyX4ASd/V2XKFyX4ASd.glb",
+    "scene_datasets/mp3d/VFuaQ6m2Qom/VFuaQ6m2Qom.glb",
+    "scene_datasets/mp3d/VLzqgDo317F/VLzqgDo317F.glb",
+    "scene_datasets/mp3d/VVfe2KiqLaN/VVfe2KiqLaN.glb",
+    "scene_datasets/mp3d/Vvot9Ly1tCj/Vvot9Ly1tCj.glb",
+    "scene_datasets/mp3d/VzqfbhrpDEA/VzqfbhrpDEA.glb",
+    "scene_datasets/mp3d/X7HyMhZNoso/X7HyMhZNoso.glb",
+    "scene_datasets/mp3d/XcA2TqTSSAj/XcA2TqTSSAj.glb",
+    "scene_datasets/mp3d/YmJkqBEsHnH/YmJkqBEsHnH.glb",
+    "scene_datasets/mp3d/Z6MFQCViBuw/Z6MFQCViBuw.glb",
+    "scene_datasets/mp3d/ZMojNkEp431/ZMojNkEp431.glb",
+    "scene_datasets/mp3d/aayBHfsNo7d/aayBHfsNo7d.glb",
+    "scene_datasets/mp3d/ac26ZMwG7aT/ac26ZMwG7aT.glb",
+    "scene_datasets/mp3d/b8cTxDM8gDG/b8cTxDM8gDG.glb",
+    "scene_datasets/mp3d/cV4RVeZvu5T/cV4RVeZvu5T.glb",
+    "scene_datasets/mp3d/dhjEzFoUFzH/dhjEzFoUFzH.glb",
+    "scene_datasets/mp3d/e9zR4mvMWw7/e9zR4mvMWw7.glb",
+    "scene_datasets/mp3d/gTV8FGcVJC9/gTV8FGcVJC9.glb",
+    "scene_datasets/mp3d/gZ6f7yhEvPG/gZ6f7yhEvPG.glb",
+    "scene_datasets/mp3d/i5noydFURQK/i5noydFURQK.glb",
+    "scene_datasets/mp3d/jh4fc5c5qoQ/jh4fc5c5qoQ.glb",
+    "scene_datasets/mp3d/kEZ7cmS4wCh/kEZ7cmS4wCh.glb",
+    "scene_datasets/mp3d/mJXqzFtmKg4/mJXqzFtmKg4.glb",
+    "scene_datasets/mp3d/oLBMNvg9in8/oLBMNvg9in8.glb",
+    "scene_datasets/mp3d/p5wJjkQkbXX/p5wJjkQkbXX.glb",
+    "scene_datasets/mp3d/pLe4wQe7qrG/pLe4wQe7qrG.glb",
+    "scene_datasets/mp3d/pRbA3pwrgk9/pRbA3pwrgk9.glb",
+    "scene_datasets/mp3d/qoiz87JEwZ2/qoiz87JEwZ2.glb",
+    "scene_datasets/mp3d/r1Q1Z4BcV1o/r1Q1Z4BcV1o.glb",
+    "scene_datasets/mp3d/r47D5H71a5s/r47D5H71a5s.glb",
+    "scene_datasets/mp3d/rPc6DW4iMge/rPc6DW4iMge.glb",
+    "scene_datasets/mp3d/s8pcmisQ38h/s8pcmisQ38h.glb",
+    "scene_datasets/mp3d/sKLMLpTHeUy/sKLMLpTHeUy.glb",
+    "scene_datasets/mp3d/sT4fr6TAbpF/sT4fr6TAbpF.glb",
+    "scene_datasets/mp3d/uNb9QFRL6hY/uNb9QFRL6hY.glb",
+    "scene_datasets/mp3d/ur6pFq6Qu1A/ur6pFq6Qu1A.glb",
+    "scene_datasets/mp3d/vyrNrziPKCB/vyrNrziPKCB.glb",
+    "scene_datasets/mp3d/x8F5xyUWy9e/x8F5xyUWy9e.glb",
+    "scene_datasets/mp3d/zsNo4HB9uLZ/zsNo4HB9uLZ.glb"
+  ],
+  "episodes_by_scan": {
+    "17DRP5sb8fy": {
+      "train": 75,
+      "val_seen": 6,
+      "val_unseen": 0
+    },
+    "1LXtFkjw3qL": {
+      "train": 162,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "1pXnuDYAj8r": {
+      "train": 256,
+      "val_seen": 24,
+      "val_unseen": 0
+    },
+    "29hnd4uzFmX": {
+      "train": 192,
+      "val_seen": 15,
+      "val_unseen": 0
+    },
+    "2azQ1b91cZZ": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 252
+    },
+    "2n8kARJN3HM": {
+      "train": 268,
+      "val_seen": 6,
+      "val_unseen": 0
+    },
+    "5LpN3gDmAk7": {
+      "train": 243,
+      "val_seen": 30,
+      "val_unseen": 0
+    },
+    "5q7pvUzZiYa": {
+      "train": 150,
+      "val_seen": 15,
+      "val_unseen": 0
+    },
+    "759xd9YjKW5": {
+      "train": 210,
+      "val_seen": 15,
+      "val_unseen": 0
+    },
+    "7y3sRwLe3Va": {
+      "train": 196,
+      "val_seen": 9,
+      "val_unseen": 0
+    },
+    "8194nk5LbLH": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 39
+    },
+    "82sE5b5pLXE": {
+      "train": 195,
+      "val_seen": 15,
+      "val_unseen": 0
+    },
+    "8WUmhLawc2A": {
+      "train": 279,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "B6ByNegPMKs": {
+      "train": 252,
+      "val_seen": 24,
+      "val_unseen": 0
+    },
+    "D7G3Y4RVNrH": {
+      "train": 34,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "D7N2EKCX4Sj": {
+      "train": 201,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "E9uDoFAP3SH": {
+      "train": 265,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "EDJbREhghzL": {
+      "train": 249,
+      "val_seen": 9,
+      "val_unseen": 0
+    },
+    "EU6Fwq7SyZv": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 132
+    },
+    "GdvgFV5R1Z5": {
+      "train": 21,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "HxpKQynjfin": {
+      "train": 15,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "JF19kD82Mey": {
+      "train": 63,
+      "val_seen": 6,
+      "val_unseen": 0
+    },
+    "JeFG25nYj2p": {
+      "train": 279,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "JmbYfDe2QKZ": {
+      "train": 210,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "PX4nDJXEHrG": {
+      "train": 240,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "Pm6F8kyY3z2": {
+      "train": 24,
+      "val_seen": 9,
+      "val_unseen": 0
+    },
+    "PuKPg4mmafe": {
+      "train": 57,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "QUCTc6BB5sX": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 255
+    },
+    "S9hNv5qa7GM": {
+      "train": 246,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "SN83YJsR3w2": {
+      "train": 232,
+      "val_seen": 3,
+      "val_unseen": 0
+    },
+    "TbHJrupSAjP": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 264
+    },
+    "ULsKaCPVFJR": {
+      "train": 234,
+      "val_seen": 24,
+      "val_unseen": 0
+    },
+    "Uxmj2M2itWa": {
+      "train": 228,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "V2XKFyX4ASd": {
+      "train": 198,
+      "val_seen": 15,
+      "val_unseen": 0
+    },
+    "VFuaQ6m2Qom": {
+      "train": 150,
+      "val_seen": 9,
+      "val_unseen": 0
+    },
+    "VLzqgDo317F": {
+      "train": 162,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "VVfe2KiqLaN": {
+      "train": 105,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "Vvot9Ly1tCj": {
+      "train": 276,
+      "val_seen": 18,
+      "val_unseen": 0
+    },
+    "VzqfbhrpDEA": {
+      "train": 237,
+      "val_seen": 18,
+      "val_unseen": 0
+    },
+    "X7HyMhZNoso": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 141
+    },
+    "XcA2TqTSSAj": {
+      "train": 18,
+      "val_seen": 3,
+      "val_unseen": 0
+    },
+    "YmJkqBEsHnH": {
+      "train": 9,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "Z6MFQCViBuw": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 159
+    },
+    "ZMojNkEp431": {
+      "train": 225,
+      "val_seen": 15,
+      "val_unseen": 0
+    },
+    "aayBHfsNo7d": {
+      "train": 145,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "ac26ZMwG7aT": {
+      "train": 273,
+      "val_seen": 24,
+      "val_unseen": 0
+    },
+    "b8cTxDM8gDG": {
+      "train": 144,
+      "val_seen": 18,
+      "val_unseen": 0
+    },
+    "cV4RVeZvu5T": {
+      "train": 147,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "dhjEzFoUFzH": {
+      "train": 33,
+      "val_seen": 9,
+      "val_unseen": 0
+    },
+    "e9zR4mvMWw7": {
+      "train": 141,
+      "val_seen": 18,
+      "val_unseen": 0
+    },
+    "gTV8FGcVJC9": {
+      "train": 202,
+      "val_seen": 9,
+      "val_unseen": 0
+    },
+    "gZ6f7yhEvPG": {
+      "train": 3,
+      "val_seen": 0,
+      "val_unseen": 0
+    },
+    "i5noydFURQK": {
+      "train": 177,
+      "val_seen": 18,
+      "val_unseen": 0
+    },
+    "jh4fc5c5qoQ": {
+      "train": 147,
+      "val_seen": 15,
+      "val_unseen": 0
+    },
+    "kEZ7cmS4wCh": {
+      "train": 196,
+      "val_seen": 24,
+      "val_unseen": 0
+    },
+    "mJXqzFtmKg4": {
+      "train": 267,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "oLBMNvg9in8": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 177
+    },
+    "p5wJjkQkbXX": {
+      "train": 202,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "pLe4wQe7qrG": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 18
+    },
+    "pRbA3pwrgk9": {
+      "train": 135,
+      "val_seen": 6,
+      "val_unseen": 0
+    },
+    "qoiz87JEwZ2": {
+      "train": 174,
+      "val_seen": 3,
+      "val_unseen": 0
+    },
+    "r1Q1Z4BcV1o": {
+      "train": 222,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "r47D5H71a5s": {
+      "train": 279,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "rPc6DW4iMge": {
+      "train": 231,
+      "val_seen": 16,
+      "val_unseen": 0
+    },
+    "s8pcmisQ38h": {
+      "train": 84,
+      "val_seen": 6,
+      "val_unseen": 0
+    },
+    "sKLMLpTHeUy": {
+      "train": 237,
+      "val_seen": 18,
+      "val_unseen": 0
+    },
+    "sT4fr6TAbpF": {
+      "train": 252,
+      "val_seen": 21,
+      "val_unseen": 0
+    },
+    "uNb9QFRL6hY": {
+      "train": 159,
+      "val_seen": 9,
+      "val_unseen": 0
+    },
+    "ur6pFq6Qu1A": {
+      "train": 279,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "vyrNrziPKCB": {
+      "train": 234,
+      "val_seen": 12,
+      "val_unseen": 0
+    },
+    "x8F5xyUWy9e": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 102
+    },
+    "zsNo4HB9uLZ": {
+      "train": 0,
+      "val_seen": 0,
+      "val_unseen": 300
+    }
+  }
+}

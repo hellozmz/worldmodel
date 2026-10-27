@@ -1,0 +1,51 @@
+{
+  "format_version": 1,
+  "split": "val_unseen",
+  "simplevln_episodes": 1839,
+  "har2r_episodes": 1839,
+  "common_episode_ids": 1839,
+  "missing_in_har2r": [],
+  "extra_in_har2r": [],
+  "navigation_exact_match_count": 1839,
+  "mismatched_episode_ids_by_field": {
+    "trajectory_id": [],
+    "scene_id": [],
+    "start_position": [],
+    "start_rotation": [],
+    "goals": [],
+    "reference_path": []
+  },
+  "instruction_equal_count": 0,
+  "instruction_mean_chars_simplevln": 139.14192495921696,
+  "instruction_mean_chars_har2r": 688.2126155519304,
+  "route_max_error_mean_m": 0.0,
+  "route_max_error_max_m": 0.0,
+  "simplevln_scenes": [
+    "mp3d/2azQ1b91cZZ/2azQ1b91cZZ.glb",
+    "mp3d/8194nk5LbLH/8194nk5LbLH.glb",
+    "mp3d/EU6Fwq7SyZv/EU6Fwq7SyZv.glb",
+    "mp3d/QUCTc6BB5sX/QUCTc6BB5sX.glb",
+    "mp3d/TbHJrupSAjP/TbHJrupSAjP.glb",
+    "mp3d/X7HyMhZNoso/X7HyMhZNoso.glb",
+    "mp3d/Z6MFQCViBuw/Z6MFQCViBuw.glb",
+    "mp3d/oLBMNvg9in8/oLBMNvg9in8.glb",
+    "mp3d/pLe4wQe7qrG/pLe4wQe7qrG.glb",
+    "mp3d/x8F5xyUWy9e/x8F5xyUWy9e.glb",
+    "mp3d/zsNo4HB9uLZ/zsNo4HB9uLZ.glb"
+  ],
+  "har2r_scenes": [
+    "mp3d/2azQ1b91cZZ/2azQ1b91cZZ.glb",
+    "mp3d/8194nk5LbLH/8194nk5LbLH.glb",
+    "mp3d/EU6Fwq7SyZv/EU6Fwq7SyZv.glb",
+    "mp3d/QUCTc6BB5sX/QUCTc6BB5sX.glb",
+    "mp3d/TbHJrupSAjP/TbHJrupSAjP.glb",
+    "mp3d/X7HyMhZNoso/X7HyMhZNoso.glb",
+    "mp3d/Z6MFQCViBuw/Z6MFQCViBuw.glb",
+    "mp3d/oLBMNvg9in8/oLBMNvg9in8.glb",
+    "mp3d/pLe4wQe7qrG/pLe4wQe7qrG.glb",
+    "mp3d/x8F5xyUWy9e/x8F5xyUWy9e.glb",
+    "mp3d/zsNo4HB9uLZ/zsNo4HB9uLZ.glb"
+  ],
+  "instruction_vocab_equal": false,
+  "compatible_navigation_layout": true
+}
