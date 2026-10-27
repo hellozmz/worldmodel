@@ -19,7 +19,7 @@ download_one() {
   local name=${repo##*/}
   echo "[$(date -Is)] START $repo@$revision"
   for attempt in $(seq 1 100); do
-    if huggingface-cli download "$repo" \
+    if timeout "${HF_DOWNLOAD_TIMEOUT_S:-7200}" huggingface-cli download "$repo" \
       --revision "$revision" \
       --local-dir "$ROOT/$name" \
       --local-dir-use-symlinks False \

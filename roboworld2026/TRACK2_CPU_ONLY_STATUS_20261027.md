@@ -75,6 +75,8 @@ Added and tested:
   - exact split/episode coverage and six-action ZIP contract validation.
 - `roboworld2026/track2/run_simplevln_social_export.py`
   - prepared official-runtime exporter with scan-based resume shards and `--dry-run`;
+  - supports `--splits train` for guard tuning while reserving validation for final export;
+  - configures the public SimpleVLN 640x480, 90-degree forward RGB-D camera contract;
   - not executed because it requires a graphics device.
 
 All current Track 2 utility tests pass locally and in the H200 container without

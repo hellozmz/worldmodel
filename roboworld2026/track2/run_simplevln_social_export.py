@@ -40,6 +40,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-name", default="simplevln")
     parser.add_argument("--gpu-ids", nargs="+", type=int, default=[0])
     parser.add_argument("--episode-limit", type=int)
+    parser.add_argument(
+        "--splits",
+        nargs="+",
+        choices=("train", "val_seen", "val_unseen"),
+        default=("val_seen", "val_unseen"),
+        help="Use train for guard tuning; validation is only exported for final scoring",
+    )
     parser.add_argument("--resolution-ratio", type=float, default=1.0)
     parser.add_argument("--stop-distance-m", type=float, default=0.80)
     parser.add_argument("--side-distance-m", type=float, default=1.05)
@@ -121,6 +128,16 @@ def configure_environment(task: dict, job: dict):
     cfg.SIMULATOR.HUMAN_GLB_PATH = task["data"] + "/HAPS2_0"
     cfg.SIMULATOR.HUMAN_INFO_PATH = task["data"] + "/Multi-Human-Annotations/human_motion.json"
     cfg.SIMULATOR.RECOMPUTE_NAVMESH_PATH = task["data"] + "/recompute_navmesh"
+    # Match the public SimpleVLN evaluation contract (one forward RGB-D camera,
+    # 90-degree FOV, 640x480). Only the resulting official six actions are exported.
+    cfg.SIMULATOR.AGENT_0.RGB_SENSOR.WIDTH = 640
+    cfg.SIMULATOR.AGENT_0.RGB_SENSOR.HEIGHT = 480
+    cfg.SIMULATOR.AGENT_0.RGB_SENSOR.HFOV = 90
+    cfg.SIMULATOR.AGENT_0.DEPTH_SENSOR.WIDTH = 640
+    cfg.SIMULATOR.AGENT_0.DEPTH_SENSOR.HEIGHT = 480
+    cfg.SIMULATOR.AGENT_0.DEPTH_SENSOR.HFOV = 90
+    cfg.SIMULATOR.AGENT_0.DEPTH_SENSOR.MAX_DEPTH = task["guard"]["max_depth_m"]
+    cfg.SIMULATOR.AGENT_0.DEPTH_SENSOR.NORMALIZE_DEPTH = task["guard"]["normalized_depth"]
     cfg.TASK.SENSORS = ["INSTRUCTION_SENSOR"]
     cfg.TASK.MEASUREMENTS = []
     cfg.ENVIRONMENT.ITERATOR_OPTIONS.SHUFFLE = False
@@ -202,8 +219,11 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
     jobs: list[dict] = []
     expected: dict[str, list[str]] = {}
     hashes: dict[str, str] = {}
-    for split in SPLITS:
-        episodes = load_episodes(data_root, split)
+    full_counts: dict[str, int] = {}
+    for split in args.splits:
+        all_episodes = load_episodes(data_root, split)
+        full_counts[split] = len(all_episodes)
+        episodes = all_episodes
         if args.episode_limit is not None:
             episodes = episodes[:args.episode_limit]
         expected[split] = [str(row["episode_id"]) for row in episodes]
@@ -234,6 +254,8 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
             "normalized_depth": args.normalized_depth,
         },
         "episode_limit": args.episode_limit,
+        "splits": list(args.splits),
+        "full_episode_counts": full_counts,
     }
     fingerprint = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     task = {
@@ -245,6 +267,8 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
         "model_name": args.model_name,
         "resolution_ratio": args.resolution_ratio,
         "guard": identity["guard"],
+        "splits": list(args.splits),
+        "full_episode_counts": full_counts,
     }
     return task, jobs, expected
 
@@ -281,8 +305,11 @@ def run_export(args: argparse.Namespace) -> None:
             log.close()
     action_dir = output / "actions"
     action_dir.mkdir(exist_ok=True)
-    complete = True
-    for split in SPLITS:
+    complete = (
+        set(args.splits) == {"val_seen", "val_unseen"}
+        and args.episode_limit is None
+    )
+    for split in args.splits:
         rows = []
         wanted = set(expected[split])
         for job in jobs:
@@ -294,7 +321,6 @@ def run_export(args: argparse.Namespace) -> None:
         check_rows(rows, wanted)
         path = action_dir / f"{split}.jsonl"
         path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8")
-        complete &= len(rows) in (778, 1839)
     if complete:
         export(action_dir, output / "submission.zip", 778, 1839)
     else:
@@ -308,6 +334,8 @@ def main() -> None:
     else:
         if args.episode_limit is not None and args.episode_limit <= 0:
             raise ValueError("episode limit must be positive")
+        if len(set(args.splits)) != len(args.splits):
+            raise ValueError("splits must be unique")
         run_export(args)
 
 
