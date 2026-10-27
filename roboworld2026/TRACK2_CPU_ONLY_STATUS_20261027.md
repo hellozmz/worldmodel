@@ -48,6 +48,12 @@ instructions (mean 688.2 characters versus 139.1 in the static R2R file). This
 makes a SimpleVLN closed-loop policy directly compatible at the navigation-task
 level; dynamic-human avoidance still has to come from forward RGB-D.
 
+The prepared exporter can therefore feed the exactly matched public R2R-CE
+instruction for `val_unseen` (the format on which the checkpoint reports 76.3%
+SR) and fall back to HA-R2R text for splits without that bundled static
+annotation. This choice uses no human-state annotation and performs no
+validation training or fine-tuning.
+
 Report:
 
 ```text
@@ -77,6 +83,7 @@ Added and tested:
   - prepared official-runtime exporter with scan-based resume shards and `--dry-run`;
   - supports `--splits train` for guard tuning while reserving validation for final export;
   - configures the public SimpleVLN 640x480, 90-degree forward RGB-D camera contract;
+  - supports matched SimpleVLN instructions for `val_unseen` and HA-R2R fallback;
   - not executed because it requires a graphics device.
 
 All current Track 2 utility tests pass locally and in the H200 container without

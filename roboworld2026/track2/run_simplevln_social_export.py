@@ -38,6 +38,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--vllm-base-url", required=True)
     parser.add_argument("--model-name", default="simplevln")
+    parser.add_argument(
+        "--instruction-source",
+        choices=("simplevln", "har2r"),
+        default="simplevln",
+        help="Use the exactly matched public R2R val_unseen instruction when available; otherwise HA-R2R text",
+    )
+    parser.add_argument(
+        "--simplevln-data-root",
+        type=Path,
+        help="Path containing eval_data/r2r/val_unseen/val_unseen.json.gz",
+    )
     parser.add_argument("--gpu-ids", nargs="+", type=int, default=[0])
     parser.add_argument("--episode-limit", type=int)
     parser.add_argument(
@@ -82,6 +93,27 @@ def load_episodes(data_root: Path, split: str) -> list[dict]:
         raise ValueError(f"duplicate episode IDs in {path}")
     episodes.sort(key=lambda row: int(row["episode_id"]))
     return episodes
+
+
+def load_simplevln_instructions(data_root: Path) -> dict[str, str]:
+    path = data_root / "eval_data/r2r/val_unseen/val_unseen.json.gz"
+    with gzip.open(path, "rt", encoding="utf-8") as stream:
+        payload = json.load(stream)
+    instructions = {
+        str(row["episode_id"]): row["instruction"]["instruction_text"]
+        for row in payload["episodes"]
+    }
+    if len(instructions) != len(payload["episodes"]):
+        raise ValueError("duplicate SimpleVLN episode IDs")
+    return instructions
+
+
+def override_instruction(observation: dict, instruction_text: str) -> dict:
+    policy_observation = dict(observation)
+    instruction = dict(observation.get("instruction", {}))
+    instruction["text"] = instruction_text
+    policy_observation["instruction"] = instruction
+    return policy_observation
 
 
 def check_rows(rows: list[dict], expected: set[str]) -> None:
@@ -170,6 +202,11 @@ def run_worker(task_path: Path) -> None:
             if set(str(value.episode_id) for value in episodes) != set(job["ids"]):
                 raise ValueError("runtime episode coverage differs")
             env.habitat_env.episode_iterator = iter(episodes)
+            instructions = (
+                load_simplevln_instructions(Path(task["simplevln_data_root"]))
+                if task["instruction_source"] == "simplevln" and job["split"] == "val_unseen"
+                else {}
+            )
             rows = []
             for episode in episodes:
                 observation = env.reset()
@@ -192,7 +229,13 @@ def run_worker(task_path: Path) -> None:
                 trace: list[str] = []
                 done = False
                 for _ in range(500):
-                    result = agent.act(observation, {}, str(episode.episode_id))
+                    policy_observation = observation
+                    if instructions:
+                        episode_id = str(episode.episode_id)
+                        if episode_id not in instructions:
+                            raise KeyError(f"missing SimpleVLN instruction for {episode_id}")
+                        policy_observation = override_instruction(observation, instructions[episode_id])
+                    result = agent.act(policy_observation, {}, str(episode.episode_id))
                     action = result["action"]
                     name = action if isinstance(action, str) else ACTION_NAMES[int(action)]
                     trace.append(name)
@@ -216,6 +259,12 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
     for relative in ("HAPS2_0", "Multi-Human-Annotations/human_motion.json"):
         if not (data_root / relative).exists():
             raise FileNotFoundError(f"missing data asset: {data_root / relative}")
+    simplevln_data_root = args.simplevln_data_root
+    if args.instruction_source == "simplevln":
+        if simplevln_data_root is None:
+            raise ValueError("--simplevln-data-root is required with --instruction-source simplevln")
+        simplevln_data_root = simplevln_data_root.resolve()
+        load_simplevln_instructions(simplevln_data_root)
     jobs: list[dict] = []
     expected: dict[str, list[str]] = {}
     hashes: dict[str, str] = {}
@@ -246,6 +295,8 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
         "human_annotations": sha256(data_root / "Multi-Human-Annotations/human_motion.json"),
         "vllm_base_url": args.vllm_base_url,
         "model_name": args.model_name,
+        "instruction_source": args.instruction_source,
+        "simplevln_data_root": str(simplevln_data_root) if simplevln_data_root else None,
         "resolution_ratio": args.resolution_ratio,
         "guard": {
             "stop_distance_m": args.stop_distance_m,
@@ -265,6 +316,8 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
         "fingerprint": fingerprint,
         "vllm_base_url": args.vllm_base_url,
         "model_name": args.model_name,
+        "instruction_source": args.instruction_source,
+        "simplevln_data_root": str(simplevln_data_root) if simplevln_data_root else None,
         "resolution_ratio": args.resolution_ratio,
         "guard": identity["guard"],
         "splits": list(args.splits),
