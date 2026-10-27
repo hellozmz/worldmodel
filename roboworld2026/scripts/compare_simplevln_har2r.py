@@ -32,7 +32,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--simplevln-root", type=Path, required=True)
     parser.add_argument("--har2r-root", type=Path, required=True)
-    parser.add_argument("--split", default="val_unseen", choices=("val_unseen",))
+    parser.add_argument("--split", choices=("train", "val_seen", "val_unseen"), required=True)
     parser.add_argument("--json-output", type=Path)
     return parser.parse_args()
 

@@ -40,14 +40,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-name", default="simplevln")
     parser.add_argument(
         "--instruction-source",
-        choices=("simplevln", "har2r"),
-        default="simplevln",
-        help="Use the exactly matched public R2R val_unseen instruction when available; otherwise HA-R2R text",
+        choices=("r2r_ce", "har2r"),
+        default="r2r_ce",
+        help="Use exactly matched public R2R-CE instructions; har2r uses the longer augmented text",
     )
     parser.add_argument(
-        "--simplevln-data-root",
+        "--r2r-ce-data-root",
         type=Path,
-        help="Path containing eval_data/r2r/val_unseen/val_unseen.json.gz",
+        help="VLN-CE R2R root containing <split>/<split>.json.gz (or SimpleVLN's nested layout)",
     )
     parser.add_argument("--gpu-ids", nargs="+", type=int, default=[0])
     parser.add_argument("--episode-limit", type=int)
@@ -95,8 +95,10 @@ def load_episodes(data_root: Path, split: str) -> list[dict]:
     return episodes
 
 
-def load_simplevln_instructions(data_root: Path) -> dict[str, str]:
-    path = data_root / "eval_data/r2r/val_unseen/val_unseen.json.gz"
+def load_r2r_ce_instructions(data_root: Path, split: str) -> dict[str, str]:
+    path = data_root / "eval_data" / "r2r" / split / f"{split}.json.gz"
+    if not path.is_file():
+        path = data_root / split / f"{split}.json.gz"
     with gzip.open(path, "rt", encoding="utf-8") as stream:
         payload = json.load(stream)
     instructions = {
@@ -203,8 +205,10 @@ def run_worker(task_path: Path) -> None:
                 raise ValueError("runtime episode coverage differs")
             env.habitat_env.episode_iterator = iter(episodes)
             instructions = (
-                load_simplevln_instructions(Path(task["simplevln_data_root"]))
-                if task["instruction_source"] == "simplevln" and job["split"] == "val_unseen"
+                load_r2r_ce_instructions(
+                    Path(task["r2r_ce_data_root"]), job["split"]
+                )
+                if task["instruction_source"] == "r2r_ce"
                 else {}
             )
             rows = []
@@ -259,12 +263,13 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
     for relative in ("HAPS2_0", "Multi-Human-Annotations/human_motion.json"):
         if not (data_root / relative).exists():
             raise FileNotFoundError(f"missing data asset: {data_root / relative}")
-    simplevln_data_root = args.simplevln_data_root
-    if args.instruction_source == "simplevln":
-        if simplevln_data_root is None:
-            raise ValueError("--simplevln-data-root is required with --instruction-source simplevln")
-        simplevln_data_root = simplevln_data_root.resolve()
-        load_simplevln_instructions(simplevln_data_root)
+    r2r_ce_data_root = args.r2r_ce_data_root
+    if args.instruction_source == "r2r_ce":
+        if r2r_ce_data_root is None:
+            raise ValueError("--r2r-ce-data-root is required with --instruction-source r2r_ce")
+        r2r_ce_data_root = r2r_ce_data_root.resolve()
+        for split in args.splits:
+            load_r2r_ce_instructions(r2r_ce_data_root, split)
     jobs: list[dict] = []
     expected: dict[str, list[str]] = {}
     hashes: dict[str, str] = {}
@@ -296,7 +301,7 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
         "vllm_base_url": args.vllm_base_url,
         "model_name": args.model_name,
         "instruction_source": args.instruction_source,
-        "simplevln_data_root": str(simplevln_data_root) if simplevln_data_root else None,
+        "r2r_ce_data_root": str(r2r_ce_data_root) if r2r_ce_data_root else None,
         "resolution_ratio": args.resolution_ratio,
         "guard": {
             "stop_distance_m": args.stop_distance_m,
@@ -317,7 +322,7 @@ def prepare_jobs(args: argparse.Namespace) -> tuple[dict, list[dict], dict[str, 
         "vllm_base_url": args.vllm_base_url,
         "model_name": args.model_name,
         "instruction_source": args.instruction_source,
-        "simplevln_data_root": str(simplevln_data_root) if simplevln_data_root else None,
+        "r2r_ce_data_root": str(r2r_ce_data_root) if r2r_ce_data_root else None,
         "resolution_ratio": args.resolution_ratio,
         "guard": identity["guard"],
         "splits": list(args.splits),

@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 from roboworld2026.track2.run_simplevln_social_export import (
-    load_simplevln_instructions,
+    load_r2r_ce_instructions,
     override_instruction,
 )
 
@@ -25,7 +25,7 @@ class RunSimpleVLNExportHelperTests(unittest.TestCase):
             }
             with gzip.open(path, "wt", encoding="utf-8") as stream:
                 json.dump(payload, stream)
-            instructions = load_simplevln_instructions(root)
+            instructions = load_r2r_ce_instructions(root, "val_unseen")
             self.assertEqual(instructions, {"12": "Exit the room.", "13": "Walk left."})
             observation = {"rgb": "unchanged", "instruction": {"text": "long HA text", "tokens": [1]}}
             result = override_instruction(observation, instructions["12"])
